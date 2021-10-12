@@ -1,8 +1,9 @@
-name: github pages
+name: blog pages
 
 on:
   push:
     branches:
+      - master
       - main  # Set a branch to deploy
 
 jobs:
