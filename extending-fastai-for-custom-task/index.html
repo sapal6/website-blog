@@ -1,0 +1,2810 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="noodp">
+<meta http-equiv=x-ua-compatible content="IE=edge, chrome=1">
+<title>Extending Fastai For Custom Task - Satyabrata pal</title><meta name=Description content="How to extend Fastai for a custom task."><meta property="og:title" content="Extending Fastai For Custom Task">
+<meta property="og:description" content="How to extend Fastai for a custom task.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://satyabratapal.com/extending-fastai-for-custom-task/"><meta property="og:image" content="http://satyabratapal.com/logo.png"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-10-12T00:00:00+00:00">
+<meta property="article:modified_time" content="2021-10-12T00:00:00+00:00">
+<meta name=twitter:card content="summary_large_image">
+<meta name=twitter:image content="http://satyabratapal.com/logo.png">
+<meta name=twitter:title content="Extending Fastai For Custom Task">
+<meta name=twitter:description content="How to extend Fastai for a custom task.">
+<meta name=application-name content="LoveIt">
+<meta name=apple-mobile-web-app-title content="LoveIt"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=http://satyabratapal.com/extending-fastai-for-custom-task/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Extending Fastai For Custom Task","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"http:\/\/satyabratapal.com\/extending-fastai-for-custom-task\/"},"genre":"posts","keywords":"Deep Learning, Fastai","wordcount":6803,"url":"http:\/\/satyabratapal.com\/extending-fastai-for-custom-task\/","datePublished":"2021-10-12T00:00:00+00:00","dateModified":"2021-10-12T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Satyabrata pal"},"description":"How to extend Fastai for a custom task."}</script></head>
+<body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark')&&document.body.setAttribute('theme','dark')</script>
+<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title="Satyabrata pal"><span id=id-1 class=typeit></span></a>
+</div>
+<div class=menu>
+<div class=menu-inner><a class=menu-item href=/posts/> Posts </a><a class=menu-item href=/tags/> Tags </a><a class=menu-item href=/categories/> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder="Search titles or contents..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search>
+<i class="fas fa-search fa-fw"></i>
+</a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear>
+<i class="fas fa-times-circle fa-fw"></i>
+</a>
+<span class="search-button search-loading" id=search-loading-desktop>
+<i class="fas fa-spinner fa-fw fa-spin"></i>
+</span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw"></i>
+</a>
+</div>
+</div>
+</div>
+</header><header class=mobile id=header-mobile>
+<div class=header-container>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title="Satyabrata pal"><span id=id-2 class=typeit></span></a>
+</div>
+<div class=menu-toggle id=menu-toggle-mobile>
+<span></span><span></span><span></span>
+</div>
+</div>
+<div class=menu id=menu-mobile><div class=search-wrapper>
+<div class="search mobile" id=search-mobile>
+<input type=text placeholder="Search titles or contents..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search>
+<i class="fas fa-search fa-fw"></i>
+</a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear>
+<i class="fas fa-times-circle fa-fw"></i>
+</a>
+<span class="search-button search-loading" id=search-loading-mobile>
+<i class="fas fa-spinner fa-fw fa-spin"></i>
+</span>
+</div>
+<a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>
+Cancel
+</a>
+</div><a class=menu-item href=/posts/ title>Posts</a><a class=menu-item href=/tags/ title>Tags</a><a class=menu-item href=/categories/ title>Categories</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw"></i>
+</a></div>
+</div>
+</header>
+<div class="search-dropdown desktop">
+<div id=search-dropdown-desktop></div>
+</div>
+<div class="search-dropdown mobile">
+<div id=search-dropdown-mobile></div>
+</div>
+<main class=main>
+<div class=container><div class=toc id=toc-auto>
+<h2 class=toc-title>Contents</h2>
+<div class=toc-content id=toc-content-auto></div>
+</div><article class="page single"><h1 class="single-title animated flipInX">Extending Fastai For Custom Task</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=" author" class=author><i class="fas fa-user-circle fa-fw"></i>Satyabrata pal</a></span>&nbsp;<span class=post-category>included in <a href=/categories/deep-learning/><i class="far fa-folder fa-fw"></i>Deep Learning</a></span></div>
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2021-10-12>2021-10-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;6803 words&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;32 minutes&nbsp;</div>
+</div><div class="details toc" id=toc-static kept>
+<div class="details-summary toc-title">
+<span>Contents</span>
+<span><i class="details-icon fas fa-angle-right"></i></span>
+</div>
+<div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
+<ul>
+<li><a href=#what-is-this->What is this? 🤔</a></li>
+<li><a href=#what-i-have-tried-to-explore-here->What I have tried to explore here? 🔍</a></li>
+<li><a href=#installing-all-the-required-libraries>Installing all the required libraries⚙️</a></li>
+<li><a href=#import-all-required-modules>Import all required modules🖥️</a></li>
+<li><a href=#get-labels>Get labels🏗️</a>
+<ul>
+<li><a href=#getfilespath-path-ext>getfiles(path: Path, ext)</a></li>
+<li><a href=#map-path-to-labels>Map path to labels🗺️</a></li>
+<li><a href=#mapxydf>mapxy(df)</a></li>
+<li><a href=#get_labelf-path>get_label(f: Path)</a></li>
+</ul>
+</li>
+<li><a href=#q-transform-using-nnaudio>Q transform using nnaudio⚗️</a></li>
+<li><a href=#creating-the-dataset>Creating the dataset🖫</a>
+<ul>
+<li><a href=#spectogram>Spectogram</a></li>
+<li><a href=#nnaudioimagefastuple>NNAudioImage(fastuple)</a></li>
+<li><a href=#nnaudiotransformitemtransform>NNAudioTransform(ItemTransform)</a></li>
+</ul>
+</li>
+<li><a href=#create-the-dataloader>Create the Dataloader🖨️</a></li>
+<li><a href=#modularity->Modularity 🧩</a></li>
+<li><a href=#make-your-own-model>Make your own model🍕</a>
+<ul>
+<li><a href=#create_timm_bodyarch-n_in3-pretrainedtrue-cutnone>create_timm_body(arch, n_in=3, pretrained=True, cut=None)</a></li>
+<li><a href=#create_timm_model>create_timm_model</a></li>
+<li><a href=#timm_learner>timm_learner</a></li>
+</ul>
+</li>
+<li><a href=#the-learner>The learner👩‍🏫</a></li>
+<li><a href=#inference>Inference🧐</a></li>
+<li><a href=#inference-1>Inference</a></li>
+<li><a href=#conclusion>Conclusion</a></li>
+</ul>
+</nav></div>
+</div><div class=content id=content><p>This article shows a way to extend Fastai to integrate external library, create custom model and create pipeline for a custom new task.</p>
+<h2 id=what-is-this->What is this? 🤔</h2>
+<p>Experiment to weave nnaudio, timm and fastai together. I created this post as part of the experiment which I did in the <a href=https://www.kaggle.com/c/g2net-gravitational-wave-detection target=_blank rel="noopener noreffer">G2Net Gravitational Wave Detection</a> competition. The data used for this post is as part of the same.</p>
+<p>If you want to know more about this competiiton then have a look at the description <a href=https://www.kaggle.com/c/g2net-gravitational-wave-detection/overview target=_blank rel="noopener noreffer">page</a>.</p>
+<h2 id=what-i-have-tried-to-explore-here->What I have tried to explore here? 🔍</h2>
+<ul>
+<li>
+<p>Extend Fastai for signal processing and time series:</p>
+<ul>
+<li>To use nnAudio for faster processing than librosa or other signal/audio processing methods.</li>
+<li>To deal with time series data as images.</li>
+<li>To deal with cosmological data like gravitational waves.1</li>
+</ul>
+</li>
+<li>
+<p>Create custom Transform.</p>
+</li>
+<li>
+<p>Create custom block.</p>
+</li>
+<li>
+<p>Create a dataloader.</p>
+</li>
+<li>
+<p>Create a custom model with models from the timm library.</p>
+</li>
+<li>
+<p>Create custom learner.</p>
+</li>
+</ul>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=o>%</span><span class=n>reload_ext</span> <span class=n>autoreload</span>
+<span class=o>%</span><span class=n>autoreload</span> <span class=mi>2</span>
+<span class=o>%</span><span class=n>matplotlib</span> <span class=n>inline</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=installing-all-the-required-libraries>Installing all the required libraries⚙️</h2>
+<ul>
+<li>Spacy</li>
+<li>Fastai</li>
+<li>nnAudio</li>
+<li>timm</li>
+</ul>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=ch>#!pip install spacy==3.1.1</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=err>!</span><span class=n>yes</span> <span class=n>Y</span><span class=o>|</span><span class=n>conda</span> <span class=n>install</span> <span class=o>-</span><span class=n>c</span> <span class=n>fastai</span> <span class=n>fastai</span><span class=o>=</span><span class=mf>2.5.2</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=err>!</span><span class=n>pip3</span> <span class=n>install</span> <span class=n>timm</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=err>!</span><span class=n>pip3</span> <span class=n>install</span> <span class=n>nnaudio</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=import-all-required-modules>Import all required modules🖥️</h2>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=c1>#export</span>
+<span class=kn>from</span> <span class=nn>typing</span> <span class=kn>import</span> <span class=n>Tuple</span>
+<span class=kn>from</span> <span class=nn>collections</span> <span class=kn>import</span> <span class=n>namedtuple</span>
+<span class=kn>from</span> <span class=nn>nnAudio.Spectrogram</span> <span class=kn>import</span> <span class=n>CQT</span>
+<span class=kn>from</span> <span class=nn>timm</span> <span class=kn>import</span> <span class=n>create_model</span><span class=p>,</span> <span class=n>list_models</span>
+<span class=kn>from</span> <span class=nn>pandas.core.frame</span> <span class=kn>import</span> <span class=n>DataFrame</span>
+<span class=kn>from</span> <span class=nn>fastcore.foundation</span> <span class=kn>import</span> <span class=o>*</span>
+<span class=kn>from</span> <span class=nn>fastai.vision.all</span> <span class=kn>import</span> <span class=o>*</span>
+<span class=kn>from</span> <span class=nn>fastai.torch_core</span> <span class=kn>import</span> <span class=n>show_image</span>
+<span class=kn>from</span> <span class=nn>fastai.vision.learner</span> <span class=kn>import</span> <span class=n>_update_first_layer</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>path</span> <span class=o>=</span> <span class=n>Path</span><span class=p>(</span><span class=s2>&#34;../input&#34;</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=get-labels>Get labels🏗️</h2>
+<p>Training labels are in the &lsquo;training_labels.csv&rsquo; file.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>df</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>read_csv</span><span class=p>(</span><span class=n>path</span><span class=o>/</span><span class=s1>&#39;g2net-gravitational-wave-detection/training_labels.csv&#39;</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>df</span><span class=o>.</span><span class=n>head</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div>
+<style scoped>.dataframe tbody tr th:only-of-type{vertical-align:middle}<pre><code>.dataframe tbody tr th{vertical-align:top}.dataframe thead th{text-align:right}</code></pre><p></style></p>
+<table border=1 class=dataframe>
+<thead>
+<tr style=text-align:right>
+<th></th>
+<th>id</th>
+<th>target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>00000e74ad</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id=getfilespath-path-ext>getfiles(path: Path, ext)</h3>
+<p>Get numpy files in <code>path</code> recursively, only in <code>folders</code>, if specified.</p>
+<blockquote>
+<p>The &ldquo;#export&rdquo; in the function below and all the rest of the functions/code are there to help me use nbdev to export the required code into a library later.</p>
+</blockquote>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=c1>#export</span>
+<span class=k>def</span> <span class=nf>getfiles</span><span class=p>(</span><span class=n>path</span><span class=p>:</span> <span class=n>Path</span><span class=p>,</span> <span class=n>ext</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>L</span><span class=p>:</span>
+    <span class=s2>&#34;Get numpy files in `path` recursively, only in `folders`, if specified.&#34;</span>
+    <span class=k>return</span> <span class=n>L</span><span class=p>(</span><span class=n>path</span><span class=o>.</span><span class=n>glob</span><span class=p>(</span><span class=sa>f</span><span class=s1>&#39;**/*.</span><span class=si>{</span><span class=n>ext</span><span class=si>}</span><span class=s1>&#39;</span><span class=p>))</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>I am using the previous function to get all the files under the train folder.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>train_path</span> <span class=o>=</span> <span class=n>path</span><span class=o>/</span><span class=s1>&#39;g2net-gravitational-wave-detection/train&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=o>%%</span><span class=n>time</span>
+<span class=n>train_files</span> <span class=o>=</span> <span class=n>getfiles</span><span class=p>(</span><span class=n>train_path</span><span class=p>,</span> <span class=s2>&#34;npy&#34;</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>CPU times: user 5.74 s, sys: 2.23 s, total: 7.97 s
+Wall time: 2min 1s
+</code></pre>
+<p>Just a quick test to see if we got the correct files.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>train_files</span><span class=p>[:</span><span class=mi>2</span><span class=p>]</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>(#2) [Path('../input/g2net-gravitational-wave-detection/train/7/7/7/
+777d746e90.npy'),Path('../input/g2net-gravitational-wave-detection/train/7/
+7/7/777ecfbd65.npy')]
+</code></pre>
+<p>Picking labels from the dataframe. We may need these labels later.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>labels</span> <span class=o>=</span> <span class=n>df</span><span class=o>.</span><span class=n>target</span><span class=o>.</span><span class=n>to_list</span><span class=p>()</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=map-path-to-labels>Map path to labels🗺️</h3>
+<p>To make things easier I will try to map the file paths to their respective labels and create a datafrane out of it.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=c1>#export</span>
+<span class=k>def</span> <span class=nf>map_path_to_labels</span><span class=p>(</span><span class=n>data</span><span class=p>:</span> <span class=n>L</span><span class=p>,</span> <span class=n>cols</span><span class=p>:</span> <span class=n>L</span><span class=o>=</span><span class=kc>None</span> <span class=p>)</span> <span class=o>-&gt;</span> <span class=n>DataFrame</span><span class=p>:</span>
+    <span class=s2>&#34;&#34;&#34;maps the files to their labels&#34;&#34;&#34;</span>
+    <span class=k>if</span> <span class=n>cols</span> <span class=ow>is</span> <span class=kc>None</span><span class=p>:</span> <span class=k>raise</span> <span class=ne>ValueError</span><span class=p>(</span><span class=s2>&#34;You forgot to provide the columns&#34;</span><span class=p>)</span>
+    <span class=n>data</span> <span class=o>=</span> <span class=nb>dict</span><span class=p>(</span><span class=nb>zip</span><span class=p>(</span><span class=n>cols</span><span class=p>,</span> <span class=n>data</span><span class=p>))</span>
+    <span class=k>return</span> <span class=n>pd</span><span class=o>.</span><span class=n>DataFrame</span><span class=o>.</span><span class=n>from_dict</span><span class=p>(</span><span class=n>data</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=o>%%</span><span class=n>time</span>
+<span class=n>df</span> <span class=o>=</span> <span class=n>map_path_to_labels</span><span class=p>([</span><span class=n>train_files</span><span class=p>,</span> <span class=n>labels</span><span class=p>],</span> <span class=n>cols</span><span class=o>=</span><span class=p>[</span><span class=s2>&#34;id&#34;</span><span class=p>,</span> <span class=s2>&#34;target&#34;</span><span class=p>])</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>CPU times: user 2.07 s, sys: 0 ns, total: 2.07 s
+Wall time: 2.07 s
+</code></pre>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>df</span><span class=o>.</span><span class=n>head</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div>
+<style scoped>.dataframe tbody tr th:only-of-type{vertical-align:middle}<pre><code>.dataframe tbody tr th{vertical-align:top}.dataframe thead th{text-align:right}</code></pre><p></style></p>
+<table border=1 class=dataframe>
+<thead>
+<tr style=text-align:right>
+<th></th>
+<th>id</th>
+<th>target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>../input/g2net-gravitational-wave-detection/train/7/7/7/777d746e90.npy</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id=mapxydf>mapxy(df)</h3>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=c1>#export</span>
+<span class=k>def</span> <span class=nf>mapxy</span><span class=p>(</span><span class=n>df</span><span class=p>:</span> <span class=n>DataFrame</span><span class=p>):</span>
+    <span class=s2>&#34;&#34;&#34;Create a dictionary of file path and the label from a dataframe&#34;&#34;&#34;</span>
+    <span class=k>return</span> <span class=nb>dict</span><span class=p>(</span><span class=n>df</span><span class=o>.</span><span class=n>values</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=o>%%</span><span class=n>time</span>
+<span class=n>files</span> <span class=o>=</span> <span class=n>mapxy</span><span class=p>(</span><span class=n>df</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>CPU times: user 872 ms, sys: 0 ns, total: 872 ms
+Wall time: 872 ms
+</code></pre>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=o>%%</span><span class=n>time</span>
+<span class=n>files</span><span class=p>[</span><span class=n>train_files</span><span class=p>[</span><span class=mi>7</span><span class=p>]]</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>CPU times: user 11 µs, sys: 7 µs, total: 18 µs
+Wall time: 21.5 µs
+
+1
+</code></pre>
+<h3 id=get_labelf-path>get_label(f: Path)</h3>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=k>def</span> <span class=nf>get_label</span><span class=p>(</span><span class=n>f</span><span class=p>:</span> <span class=n>Path</span><span class=p>):</span>
+    <span class=s2>&#34;&#34;&#34;get the label belonging to a file&#34;&#34;&#34;</span>
+    <span class=n>label</span> <span class=o>=</span> <span class=kc>None</span>
+    <span class=k>if</span> <span class=n>f</span> <span class=ow>in</span> <span class=n>df</span><span class=o>.</span><span class=n>values</span><span class=p>:</span>
+        <span class=n>label</span> <span class=o>=</span> <span class=n>df</span><span class=p>[</span><span class=n>df</span><span class=p>[</span><span class=s1>&#39;id&#39;</span><span class=p>]</span> <span class=o>==</span> <span class=n>f</span><span class=p>][</span><span class=s1>&#39;target&#39;</span><span class=p>]</span><span class=o>.</span><span class=n>values</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
+    <span class=k>return</span> <span class=n>label</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>get_label</span><span class=p>(</span><span class=n>train_files</span><span class=p>[</span><span class=mi>0</span><span class=p>])</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>1
+</code></pre>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>get_label</span><span class=p>(</span><span class=n>Path</span><span class=p>(</span><span class=s2>&#34;/ff/ff.npy&#34;</span><span class=p>))</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=q-transform-using-nnaudio>Q transform using nnaudio⚗️</h2>
+<p>We will design a function that would get the q transform of the time series on the fly using nnaudio.
+The result will be similar to converting the time series data into images.</p>
+<p>Code taken from <a href=https://www.kaggle.com/yasufuminakama/g2net-efficientnet-b7-baseline-training target=_blank rel="noopener noreffer">notebook</a> shared by <a href=https://www.kaggle.com/yasufuminakama target=_blank rel="noopener noreffer">Y.Nakama</a></p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=c1>#export</span>
+<span class=k>def</span> <span class=nf>qtfm</span><span class=p>():</span>
+    <span class=s2>&#34;&#34;&#34;convert waves to images&#34;&#34;&#34;</span>
+    <span class=n>cqt</span> <span class=o>=</span> <span class=n>CQT</span><span class=p>(</span><span class=n>sr</span><span class=o>=</span> <span class=mi>2048</span><span class=p>,</span> <span class=n>fmin</span><span class=o>=</span> <span class=mi>20</span><span class=p>,</span> <span class=n>fmax</span><span class=o>=</span> <span class=mi>1024</span><span class=p>,</span> <span class=n>hop_length</span><span class=o>=</span> <span class=mi>32</span><span class=p>,</span> <span class=n>bins_per_octave</span><span class=o>=</span><span class=mi>8</span><span class=p>,</span><span class=n>verbose</span><span class=o>=</span><span class=kc>False</span><span class=p>)</span>
+    <span class=k>return</span> <span class=n>cqt</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="details admonition tip open">
+<div class="details-summary admonition-title">
+<i class="icon fas fa-lightbulb fa-fw"></i>Tip<i class="details-icon fas fa-angle-right fa-fw"></i>
+</div>
+<div class=details-content>
+<div class=admonition-content>Remember to set <code>verbose</code> False if you don&rsquo;t want all the string output to be displayed everytime dataloader loads the data.</div>
+</div>
+</div>
+<p>Quick test to see if this works.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>waves</span> <span class=o>=</span> <span class=n>np</span><span class=o>.</span><span class=n>load</span><span class=p>(</span><span class=n>train_files</span><span class=p>[</span><span class=mi>0</span><span class=p>])</span>
+<span class=n>waves</span> <span class=o>=</span> <span class=n>np</span><span class=o>.</span><span class=n>hstack</span><span class=p>(</span><span class=n>waves</span><span class=p>)</span>
+<span class=n>waves</span> <span class=o>=</span> <span class=n>waves</span> <span class=o>/</span> <span class=n>np</span><span class=o>.</span><span class=n>max</span><span class=p>(</span><span class=n>waves</span><span class=p>)</span>
+<span class=n>waves</span> <span class=o>=</span> <span class=n>torch</span><span class=o>.</span><span class=n>from_numpy</span><span class=p>(</span><span class=n>waves</span><span class=p>)</span><span class=o>.</span><span class=n>float</span><span class=p>()</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=o>%%</span><span class=n>time</span>
+<span class=n>qtfm</span><span class=p>()(</span><span class=n>waves</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>CPU times: user 20.5 ms, sys: 957 µs, total: 21.5 ms
+Wall time: 26.3 ms
+
+tensor([[[0.3868, 0.3814, 0.3670,  ..., 0.1262, 0.1258, 0.1258],
+         [0.3012, 0.2917, 0.2653,  ..., 0.1504, 0.1565, 0.1585],
+         [0.2445, 0.2453, 0.2446,  ..., 0.0945, 0.0961, 0.0965],
+         ...,
+         [0.0027, 0.0040, 0.0072,  ..., 0.0018, 0.0076, 0.0014],
+         [0.0027, 0.0040, 0.0120,  ..., 0.0012, 0.0061, 0.0126],
+         [0.0039, 0.0140, 0.0172,  ..., 0.0010, 0.0064, 0.0160]]])
+</code></pre>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=o>%%</span><span class=n>time</span>
+<span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=mi>5</span><span class=p>):</span>
+    <span class=n>waves</span> <span class=o>=</span> <span class=n>np</span><span class=o>.</span><span class=n>load</span><span class=p>(</span><span class=n>df</span><span class=o>.</span><span class=n>iloc</span><span class=p>[</span><span class=n>i</span><span class=p>]</span><span class=o>.</span><span class=n>id</span><span class=p>)</span>
+    <span class=n>waves</span> <span class=o>=</span> <span class=n>np</span><span class=o>.</span><span class=n>hstack</span><span class=p>(</span><span class=n>waves</span><span class=p>)</span>
+    <span class=n>waves</span> <span class=o>=</span> <span class=n>waves</span> <span class=o>/</span> <span class=n>np</span><span class=o>.</span><span class=n>max</span><span class=p>(</span><span class=n>waves</span><span class=p>)</span>
+    <span class=n>waves</span> <span class=o>=</span> <span class=n>torch</span><span class=o>.</span><span class=n>from_numpy</span><span class=p>(</span><span class=n>waves</span><span class=p>)</span><span class=o>.</span><span class=n>float</span><span class=p>()</span>
+    <span class=n>image</span> <span class=o>=</span> <span class=n>qtfm</span><span class=p>()(</span><span class=n>waves</span><span class=p>)</span>
+    <span class=n>target</span> <span class=o>=</span> <span class=n>get_label</span><span class=p>(</span><span class=n>train_files</span><span class=p>[</span><span class=n>i</span><span class=p>])</span>
+    <span class=n>plt</span><span class=o>.</span><span class=n>imshow</span><span class=p>(</span><span class=n>image</span><span class=p>[</span><span class=mi>0</span><span class=p>])</span>
+    <span class=n>plt</span><span class=o>.</span><span class=n>title</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;target: </span><span class=si>{</span><span class=n>target</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+    <span class=n>plt</span><span class=o>.</span><span class=n>show</span><span class=p>()</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_42_0.png title=/posts/Extending-Fastai-For-Custom-Task/output_42_0.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_42_0.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_42_0.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_42_0.png, /posts/Extending-Fastai-For-Custom-Task/output_42_0.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_42_0.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_42_0.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_42_1.png title=/posts/Extending-Fastai-For-Custom-Task/output_42_1.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_42_1.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_42_1.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_42_1.png, /posts/Extending-Fastai-For-Custom-Task/output_42_1.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_42_1.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_42_1.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_42_2.png title=/posts/Extending-Fastai-For-Custom-Task/output_42_2.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_42_2.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_42_2.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_42_2.png, /posts/Extending-Fastai-For-Custom-Task/output_42_2.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_42_2.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_42_2.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_42_3.png title=/posts/Extending-Fastai-For-Custom-Task/output_42_3.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_42_3.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_42_3.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_42_3.png, /posts/Extending-Fastai-For-Custom-Task/output_42_3.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_42_3.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_42_3.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_42_4.png title=/posts/Extending-Fastai-For-Custom-Task/output_42_4.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_42_4.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_42_4.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_42_4.png, /posts/Extending-Fastai-For-Custom-Task/output_42_4.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_42_4.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_42_4.png height=100 width=400>
+</a>
+<pre><code>CPU times: user 5.37 s, sys: 391 ms, total: 5.77 s
+Wall time: 5.23 s
+</code></pre>
+<p>Cool! so we are able to plot the images now. IT is fast too.</p>
+<h2 id=creating-the-dataset>Creating the dataset🖫</h2>
+<p>If you want to use fastai&rsquo;s learner to train your model on the transfomed spectograms, you can do so by creating a custom Dataset in pytorch and then feeding that dataset with a dataloader to fastai&rsquo;s learner. However, if you create a pipeline using fastai&rsquo;s internals then you get to use some cool functionalities out-of-box. We will see that in a while.</p>
+<p>All the code below are very heavily insipired by the original inspiration of this notebook (see the very first section), this <a href=https://ohmeow.com/posts/2020/04/11/finding-datablock-nirvana-part-1.html target=_blank rel="noopener noreffer">post</a> by Wayde Gilliam and the fastai s<a href=https://docs.fast.ai/tutorial.siamese.html#Writing-your-custom-data-block target=_blank rel="noopener noreffer">iamese tutorial</a>.</p>
+<h3 id=spectogram>Spectogram</h3>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=c1>#export</span>
+<span class=k>def</span> <span class=nf>get_waves</span><span class=p>(</span><span class=n>f</span><span class=p>):</span>
+    <span class=s2>&#34;&#34;&#34;read numpy file, stack the timeseries and convert those into a tensor&#34;&#34;&#34;</span>
+    <span class=n>waves</span> <span class=o>=</span> <span class=n>np</span><span class=o>.</span><span class=n>load</span><span class=p>(</span><span class=n>f</span><span class=p>)</span>
+    <span class=n>waves</span> <span class=o>=</span> <span class=n>np</span><span class=o>.</span><span class=n>hstack</span><span class=p>(</span><span class=n>waves</span><span class=p>)</span>
+    <span class=n>waves</span> <span class=o>=</span> <span class=n>waves</span> <span class=o>/</span> <span class=n>np</span><span class=o>.</span><span class=n>max</span><span class=p>(</span><span class=n>waves</span><span class=p>)</span>
+    <span class=n>waves</span> <span class=o>=</span> <span class=n>torch</span><span class=o>.</span><span class=n>from_numpy</span><span class=p>(</span><span class=n>waves</span><span class=p>)</span><span class=o>.</span><span class=n>float</span><span class=p>()</span>
+    <span class=k>return</span> <span class=n>waves</span>
+
+<span class=k>def</span> <span class=nf>create_spectrogram</span><span class=p>(</span><span class=n>x</span><span class=p>:</span> <span class=n>Path</span><span class=p>):</span>
+    <span class=s2>&#34;&#34;&#34;Create an AudioSpectrogram from a torch tensor&#34;&#34;&#34;</span>
+    <span class=n>waves</span> <span class=o>=</span> <span class=n>get_waves</span><span class=p>(</span><span class=n>x</span><span class=p>)</span>
+    <span class=k>return</span> <span class=n>qtfm</span><span class=p>()(</span><span class=n>waves</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=nnaudioimagefastuple>NNAudioImage(fastuple)</h3>
+<p>First of all, we are going to create an &ldquo;Image type&rdquo; for our transformed object (it&rsquo;s the numpy data transformed into spectrogram).</p>
+<p>We have to do this because our data is not an image data from get-go. Rather it&rsquo;s a signal data which we are transforming into an Image. So, to tell fastai that this is a custom Image type which we are dealing with and ho we should be displaying it, we have to create an Image type.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=c1>#export</span>
+<span class=k>class</span> <span class=nc>AudioImage</span><span class=p>(</span><span class=n>fastuple</span><span class=p>):</span>
+    <span class=s2>&#34;&#34;&#34;Custom Image for nnAudio transformed signals&#34;&#34;&#34;</span>
+    <span class=k>def</span> <span class=nf>show</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>figsize</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=n>ctx</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>):</span>
+        <span class=k>if</span> <span class=nb>len</span><span class=p>(</span><span class=bp>self</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mi>1</span><span class=p>:</span>
+            <span class=n>img</span><span class=p>,</span><span class=n>label</span> <span class=o>=</span> <span class=bp>self</span>
+        <span class=k>else</span><span class=p>:</span>
+            <span class=n>img</span> <span class=o>=</span> <span class=bp>self</span>
+            <span class=n>label</span> <span class=o>=</span> <span class=s1>&#39;&#39;</span>
+    
+        <span class=k>if</span> <span class=n>figsize</span> <span class=ow>is</span> <span class=kc>None</span><span class=p>:</span> <span class=n>figsize</span><span class=o>=</span><span class=p>(</span><span class=mi>10</span><span class=p>,</span><span class=mi>10</span><span class=p>)</span>
+        <span class=k>return</span> <span class=n>show_image</span><span class=p>(</span><span class=n>img</span><span class=p>,</span> 
+                          <span class=n>title</span><span class=o>=</span><span class=n>label</span><span class=p>,</span> <span class=n>figsize</span><span class=o>=</span><span class=n>figsize</span><span class=p>,</span> <span class=n>ctx</span><span class=o>=</span><span class=n>ctx</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>image</span> <span class=o>=</span> <span class=n>create_spectrogram</span><span class=p>(</span><span class=n>train_files</span><span class=p>[</span><span class=mi>0</span><span class=p>])</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=nb>type</span><span class=p>(</span><span class=n>image</span><span class=p>),</span> <span class=n>image</span><span class=o>.</span><span class=n>shape</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>(torch.Tensor, torch.Size([1, 46, 385]))
+</code></pre>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>image</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>tensor([[[0.3868, 0.3814, 0.3670,  ..., 0.1262, 0.1258, 0.1258],
+         [0.3012, 0.2917, 0.2653,  ..., 0.1504, 0.1565, 0.1585],
+         [0.2445, 0.2453, 0.2446,  ..., 0.0945, 0.0961, 0.0965],
+         ...,
+         [0.0027, 0.0040, 0.0072,  ..., 0.0018, 0.0076, 0.0014],
+         [0.0027, 0.0040, 0.0120,  ..., 0.0012, 0.0061, 0.0126],
+         [0.0039, 0.0140, 0.0172,  ..., 0.0010, 0.0064, 0.0160]]])
+</code></pre>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>get_label</span><span class=p>(</span><span class=n>train_files</span><span class=p>[</span><span class=mi>0</span><span class=p>])</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>1
+</code></pre>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>s</span> <span class=o>=</span> <span class=n>AudioImage</span><span class=p>(</span><span class=n>image</span><span class=p>,</span> <span class=n>get_label</span><span class=p>(</span><span class=n>train_files</span><span class=p>[</span><span class=mi>0</span><span class=p>]))</span>
+<span class=n>s</span><span class=o>.</span><span class=n>show</span><span class=p>()</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>&lt;AxesSubplot:title={'center':'1'}&gt;
+</code></pre>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_53_1.png title=/posts/Extending-Fastai-For-Custom-Task/output_53_1.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_53_1.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_53_1.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_53_1.png, /posts/Extending-Fastai-For-Custom-Task/output_53_1.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_53_1.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_53_1.png height=100 width=400>
+</a>
+<p>You can create a Dataset in fastai by creating a custom Transform . Creating a <code>Transform</code> has come advantages as compared to a pytorch Dataset. For example, you don&rsquo;t need to have a <code>len</code> component or a <code>get_item</code> component.</p>
+<p>On a very high level a <code>Transform</code> has an <code>encodes</code>, <code>decodes</code> and <code>setup</code> methods. For our purpose having an <code>encodes</code> methods only would suffice. This is the place where we would be transforming the numpy data into spectograms.</p>
+<p>To know more about <code>Tranforms</code> refer these &ndash;></p>
+<ul>
+<li><a href=https://ohmeow.com/posts/2020/04/11/finding-datablock-nirvana-part-1.html target=_blank rel="noopener noreffer">data block nirvana</a></li>
+<li><a href=https://docs.fast.ai/tutorial.siamese.html#Writing-your-custom-data-block target=_blank rel="noopener noreffer">Siamese tutorial</a></li>
+<li><a href=https://github.com/fastai/fastbook/blob/master/11_midlevel_data.ipynb target=_blank rel="noopener noreffer">Fastbook chapter-11</a></li>
+<li><a href=https://docs.fast.ai/tutorial.albumentations.html target=_blank rel="noopener noreffer">Albumentation tutorial</a></li>
+</ul>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=o>%%</span><span class=n>time</span>
+<span class=n>vals</span> <span class=o>=</span> <span class=n>df</span><span class=o>.</span><span class=n>target</span><span class=o>.</span><span class=n>to_list</span><span class=p>()</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>CPU times: user 9.73 ms, sys: 0 ns, total: 9.73 ms
+Wall time: 9.74 ms
+</code></pre>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=o>%%</span><span class=n>time</span>
+<span class=n>vocab</span><span class=p>,</span><span class=n>o2i</span> <span class=o>=</span> <span class=n>uniqueify</span><span class=p>(</span><span class=n>vals</span><span class=p>,</span> <span class=n>sort</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span> <span class=n>bidir</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>CPU times: user 12.7 ms, sys: 0 ns, total: 12.7 ms
+Wall time: 12.8 ms
+</code></pre>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>lbl2path</span> <span class=o>=</span> <span class=n>mapxy</span><span class=p>(</span><span class=n>df</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=o>%%</span><span class=n>time</span>
+<span class=n>lbl2path</span><span class=p>[</span><span class=n>train_files</span><span class=p>[</span><span class=mi>5</span><span class=p>]]</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>CPU times: user 13 µs, sys: 5 µs, total: 18 µs
+Wall time: 21.5 µs
+
+
+
+
+
+1
+</code></pre>
+<p>combining all above steps</p>
+<h3 id=nnaudiotransformitemtransform>NNAudioTransform(ItemTransform)</h3>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=c1>#export</span>
+<span class=c1>#ItemTransform let&#39;s you work with tuple elements</span>
+<span class=k>class</span> <span class=nc>NNAudioTransform</span><span class=p>(</span><span class=n>ItemTransform</span><span class=p>):</span>
+    <span class=s2>&#34;&#34;&#34;Custom Transform which uses nnAudio transforms
+</span><span class=s2>    to extract spectogram on the fly&#34;&#34;&#34;</span>
+    <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>df</span><span class=p>:</span> <span class=n>DataFrame</span><span class=p>,</span> <span class=n>col</span><span class=p>:</span> <span class=nb>str</span> <span class=o>=</span> <span class=s1>&#39;target&#39;</span><span class=p>):</span>
+        <span class=bp>self</span><span class=o>.</span><span class=n>lbl2files</span> <span class=o>=</span> <span class=n>mapxy</span><span class=p>(</span><span class=n>df</span><span class=p>)</span>
+        <span class=n>vals</span> <span class=o>=</span> <span class=n>df</span><span class=p>[</span><span class=n>col</span><span class=p>]</span><span class=o>.</span><span class=n>to_list</span><span class=p>()</span>
+        <span class=bp>self</span><span class=o>.</span><span class=n>vocab</span><span class=p>,</span><span class=bp>self</span><span class=o>.</span><span class=n>o2i</span> <span class=o>=</span> <span class=n>uniqueify</span><span class=p>(</span><span class=n>vals</span><span class=p>,</span> <span class=n>sort</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span> <span class=n>bidir</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+        
+    <span class=k>def</span> <span class=nf>encodes</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>o</span><span class=p>):</span> <span class=k>return</span> <span class=p>(</span><span class=n>create_spectrogram</span><span class=p>(</span><span class=n>o</span><span class=p>),</span> <span class=bp>self</span><span class=o>.</span><span class=n>o2i</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>lbl2files</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=n>o</span><span class=p>)))</span>
+    <span class=k>def</span> <span class=nf>decodes</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>x</span><span class=p>):</span> <span class=k>return</span> <span class=n>AudioImage</span><span class=p>(</span><span class=n>x</span><span class=p>[</span><span class=mi>0</span><span class=p>],</span><span class=bp>self</span><span class=o>.</span><span class=n>vocab</span><span class=p>[</span><span class=n>x</span><span class=p>[</span><span class=mi>1</span><span class=p>]])</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Let&rsquo;s walk through the code.</p>
+<p>If you inherit from the <code>Transform</code> class, the resulting transform is applied to the item as a whole but when you inherit from the <code>ItemTransform</code> class then the resulting transform is applied to each element of the input.</p>
+<p>For example, if you have a transform that is inherited from the <code>Transform</code> class and you have an input which is a tuple <code>("a", 1)</code> then the transform would consider the tuple as a single element. But, when your transform is an <code>ItemTransform</code> then the transform is applied to &ldquo;a&rdquo; as well as &ldquo;1&rdquo; separately.</p>
+<p>The <strong>init</strong> method sets up our <code>mapxy</code> method as a class property. It then converts the target column values into a list and creates a vocab of our targets and a dictionary mapping our targets to indices.</p>
+<p>The encodes method is where the magic occurs. Here, we return a tuple with our spectogram and the label related to our input.</p>
+<p>The decodes method returns an <code>AudioImage</code> type which knows how to show itself whenever a <code>show</code> method is invoked.</p>
+<p>You might notice that I have used a dataframe to create a list of our inputs and a dictionary of our labels. This was an engineering choice which I made because creating a list of labels from the input list of filenames was too slow. Doing it this was by using a dataframe made things faster.</p>
+<blockquote>
+<p>In deep learning a majority chunk of the speed boost comes from good engineering practices rather than having the best SOTA architectures or a faster computer.</p>
+</blockquote>
+<p>We will also use a &lsquo;splitter&rsquo; which tells fastai the way we want to split our data. For now we will use <code>RandomSplitter</code> to do this job. Additionally we will also instantiate the <code>NNAudioTransform</code> object.</p>
+<p>We will take a few samples only to make our experiment quicker.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>subset_for_dsets</span> <span class=o>=</span> <span class=n>train_files</span><span class=p>[:</span><span class=mi>20000</span><span class=p>]</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>splits</span> <span class=o>=</span> <span class=n>TrainTestSplitter</span><span class=p>()(</span><span class=n>subset_for_dsets</span><span class=p>)</span>
+<span class=n>tfm</span> <span class=o>=</span> <span class=n>NNAudioTransform</span><span class=p>(</span><span class=n>df</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>The <code>tfm</code> is a transform is would be applied to the input files to generate the spectogram. The second list has the transform which will be applied to our targets.</p>
+<p>Next, we have to tell fastai to take our &lsquo;sample&rsquo; and apply the transform and the splitter to it.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=o>%%</span><span class=n>time</span>
+<span class=n>tls</span> <span class=o>=</span> <span class=n>TfmdLists</span><span class=p>(</span><span class=n>subset_for_dsets</span><span class=p>,</span> <span class=n>tfm</span><span class=p>,</span> <span class=n>splits</span><span class=o>=</span><span class=n>splits</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>CPU times: user 85 ms, sys: 278 µs, total: 85.3 ms
+Wall time: 105 ms
+</code></pre>
+<p><code>TfmdLists</code> is a low-level API which creates a pipeline for us. It creates a pipeline that takes in our samples&ndash;>splits it &ndash;> applies our transform to the items.</p>
+<p>More information on a <code>TfmdLists</code> can be found in this <a href=https://docs.fast.ai/tutorial.pets.html target=_blank rel="noopener noreffer">tutorial</a> fromt he official documentation.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>tls</span><span class=o>.</span><span class=n>vocab</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>[0, 1]
+</code></pre>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>show_at</span><span class=p>(</span><span class=n>tls</span><span class=o>.</span><span class=n>train</span><span class=p>,</span> <span class=mi>1</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>&lt;AxesSubplot:title={'center':'0'}&gt;
+</code></pre>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_72_1.png title=/posts/Extending-Fastai-For-Custom-Task/output_72_1.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_72_1.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_72_1.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_72_1.png, /posts/Extending-Fastai-For-Custom-Task/output_72_1.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_72_1.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_72_1.png height=100 width=400>
+</a>
+<h2 id=create-the-dataloader>Create the Dataloader🖨️</h2>
+<p>We can use the <code>TfmdLists</code> to create a dataloader by calling <code>dataloaders()</code>. Here, we can&rsquo;t apply <code>item_tfms</code> or <code>batch_tfms</code> but we can get the hooks to different point of the pipeline and can put our transforms there.</p>
+<p>For example, once items are grabbed then that moment is known as &ldquo;after_item&rdquo;. We can use this hook to apply our transforms once items are grabbed.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>dls</span> <span class=o>=</span> <span class=n>tls</span><span class=o>.</span><span class=n>dataloaders</span><span class=p>(</span><span class=n>after_item</span><span class=o>=</span><span class=p>[</span><span class=n>ToTensor</span><span class=p>()],</span> <span class=n>after_batch</span><span class=o>=</span><span class=p>[</span><span class=n>IntToFloatTensor</span><span class=p>(),</span> <span class=n>Normalize</span><span class=o>.</span><span class=n>from_stats</span><span class=p>(</span><span class=o>*</span><span class=n>imagenet_stats</span><span class=p>)])</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>One more thing that we need to do is to make the <code>show_batch</code> method aware of the type of our Image. This can be easily done by using <code>typedispatch</code> to dispatch our <code>show_batch</code> (the one which we will override with our image type).</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=c1>#export</span>
+<span class=nd>@typedispatch</span>
+<span class=k>def</span> <span class=nf>show_batch</span><span class=p>(</span><span class=n>x</span><span class=p>:</span><span class=n>AudioImage</span><span class=p>,</span> <span class=n>y</span><span class=p>,</span> <span class=n>samples</span><span class=p>,</span> <span class=n>ctxs</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=n>max_n</span><span class=o>=</span><span class=mi>6</span><span class=p>,</span> <span class=n>nrows</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=n>ncols</span><span class=o>=</span><span class=mi>3</span><span class=p>,</span> <span class=n>figsize</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>):</span>
+    <span class=k>if</span> <span class=n>figsize</span> <span class=ow>is</span> <span class=kc>None</span><span class=p>:</span> <span class=n>figsize</span> <span class=o>=</span> <span class=p>(</span><span class=n>ncols</span><span class=o>*</span><span class=mi>6</span><span class=p>,</span> <span class=n>max_n</span><span class=o>//</span><span class=n>ncols</span> <span class=o>*</span> <span class=mi>3</span><span class=p>)</span>
+    <span class=k>if</span> <span class=n>ctxs</span> <span class=ow>is</span> <span class=kc>None</span><span class=p>:</span> <span class=n>ctxs</span> <span class=o>=</span> <span class=n>get_grid</span><span class=p>(</span><span class=nb>min</span><span class=p>(</span><span class=n>x</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span><span class=o>.</span><span class=n>shape</span><span class=p>[</span><span class=mi>0</span><span class=p>],</span> <span class=n>max_n</span><span class=p>),</span> <span class=n>nrows</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=n>ncols</span><span class=o>=</span><span class=n>ncols</span><span class=p>,</span> <span class=n>figsize</span><span class=o>=</span><span class=n>figsize</span><span class=p>)</span>
+    <span class=k>for</span> <span class=n>i</span><span class=p>,</span><span class=n>ctx</span> <span class=ow>in</span> <span class=nb>enumerate</span><span class=p>(</span><span class=n>ctxs</span><span class=p>):</span>
+        <span class=n>AudioImage</span><span class=p>(</span><span class=n>x</span><span class=p>[</span><span class=mi>0</span><span class=p>][</span><span class=n>i</span><span class=p>],</span> <span class=p>[</span><span class=s1>&#39;0&#39;</span><span class=p>,</span><span class=s1>&#39;1&#39;</span><span class=p>][</span><span class=n>x</span><span class=p>[</span><span class=mi>1</span><span class=p>][</span><span class=n>i</span><span class=p>]</span><span class=o>.</span><span class=n>item</span><span class=p>()])</span><span class=o>.</span><span class=n>show</span><span class=p>(</span><span class=n>ctx</span><span class=o>=</span><span class=n>ctx</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>typedispatch</code> does something similar to <a href=https://en.wikipedia.org/wiki/Multiple_dispatch target=_blank rel="noopener noreffer">multi-dispatch</a>. So, that whenever we call the <code>show_batch</code> on our image type then fastai will call our version of <code>show_batch</code> after recognizing our image type.</p>
+<p>Here we go</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=o>%%</span><span class=n>time</span>
+<span class=n>dls</span><span class=o>.</span><span class=n>show_batch</span><span class=p>()</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>CPU times: user 1.05 s, sys: 15.8 ms, total: 1.07 s
+Wall time: 1.62 s
+</code></pre>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_79_1.png title=/posts/Extending-Fastai-For-Custom-Task/output_79_1.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_79_1.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_79_1.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_79_1.png, /posts/Extending-Fastai-For-Custom-Task/output_79_1.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_79_1.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_79_1.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_79_2.png title=/posts/Extending-Fastai-For-Custom-Task/output_79_2.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_79_2.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_79_2.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_79_2.png, /posts/Extending-Fastai-For-Custom-Task/output_79_2.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_79_2.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_79_2.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_79_3.png title=/posts/Extending-Fastai-For-Custom-Task/output_79_3.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_79_3.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_79_3.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_79_3.png, /posts/Extending-Fastai-For-Custom-Task/output_79_3.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_79_3.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_79_3.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_79_4.png title=/posts/Extending-Fastai-For-Custom-Task/output_79_4.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_79_4.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_79_4.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_79_4.png, /posts/Extending-Fastai-For-Custom-Task/output_79_4.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_79_4.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_79_4.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_79_5.png title=/posts/Extending-Fastai-For-Custom-Task/output_79_5.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_79_5.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_79_5.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_79_5.png, /posts/Extending-Fastai-For-Custom-Task/output_79_5.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_79_5.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_79_5.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_79_6.png title=/posts/Extending-Fastai-For-Custom-Task/output_79_6.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_79_6.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_79_6.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_79_6.png, /posts/Extending-Fastai-For-Custom-Task/output_79_6.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_79_6.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_79_6.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_79_7.png title=/posts/Extending-Fastai-For-Custom-Task/output_79_7.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_79_7.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_79_7.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_79_7.png, /posts/Extending-Fastai-For-Custom-Task/output_79_7.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_79_7.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_79_7.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_79_8.png title=/posts/Extending-Fastai-For-Custom-Task/output_79_8.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_79_8.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_79_8.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_79_8.png, /posts/Extending-Fastai-For-Custom-Task/output_79_8.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_79_8.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_79_8.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_79_9.png title=/posts/Extending-Fastai-For-Custom-Task/output_79_9.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_79_9.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_79_9.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_79_9.png, /posts/Extending-Fastai-For-Custom-Task/output_79_9.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_79_9.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_79_9.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_79_2.png title=/posts/Extending-Fastai-For-Custom-Task/output_79_2.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_79_2.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_79_2.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_79_2.png, /posts/Extending-Fastai-For-Custom-Task/output_79_2.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_79_2.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_79_2.png height=100 width=400>
+</a>
+<h2 id=modularity->Modularity 🧩</h2>
+<p>The way that we have created the above transform works well for a specific type of task. There are somethings which could not be answered by the above transform.</p>
+<ul>
+<li>What is the categories are other than 0 and 1.</li>
+<li>What if it&rsquo;s a multicategory problem.</li>
+<li>How to handle the lack of targets during inference?
+<ul>
+<li>This could be handled by having a <code>setups</code> method inside the transform and have it accept list of filenames. This could work well when data is small but for huge data mapping the labelling function to all the filenames in order to create a vocab and label maps would take lots of time. In short it doesn&rsquo;t scale well.</li>
+</ul>
+</li>
+</ul>
+<p>So what do we do?</p>
+<p>The solution is to create a custom datablock for our type of task which can then be plugged into a <code>Datablock</code> like this&ndash;></p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>DataBlock(blocks=(NNAudioBlock, MultiCategoryBlock),
+                   splitter=ColSplitter(),
+                   get_x=lambda x:pascal_source/&#34;train&#34;/f&#39;{x[0]}&#39;,
+                   get_y=lambda x:x[1].split(&#39; &#39;),
+                   item_tfms=Resize(224),
+                   batch_tfms=aug_transforms())
+</code></pre></td></tr></table>
+</div>
+</div><p>Let&rsquo;s create a type to represent our spectrogram</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=k>class</span> <span class=nc>Spectrogram</span><span class=p>(</span><span class=n>TensorImageBase</span><span class=p>):</span>
+    <span class=s2>&#34;&#34;&#34;Type to represent a spectogram which knows show itself&#34;&#34;&#34;</span>
+    <span class=nd>@classmethod</span>
+    <span class=k>def</span> <span class=nf>create</span><span class=p>(</span><span class=bp>cls</span><span class=p>,</span> <span class=n>o</span><span class=p>):</span>
+        <span class=n>waves</span> <span class=o>=</span> <span class=n>get_waves</span><span class=p>(</span><span class=n>o</span><span class=p>)</span>
+        <span class=k>return</span> <span class=bp>cls</span><span class=p>(</span><span class=n>qtfm</span><span class=p>()(</span><span class=n>waves</span><span class=p>))</span>
+    
+    <span class=k>def</span> <span class=nf>show</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>figsize</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=n>ctx</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>):</span> 
+        <span class=n>t</span> <span class=o>=</span> <span class=bp>self</span>
+        <span class=k>if</span> <span class=ow>not</span> <span class=nb>isinstance</span><span class=p>(</span><span class=n>t</span><span class=p>,</span> <span class=n>Tensor</span><span class=p>):</span> <span class=k>return</span> <span class=n>ctx</span>
+        <span class=k>if</span> <span class=n>figsize</span> <span class=ow>is</span> <span class=kc>None</span><span class=p>:</span> <span class=n>figsize</span><span class=o>=</span><span class=p>(</span><span class=mi>10</span><span class=p>,</span><span class=mi>10</span><span class=p>)</span>
+        <span class=k>return</span> <span class=n>show_image</span><span class=p>(</span><span class=n>t</span><span class=p>,</span> <span class=n>figsize</span><span class=o>=</span><span class=n>figsize</span><span class=p>,</span> <span class=n>ctx</span><span class=o>=</span><span class=n>ctx</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>In the above class we use the functions <code>get_waves</code> and <code>qtfm()</code> defined in the previous sections to create a spectrogram. The <code>show</code> method is also similar to the <code>show</code> method which we had used in the previous section. The only difference is that in this show method we are not taking the label into account because the <code>Spectogram</code> is just a type of a file converted to a spectrogram.</p>
+<p>but does it work? let&rsquo;s test it.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>spectrogram</span> <span class=o>=</span> <span class=n>Spectrogram</span><span class=o>.</span><span class=n>create</span><span class=p>(</span><span class=n>train_files</span><span class=p>[</span><span class=mi>0</span><span class=p>])</span>
+<span class=nb>type</span><span class=p>(</span><span class=n>spectrogram</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>__main__.Spectrogram
+</code></pre>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>spectrogram</span><span class=o>.</span><span class=n>show</span><span class=p>()</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>&lt;AxesSubplot:&gt;
+</code></pre>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_86_1.png title=/posts/Extending-Fastai-For-Custom-Task/output_86_1.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_86_1.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_86_1.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_86_1.png, /posts/Extending-Fastai-For-Custom-Task/output_86_1.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_86_1.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_86_1.png height=100 width=400>
+</a>
+<p>Voila! it knows how to show itself.</p>
+<p>Now, we can create a custom block for our data. A block is a set of default transforms which is supposed to be applied to your data in order to tell fastai about the type of your data.</p>
+<p>In our custom block we will tell fastai how create a Spectrogram block and then apply <code>IntToFloatTensor</code> transform.</p>
+<p>The source code an <code>ImageBlock</code> is like this&ndash;></p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>ImageBlock</span><span class=err>??</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>We will use the source code for <code>ImageBlock</code> to create our custom block.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=k>def</span> <span class=nf>SpectrogramBlock</span><span class=p>(</span><span class=bp>cls</span><span class=o>=</span><span class=n>Spectrogram</span><span class=p>)</span> <span class=p>:</span> 
+    <span class=s2>&#34;A `TransformBlock` for spectograms of `cls`&#34;</span>
+    <span class=k>return</span> <span class=n>TransformBlock</span><span class=p>(</span><span class=n>type_tfms</span><span class=o>=</span><span class=bp>cls</span><span class=o>.</span><span class=n>create</span><span class=p>,</span> <span class=n>batch_tfms</span><span class=o>=</span><span class=n>IntToFloatTensor</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Now that we have our custom block ready, we can test if a DataBlock can now be created.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>g2net</span> <span class=o>=</span> <span class=n>DataBlock</span><span class=p>(</span><span class=n>blocks</span><span class=o>=</span><span class=p>(</span><span class=n>SpectrogramBlock</span><span class=p>,</span> <span class=n>CategoryBlock</span><span class=p>),</span>
+                   <span class=n>splitter</span><span class=o>=</span><span class=n>RandomSplitter</span><span class=p>(),</span>
+                   <span class=n>get_x</span><span class=o>=</span><span class=n>ColReader</span><span class=p>(</span><span class=mi>0</span><span class=p>),</span>
+                   <span class=n>get_y</span><span class=o>=</span><span class=n>ColReader</span><span class=p>(</span><span class=mi>1</span><span class=p>),</span>
+                   <span class=n>batch_tfms</span><span class=o>=</span><span class=n>aug_transforms</span><span class=p>())</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Next, we create the dataloader.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>dls</span> <span class=o>=</span> <span class=n>g2net</span><span class=o>.</span><span class=n>dataloaders</span><span class=p>(</span><span class=n>df</span><span class=o>.</span><span class=n>iloc</span><span class=p>[:</span><span class=mi>2000</span><span class=p>])</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>/opt/conda/lib/python3.7/site-packages/nnAudio/utils.py:326: SyntaxWarning: If fmax is given, n_bins will be ignored
+  warnings.warn('If fmax is given, n_bins will be ignored',SyntaxWarning)
+</code></pre>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=o>%%</span><span class=n>time</span>
+<span class=n>dls</span><span class=o>.</span><span class=n>show_batch</span><span class=p>()</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>CPU times: user 1.19 s, sys: 5.58 ms, total: 1.2 s
+Wall time: 1.7 s
+</code></pre>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_96_1.png title=/posts/Extending-Fastai-For-Custom-Task/output_96_1.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_96_1.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_96_1.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_96_1.png, /posts/Extending-Fastai-For-Custom-Task/output_96_1.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_96_1.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_96_1.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_96_2.png title=/posts/Extending-Fastai-For-Custom-Task/output_96_2.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_96_2.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_96_2.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_96_2.png, /posts/Extending-Fastai-For-Custom-Task/output_96_2.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_96_2.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_96_2.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_96_3.png title=/posts/Extending-Fastai-For-Custom-Task/output_96_3.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_96_3.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_96_3.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_96_3.png, /posts/Extending-Fastai-For-Custom-Task/output_96_3.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_96_3.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_96_3.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_96_4.png title=/posts/Extending-Fastai-For-Custom-Task/output_96_4.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_96_4.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_96_4.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_96_4.png, /posts/Extending-Fastai-For-Custom-Task/output_96_4.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_96_4.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_96_4.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_96_5.png title=/posts/Extending-Fastai-For-Custom-Task/output_96_5.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_96_5.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_96_5.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_96_5.png, /posts/Extending-Fastai-For-Custom-Task/output_96_5.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_96_5.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_96_5.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_96_6.png title=/posts/Extending-Fastai-For-Custom-Task/output_96_6.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_96_6.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_96_6.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_96_6.png, /posts/Extending-Fastai-For-Custom-Task/output_96_6.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_96_6.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_96_6.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_96_7.png title=/posts/Extending-Fastai-For-Custom-Task/output_96_7.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_96_7.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_96_7.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_96_7.png, /posts/Extending-Fastai-For-Custom-Task/output_96_7.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_96_7.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_96_7.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_96_8.png title=/posts/Extending-Fastai-For-Custom-Task/output_96_8.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_96_8.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_96_8.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_96_8.png, /posts/Extending-Fastai-For-Custom-Task/output_96_8.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_96_8.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_96_8.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_96_9.png title=/posts/Extending-Fastai-For-Custom-Task/output_96_9.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_96_9.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_96_9.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_96_9.png, /posts/Extending-Fastai-For-Custom-Task/output_96_9.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_96_9.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_96_9.png height=100 width=400>
+</a>
+<p>Here we go. Now we have a custom block and we can create a DataBlock as well as dataloaders and then display it.</p>
+<h2 id=make-your-own-model>Make your own model🍕</h2>
+<p>We are going to use the timm library as the source of our model. To weave it into fastai, we will create a custom fastai model.</p>
+<p>All the code below is heavily inspired by&ndash;></p>
+<ul>
+<li><a href=https://www.kaggle.com/benihime91 target=_blank rel="noopener noreffer">Ayushman&rsquo;s</a> <a href=https://www.kaggle.com/benihime91/fastai-timm-efficientnet-train-fold-0 target=_blank rel="noopener noreffer">notebook</a>.</li>
+<li>fastai siamese <a href=https://docs.fast.ai/tutorial.siamese.html target=_blank rel="noopener noreffer">tutorial</a>.</li>
+</ul>
+<p>We will also take into account the structure of fastai&rsquo;s <code>create_cnn_model</code> class. The code for which is as follows</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>create_cnn_model</span><span class=err>??</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Let&rsquo;s build our own.</p>
+<p>We will cut off the head of a timm pretrained model using <code>create_body</code> and take the encoder only as this would be the portion of the pretrained model which I would like to use. Then I will top it off with a custom fastai head using <code>create_head</code> that we would need to train on our target data.</p>
+<p>To know more about this flow have a look into the fastai siamese <a href=https://docs.fast.ai/tutorial.siamese.html target=_blank rel="noopener noreffer">tutorial</a>.</p>
+<p>But first we will create our custom <code>create_body</code> and <code>create_head</code> functions. the reason for this is that fastai in it&rsquo;s current state is not integrated with the timm library. So, creating custom versions of <code>create_body</code> and <code>create_head</code> makes the weaving of timm into fastai re-usable.</p>
+<p>The insipration for this is the <a href=https://walkwithfastai.com/vision.external.timm#create_timm_body target=_blank rel="noopener noreffer">post</a> in &lsquo;walk with fastai&rsquo;. Once again the code and the approach is based on this post.</p>
+<blockquote>
+<p>I am recreating this again here instead of using the &lsquo;walk with fastai&rsquo; library is to drill down into the concept and for my personal learning.</p>
+</blockquote>
+<h3 id=create_timm_bodyarch-n_in3-pretrainedtrue-cutnone>create_timm_body(arch, n_in=3, pretrained=True, cut=None)</h3>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=c1>#export</span>
+<span class=k>def</span> <span class=nf>create_timm_body</span><span class=p>(</span><span class=n>arch</span><span class=p>,</span> <span class=n>n_in</span><span class=o>=</span><span class=mi>3</span><span class=p>,</span> <span class=n>pretrained</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span> <span class=n>cut</span><span class=o>=</span><span class=kc>None</span><span class=p>):</span>
+    <span class=s2>&#34;Cut off the body of a typically pretrained timm library `arch` as determined by `cut`&#34;</span>
+    <span class=n>model</span> <span class=o>=</span> <span class=n>create_model</span><span class=p>(</span><span class=n>arch</span><span class=p>,</span> <span class=n>pretrained</span><span class=o>=</span><span class=n>pretrained</span><span class=p>,</span> <span class=n>num_classes</span><span class=o>=</span><span class=mi>0</span><span class=p>,</span> <span class=n>in_chans</span><span class=o>=</span><span class=mi>1</span><span class=p>,</span><span class=n>global_pool</span><span class=o>=</span><span class=s1>&#39;&#39;</span><span class=p>)</span>
+    <span class=n>_update_first_layer</span><span class=p>(</span><span class=n>model</span><span class=p>,</span> <span class=n>n_in</span><span class=p>,</span> <span class=n>pretrained</span><span class=p>)</span>
+    <span class=c1>#cut = ifnone(cut, cnn_config(arch)[&#39;cut&#39;])</span>
+    <span class=k>if</span> <span class=n>cut</span> <span class=ow>is</span> <span class=kc>None</span><span class=p>:</span>
+        <span class=n>ll</span> <span class=o>=</span> <span class=nb>list</span><span class=p>(</span><span class=nb>enumerate</span><span class=p>(</span><span class=n>model</span><span class=o>.</span><span class=n>children</span><span class=p>()))</span>
+        <span class=n>cut</span> <span class=o>=</span> <span class=nb>next</span><span class=p>(</span><span class=n>i</span> <span class=k>for</span> <span class=n>i</span><span class=p>,</span><span class=n>o</span> <span class=ow>in</span> <span class=nb>reversed</span><span class=p>(</span><span class=n>ll</span><span class=p>)</span> <span class=k>if</span> <span class=n>has_pool_type</span><span class=p>(</span><span class=n>o</span><span class=p>))</span>
+    <span class=k>if</span>   <span class=nb>isinstance</span><span class=p>(</span><span class=n>cut</span><span class=p>,</span> <span class=nb>int</span><span class=p>):</span>      <span class=k>return</span> <span class=n>nn</span><span class=o>.</span><span class=n>Sequential</span><span class=p>(</span><span class=o>*</span><span class=nb>list</span><span class=p>(</span><span class=n>model</span><span class=o>.</span><span class=n>children</span><span class=p>())[:</span><span class=n>cut</span><span class=p>])</span>
+    <span class=k>elif</span> <span class=n>callable</span><span class=p>(</span><span class=n>cut</span><span class=p>):</span> <span class=k>return</span> <span class=n>cut</span><span class=p>(</span><span class=n>model</span><span class=p>)</span>
+    <span class=k>else</span><span class=p>:</span>  <span class=k>raise</span> <span class=n>NamedError</span><span class=p>(</span><span class=s2>&#34;cut must be either integer or a function&#34;</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Now that we have a way to create a body, we will use the code from <code>create_cnn_model</code> to build our custom <code>create_timm_model</code>.</p>
+<p>The code for <code>create_cnn_model</code> from fastai source code is as follows&ndash;></p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=nd>@delegates</span><span class=p>(</span><span class=n>create_head</span><span class=p>)</span>
+<span class=k>def</span> <span class=nf>create_cnn_model</span><span class=p>(</span><span class=n>arch</span><span class=p>,</span> <span class=n>n_out</span><span class=p>,</span> <span class=n>pretrained</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span> <span class=n>cut</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=n>n_in</span><span class=o>=</span><span class=mi>3</span><span class=p>,</span> <span class=n>init</span><span class=o>=</span><span class=n>nn</span><span class=o>.</span><span class=n>init</span><span class=o>.</span><span class=n>kaiming_normal_</span><span class=p>,</span> <span class=n>custom_head</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span>
+                     <span class=n>concat_pool</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>):</span>
+    <span class=s2>&#34;Create custom convnet architecture&#34;</span>
+    <span class=n>meta</span> <span class=o>=</span> <span class=n>model_meta</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=n>arch</span><span class=p>,</span> <span class=n>_default_meta</span><span class=p>)</span>
+    <span class=n>body</span> <span class=o>=</span> <span class=n>create_body</span><span class=p>(</span><span class=n>arch</span><span class=p>,</span> <span class=n>n_in</span><span class=p>,</span> <span class=n>pretrained</span><span class=p>,</span> <span class=n>ifnone</span><span class=p>(</span><span class=n>cut</span><span class=p>,</span> <span class=n>meta</span><span class=p>[</span><span class=s1>&#39;cut&#39;</span><span class=p>]))</span>
+    <span class=k>if</span> <span class=n>custom_head</span> <span class=ow>is</span> <span class=kc>None</span><span class=p>:</span>
+        <span class=n>nf</span> <span class=o>=</span> <span class=n>num_features_model</span><span class=p>(</span><span class=n>nn</span><span class=o>.</span><span class=n>Sequential</span><span class=p>(</span><span class=o>*</span><span class=n>body</span><span class=o>.</span><span class=n>children</span><span class=p>()))</span>
+        <span class=n>head</span> <span class=o>=</span> <span class=n>create_head</span><span class=p>(</span><span class=n>nf</span><span class=p>,</span> <span class=n>n_out</span><span class=p>,</span> <span class=n>concat_pool</span><span class=o>=</span><span class=n>concat_pool</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>)</span>
+    <span class=k>else</span><span class=p>:</span> <span class=n>head</span> <span class=o>=</span> <span class=n>custom_head</span>
+    <span class=n>model</span> <span class=o>=</span> <span class=n>nn</span><span class=o>.</span><span class=n>Sequential</span><span class=p>(</span><span class=n>body</span><span class=p>,</span> <span class=n>head</span><span class=p>)</span>
+    <span class=k>if</span> <span class=n>init</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span> <span class=n>apply_init</span><span class=p>(</span><span class=n>model</span><span class=p>[</span><span class=mi>1</span><span class=p>],</span> <span class=n>init</span><span class=p>)</span>
+    <span class=k>return</span> <span class=n>model</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>The code for <code>create_timm_model</code> is as follows.</p>
+<h3 id=create_timm_model>create_timm_model</h3>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=c1>#export</span>
+<span class=nd>@delegates</span><span class=p>(</span><span class=n>create_head</span><span class=p>)</span>
+<span class=k>def</span> <span class=nf>create_timm_model</span><span class=p>(</span><span class=n>arch</span><span class=p>,</span> <span class=n>n_out</span><span class=p>,</span> <span class=n>pretrained</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span> <span class=n>cut</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=n>n_in</span><span class=o>=</span><span class=mi>3</span><span class=p>,</span> <span class=n>init</span><span class=o>=</span><span class=n>nn</span><span class=o>.</span><span class=n>init</span><span class=o>.</span><span class=n>kaiming_normal_</span><span class=p>,</span> <span class=n>custom_head</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span>
+                     <span class=n>concat_pool</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span> <span class=n>in_chans</span><span class=o>=</span><span class=mi>1</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>):</span>
+    <span class=s2>&#34;Create custom architecture from the timm library&#34;</span>
+    <span class=n>body</span> <span class=o>=</span> <span class=n>create_timm_body</span><span class=p>(</span><span class=n>arch</span><span class=p>,</span> <span class=n>n_in</span><span class=p>,</span> <span class=n>pretrained</span><span class=p>,</span> <span class=kc>None</span><span class=p>)</span>
+    <span class=k>if</span> <span class=n>custom_head</span> <span class=ow>is</span> <span class=kc>None</span><span class=p>:</span>
+        <span class=n>nf</span> <span class=o>=</span> <span class=n>num_features_model</span><span class=p>(</span><span class=n>nn</span><span class=o>.</span><span class=n>Sequential</span><span class=p>(</span><span class=o>*</span><span class=n>body</span><span class=o>.</span><span class=n>children</span><span class=p>()))</span>
+        <span class=n>head</span> <span class=o>=</span> <span class=n>create_head</span><span class=p>(</span><span class=n>nf</span><span class=p>,</span> <span class=n>n_out</span><span class=p>,</span> <span class=n>concat_pool</span><span class=o>=</span><span class=n>concat_pool</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>)</span>
+    <span class=k>else</span><span class=p>:</span> <span class=n>head</span> <span class=o>=</span> <span class=n>custom_head</span>
+    <span class=n>model</span> <span class=o>=</span> <span class=n>nn</span><span class=o>.</span><span class=n>Sequential</span><span class=p>(</span><span class=n>body</span><span class=p>,</span> <span class=n>head</span><span class=p>)</span>
+    <span class=k>if</span> <span class=n>init</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span> <span class=n>apply_init</span><span class=p>(</span><span class=n>model</span><span class=p>[</span><span class=mi>1</span><span class=p>],</span> <span class=n>init</span><span class=p>)</span>
+    <span class=k>return</span> <span class=n>model</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>The <code>@delegate</code> macro tells fastai to show the parameters of any <code>**kwargs</code> (which we would be using in the <code>create_body</code>) during function <a href=https://fastcore.fast.ai/meta.html#delegates target=_blank rel="noopener noreffer">introspection</a>.</p>
+<p>Let&rsquo;s do a quick test to check if our custom model works.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=c1># num of classes</span>
+<span class=n>n_out</span> <span class=o>=</span> <span class=mi>2</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>model</span> <span class=o>=</span> <span class=n>create_timm_model</span><span class=p>(</span><span class=s2>&#34;efficientnet_b3a&#34;</span><span class=p>,</span> <span class=n>n_out</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>Downloading: &quot;https://github.com/rwightman/pytorch-image-models/releases/
+download/v0.1-weights/efficientnet_b3_ra2-cf984f9c.pth&quot; to /root/.cache/
+torch/hub/checkpoints/efficientnet_b3_ra2-cf984f9c.pth
+</code></pre>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>L</span><span class=p>(</span><span class=n>model</span><span class=o>.</span><span class=n>children</span><span class=p>())</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span><span class=lnt>147
+</span><span class=lnt>148
+</span><span class=lnt>149
+</span><span class=lnt>150
+</span><span class=lnt>151
+</span><span class=lnt>152
+</span><span class=lnt>153
+</span><span class=lnt>154
+</span><span class=lnt>155
+</span><span class=lnt>156
+</span><span class=lnt>157
+</span><span class=lnt>158
+</span><span class=lnt>159
+</span><span class=lnt>160
+</span><span class=lnt>161
+</span><span class=lnt>162
+</span><span class=lnt>163
+</span><span class=lnt>164
+</span><span class=lnt>165
+</span><span class=lnt>166
+</span><span class=lnt>167
+</span><span class=lnt>168
+</span><span class=lnt>169
+</span><span class=lnt>170
+</span><span class=lnt>171
+</span><span class=lnt>172
+</span><span class=lnt>173
+</span><span class=lnt>174
+</span><span class=lnt>175
+</span><span class=lnt>176
+</span><span class=lnt>177
+</span><span class=lnt>178
+</span><span class=lnt>179
+</span><span class=lnt>180
+</span><span class=lnt>181
+</span><span class=lnt>182
+</span><span class=lnt>183
+</span><span class=lnt>184
+</span><span class=lnt>185
+</span><span class=lnt>186
+</span><span class=lnt>187
+</span><span class=lnt>188
+</span><span class=lnt>189
+</span><span class=lnt>190
+</span><span class=lnt>191
+</span><span class=lnt>192
+</span><span class=lnt>193
+</span><span class=lnt>194
+</span><span class=lnt>195
+</span><span class=lnt>196
+</span><span class=lnt>197
+</span><span class=lnt>198
+</span><span class=lnt>199
+</span><span class=lnt>200
+</span><span class=lnt>201
+</span><span class=lnt>202
+</span><span class=lnt>203
+</span><span class=lnt>204
+</span><span class=lnt>205
+</span><span class=lnt>206
+</span><span class=lnt>207
+</span><span class=lnt>208
+</span><span class=lnt>209
+</span><span class=lnt>210
+</span><span class=lnt>211
+</span><span class=lnt>212
+</span><span class=lnt>213
+</span><span class=lnt>214
+</span><span class=lnt>215
+</span><span class=lnt>216
+</span><span class=lnt>217
+</span><span class=lnt>218
+</span><span class=lnt>219
+</span><span class=lnt>220
+</span><span class=lnt>221
+</span><span class=lnt>222
+</span><span class=lnt>223
+</span><span class=lnt>224
+</span><span class=lnt>225
+</span><span class=lnt>226
+</span><span class=lnt>227
+</span><span class=lnt>228
+</span><span class=lnt>229
+</span><span class=lnt>230
+</span><span class=lnt>231
+</span><span class=lnt>232
+</span><span class=lnt>233
+</span><span class=lnt>234
+</span><span class=lnt>235
+</span><span class=lnt>236
+</span><span class=lnt>237
+</span><span class=lnt>238
+</span><span class=lnt>239
+</span><span class=lnt>240
+</span><span class=lnt>241
+</span><span class=lnt>242
+</span><span class=lnt>243
+</span><span class=lnt>244
+</span><span class=lnt>245
+</span><span class=lnt>246
+</span><span class=lnt>247
+</span><span class=lnt>248
+</span><span class=lnt>249
+</span><span class=lnt>250
+</span><span class=lnt>251
+</span><span class=lnt>252
+</span><span class=lnt>253
+</span><span class=lnt>254
+</span><span class=lnt>255
+</span><span class=lnt>256
+</span><span class=lnt>257
+</span><span class=lnt>258
+</span><span class=lnt>259
+</span><span class=lnt>260
+</span><span class=lnt>261
+</span><span class=lnt>262
+</span><span class=lnt>263
+</span><span class=lnt>264
+</span><span class=lnt>265
+</span><span class=lnt>266
+</span><span class=lnt>267
+</span><span class=lnt>268
+</span><span class=lnt>269
+</span><span class=lnt>270
+</span><span class=lnt>271
+</span><span class=lnt>272
+</span><span class=lnt>273
+</span><span class=lnt>274
+</span><span class=lnt>275
+</span><span class=lnt>276
+</span><span class=lnt>277
+</span><span class=lnt>278
+</span><span class=lnt>279
+</span><span class=lnt>280
+</span><span class=lnt>281
+</span><span class=lnt>282
+</span><span class=lnt>283
+</span><span class=lnt>284
+</span><span class=lnt>285
+</span><span class=lnt>286
+</span><span class=lnt>287
+</span><span class=lnt>288
+</span><span class=lnt>289
+</span><span class=lnt>290
+</span><span class=lnt>291
+</span><span class=lnt>292
+</span><span class=lnt>293
+</span><span class=lnt>294
+</span><span class=lnt>295
+</span><span class=lnt>296
+</span><span class=lnt>297
+</span><span class=lnt>298
+</span><span class=lnt>299
+</span><span class=lnt>300
+</span><span class=lnt>301
+</span><span class=lnt>302
+</span><span class=lnt>303
+</span><span class=lnt>304
+</span><span class=lnt>305
+</span><span class=lnt>306
+</span><span class=lnt>307
+</span><span class=lnt>308
+</span><span class=lnt>309
+</span><span class=lnt>310
+</span><span class=lnt>311
+</span><span class=lnt>312
+</span><span class=lnt>313
+</span><span class=lnt>314
+</span><span class=lnt>315
+</span><span class=lnt>316
+</span><span class=lnt>317
+</span><span class=lnt>318
+</span><span class=lnt>319
+</span><span class=lnt>320
+</span><span class=lnt>321
+</span><span class=lnt>322
+</span><span class=lnt>323
+</span><span class=lnt>324
+</span><span class=lnt>325
+</span><span class=lnt>326
+</span><span class=lnt>327
+</span><span class=lnt>328
+</span><span class=lnt>329
+</span><span class=lnt>330
+</span><span class=lnt>331
+</span><span class=lnt>332
+</span><span class=lnt>333
+</span><span class=lnt>334
+</span><span class=lnt>335
+</span><span class=lnt>336
+</span><span class=lnt>337
+</span><span class=lnt>338
+</span><span class=lnt>339
+</span><span class=lnt>340
+</span><span class=lnt>341
+</span><span class=lnt>342
+</span><span class=lnt>343
+</span><span class=lnt>344
+</span><span class=lnt>345
+</span><span class=lnt>346
+</span><span class=lnt>347
+</span><span class=lnt>348
+</span><span class=lnt>349
+</span><span class=lnt>350
+</span><span class=lnt>351
+</span><span class=lnt>352
+</span><span class=lnt>353
+</span><span class=lnt>354
+</span><span class=lnt>355
+</span><span class=lnt>356
+</span><span class=lnt>357
+</span><span class=lnt>358
+</span><span class=lnt>359
+</span><span class=lnt>360
+</span><span class=lnt>361
+</span><span class=lnt>362
+</span><span class=lnt>363
+</span><span class=lnt>364
+</span><span class=lnt>365
+</span><span class=lnt>366
+</span><span class=lnt>367
+</span><span class=lnt>368
+</span><span class=lnt>369
+</span><span class=lnt>370
+</span><span class=lnt>371
+</span><span class=lnt>372
+</span><span class=lnt>373
+</span><span class=lnt>374
+</span><span class=lnt>375
+</span><span class=lnt>376
+</span><span class=lnt>377
+</span><span class=lnt>378
+</span><span class=lnt>379
+</span><span class=lnt>380
+</span><span class=lnt>381
+</span><span class=lnt>382
+</span><span class=lnt>383
+</span><span class=lnt>384
+</span><span class=lnt>385
+</span><span class=lnt>386
+</span><span class=lnt>387
+</span><span class=lnt>388
+</span><span class=lnt>389
+</span><span class=lnt>390
+</span><span class=lnt>391
+</span><span class=lnt>392
+</span><span class=lnt>393
+</span><span class=lnt>394
+</span><span class=lnt>395
+</span><span class=lnt>396
+</span><span class=lnt>397
+</span><span class=lnt>398
+</span><span class=lnt>399
+</span><span class=lnt>400
+</span><span class=lnt>401
+</span><span class=lnt>402
+</span><span class=lnt>403
+</span><span class=lnt>404
+</span><span class=lnt>405
+</span><span class=lnt>406
+</span><span class=lnt>407
+</span><span class=lnt>408
+</span><span class=lnt>409
+</span><span class=lnt>410
+</span><span class=lnt>411
+</span><span class=lnt>412
+</span><span class=lnt>413
+</span><span class=lnt>414
+</span><span class=lnt>415
+</span><span class=lnt>416
+</span><span class=lnt>417
+</span><span class=lnt>418
+</span><span class=lnt>419
+</span><span class=lnt>420
+</span><span class=lnt>421
+</span><span class=lnt>422
+</span><span class=lnt>423
+</span><span class=lnt>424
+</span><span class=lnt>425
+</span><span class=lnt>426
+</span><span class=lnt>427
+</span><span class=lnt>428
+</span><span class=lnt>429
+</span><span class=lnt>430
+</span><span class=lnt>431
+</span><span class=lnt>432
+</span><span class=lnt>433
+</span><span class=lnt>434
+</span><span class=lnt>435
+</span><span class=lnt>436
+</span><span class=lnt>437
+</span><span class=lnt>438
+</span><span class=lnt>439
+</span><span class=lnt>440
+</span><span class=lnt>441
+</span><span class=lnt>442
+</span><span class=lnt>443
+</span><span class=lnt>444
+</span><span class=lnt>445
+</span><span class=lnt>446
+</span><span class=lnt>447
+</span><span class=lnt>448
+</span><span class=lnt>449
+</span><span class=lnt>450
+</span><span class=lnt>451
+</span><span class=lnt>452
+</span><span class=lnt>453
+</span><span class=lnt>454
+</span><span class=lnt>455
+</span><span class=lnt>456
+</span><span class=lnt>457
+</span><span class=lnt>458
+</span><span class=lnt>459
+</span><span class=lnt>460
+</span><span class=lnt>461
+</span><span class=lnt>462
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>    (#2) [Sequential(
+      (0): Conv2d(1, 40, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), 
+      bias=False)
+      (1): BatchNorm2d(40, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): SiLU(inplace=True)
+      (3): Sequential(
+        (0): Sequential(
+          (0): DepthwiseSeparableConv(
+            (conv_dw): Conv2d(40, 40, kernel_size=(3, 3), stride=(1, 1), 
+            padding=(1, 1), groups=40, bias=False)
+            (bn1): BatchNorm2d(40, eps=1e-05, momentum=0.1, affine=True, 
+            track_running_stats=True)
+
+            (act1): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(40, 10, kernel_size=(1, 1), stride=(1, 1))
+
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(10, 40, kernel_size=(1, 1), stride=(1, 1))
+
+              (gate): Sigmoid()
+            )
+            (conv_pw): Conv2d(40, 24, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn2): BatchNorm2d(24, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act2): Identity()
+          )
+          (1): DepthwiseSeparableConv(
+            (conv_dw): Conv2d(24, 24, kernel_size=(3, 3), stride=(1, 1), 
+            padding=(1, 1), groups=24, bias=False)
+            (bn1): BatchNorm2d(24, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+
+            (act1): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(24, 6, kernel_size=(1, 1), stride=(1, 1))
+
+
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(6, 24, kernel_size=(1, 1), stride=(1, 1))
+
+              (gate): Sigmoid()
+            )
+            (conv_pw): Conv2d(24, 24, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn2): BatchNorm2d(24, eps=1e-05, momentum=0.1, affine=True, 
+            track_running_stats=True)
+
+            (act2): Identity()
+          )
+        )
+        (1): Sequential(
+          (0): InvertedResidual(
+            (conv_pw): Conv2d(24, 144, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn1): BatchNorm2d(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act1): SiLU(inplace=True)
+            (conv_dw): Conv2d(144, 144, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), groups=144, bias=False)
+            (bn2): BatchNorm2d(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act2): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(144, 6, kernel_size=(1, 1), stride=(1, 1))
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(6, 144, kernel_size=(1, 1), stride=(1, 1))
+              (gate): Sigmoid()
+            )
+            (conv_pwl): Conv2d(144, 32, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn3): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (1): InvertedResidual(
+            (conv_pw): Conv2d(32, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act1): SiLU(inplace=True)
+            (conv_dw): Conv2d(192, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=192, bias=False)
+            (bn2): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act2): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(192, 8, kernel_size=(1, 1), stride=(1, 1))
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(8, 192, kernel_size=(1, 1), stride=(1, 1))
+              (gate): Sigmoid()
+            )
+            (conv_pwl): Conv2d(192, 32, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn3): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (2): InvertedResidual(
+            (conv_pw): Conv2d(32, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act1): SiLU(inplace=True)
+            (conv_dw): Conv2d(192, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=192, bias=False)
+            (bn2): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act2): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(192, 8, kernel_size=(1, 1), stride=(1, 1))
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(8, 192, kernel_size=(1, 1), stride=(1, 1))
+              (gate): Sigmoid()
+            )
+            (conv_pwl): Conv2d(192, 32, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn3): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (2): Sequential(
+          (0): InvertedResidual(
+            (conv_pw): Conv2d(32, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act1): SiLU(inplace=True)
+            (conv_dw): Conv2d(192, 192, kernel_size=(5, 5), stride=(2, 2), padding=(2, 2), groups=192, bias=False)
+            (bn2): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act2): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(192, 8, kernel_size=(1, 1), stride=(1, 1))
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(8, 192, kernel_size=(1, 1), stride=(1, 1))
+              (gate): Sigmoid()
+            )
+            (conv_pwl): Conv2d(192, 48, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn3): BatchNorm2d(48, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (1): InvertedResidual(
+            (conv_pw): Conv2d(48, 288, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn1): BatchNorm2d(288, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act1): SiLU(inplace=True)
+            (conv_dw): Conv2d(288, 288, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=288, bias=False)
+            (bn2): BatchNorm2d(288, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act2): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(288, 12, kernel_size=(1, 1), stride=(1, 1))
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(12, 288, kernel_size=(1, 1), stride=(1, 1))
+              (gate): Sigmoid()
+            )
+            (conv_pwl): Conv2d(288, 48, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn3): BatchNorm2d(48, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (2): InvertedResidual(
+            (conv_pw): Conv2d(48, 288, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn1): BatchNorm2d(288, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act1): SiLU(inplace=True)
+            (conv_dw): Conv2d(288, 288, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=288, bias=False)
+            (bn2): BatchNorm2d(288, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act2): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(288, 12, kernel_size=(1, 1), stride=(1, 1))
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(12, 288, kernel_size=(1, 1), stride=(1, 1))
+              (gate): Sigmoid()
+            )
+            (conv_pwl): Conv2d(288, 48, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn3): BatchNorm2d(48, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (3): Sequential(
+          (0): InvertedResidual(
+            (conv_pw): Conv2d(48, 288, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn1): BatchNorm2d(288, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act1): SiLU(inplace=True)
+            (conv_dw): Conv2d(288, 288, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), groups=288, bias=False)
+            (bn2): BatchNorm2d(288, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act2): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(288, 12, kernel_size=(1, 1), stride=(1, 1))
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(12, 288, kernel_size=(1, 1), stride=(1, 1))
+              (gate): Sigmoid()
+            )
+            (conv_pwl): Conv2d(288, 96, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn3): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (1): InvertedResidual(
+            (conv_pw): Conv2d(96, 576, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn1): BatchNorm2d(576, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act1): SiLU(inplace=True)
+            (conv_dw): Conv2d(576, 576, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=576, bias=False)
+            (bn2): BatchNorm2d(576, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act2): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(576, 24, kernel_size=(1, 1), stride=(1, 1))
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(24, 576, kernel_size=(1, 1), stride=(1, 1))
+              (gate): Sigmoid()
+            )
+            (conv_pwl): Conv2d(576, 96, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn3): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (2): InvertedResidual(
+            (conv_pw): Conv2d(96, 576, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn1): BatchNorm2d(576, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act1): SiLU(inplace=True)
+            (conv_dw): Conv2d(576, 576, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=576, bias=False)
+            (bn2): BatchNorm2d(576, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act2): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(576, 24, kernel_size=(1, 1), stride=(1, 1))
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(24, 576, kernel_size=(1, 1), stride=(1, 1))
+              (gate): Sigmoid()
+            )
+            (conv_pwl): Conv2d(576, 96, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn3): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (3): InvertedResidual(
+            (conv_pw): Conv2d(96, 576, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn1): BatchNorm2d(576, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act1): SiLU(inplace=True)
+            (conv_dw): Conv2d(576, 576, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=576, bias=False)
+            (bn2): BatchNorm2d(576, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act2): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(576, 24, kernel_size=(1, 1), stride=(1, 1))
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(24, 576, kernel_size=(1, 1), stride=(1, 1))
+              (gate): Sigmoid()
+            )
+            (conv_pwl): Conv2d(576, 96, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn3): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (4): InvertedResidual(
+            (conv_pw): Conv2d(96, 576, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn1): BatchNorm2d(576, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act1): SiLU(inplace=True)
+            (conv_dw): Conv2d(576, 576, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=576, bias=False)
+            (bn2): BatchNorm2d(576, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act2): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(576, 24, kernel_size=(1, 1), stride=(1, 1))
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(24, 576, kernel_size=(1, 1), stride=(1, 1))
+              (gate): Sigmoid()
+            )
+            (conv_pwl): Conv2d(576, 96, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn3): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (4): Sequential(
+          (0): InvertedResidual(
+            (conv_pw): Conv2d(96, 576, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn1): BatchNorm2d(576, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act1): SiLU(inplace=True)
+            (conv_dw): Conv2d(576, 576, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=576, bias=False)
+            (bn2): BatchNorm2d(576, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act2): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(576, 24, kernel_size=(1, 1), stride=(1, 1))
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(24, 576, kernel_size=(1, 1), stride=(1, 1))
+              (gate): Sigmoid()
+            )
+            (conv_pwl): Conv2d(576, 136, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn3): BatchNorm2d(136, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (1): InvertedResidual(
+            (conv_pw): Conv2d(136, 816, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn1): BatchNorm2d(816, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act1): SiLU(inplace=True)
+            (conv_dw): Conv2d(816, 816, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=816, bias=False)
+            (bn2): BatchNorm2d(816, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act2): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(816, 34, kernel_size=(1, 1), stride=(1, 1))
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(34, 816, kernel_size=(1, 1), stride=(1, 1))
+              (gate): Sigmoid()
+            )
+            (conv_pwl): Conv2d(816, 136, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn3): BatchNorm2d(136, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (2): InvertedResidual(
+            (conv_pw): Conv2d(136, 816, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn1): BatchNorm2d(816, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act1): SiLU(inplace=True)
+            (conv_dw): Conv2d(816, 816, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=816, bias=False)
+            (bn2): BatchNorm2d(816, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act2): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(816, 34, kernel_size=(1, 1), stride=(1, 1))
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(34, 816, kernel_size=(1, 1), stride=(1, 1))
+              (gate): Sigmoid()
+            )
+            (conv_pwl): Conv2d(816, 136, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn3): BatchNorm2d(136, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (3): InvertedResidual(
+            (conv_pw): Conv2d(136, 816, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn1): BatchNorm2d(816, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act1): SiLU(inplace=True)
+            (conv_dw): Conv2d(816, 816, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=816, bias=False)
+            (bn2): BatchNorm2d(816, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act2): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(816, 34, kernel_size=(1, 1), stride=(1, 1))
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(34, 816, kernel_size=(1, 1), stride=(1, 1))
+              (gate): Sigmoid()
+            )
+            (conv_pwl): Conv2d(816, 136, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn3): BatchNorm2d(136, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (4): InvertedResidual(
+            (conv_pw): Conv2d(136, 816, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn1): BatchNorm2d(816, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act1): SiLU(inplace=True)
+            (conv_dw): Conv2d(816, 816, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=816, bias=False)
+            (bn2): BatchNorm2d(816, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act2): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(816, 34, kernel_size=(1, 1), stride=(1, 1))
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(34, 816, kernel_size=(1, 1), stride=(1, 1))
+              (gate): Sigmoid()
+            )
+            (conv_pwl): Conv2d(816, 136, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn3): BatchNorm2d(136, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (5): Sequential(
+          (0): InvertedResidual(
+            (conv_pw): Conv2d(136, 816, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn1): BatchNorm2d(816, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act1): SiLU(inplace=True)
+            (conv_dw): Conv2d(816, 816, kernel_size=(5, 5), stride=(2, 2), padding=(2, 2), groups=816, bias=False)
+            (bn2): BatchNorm2d(816, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act2): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(816, 34, kernel_size=(1, 1), stride=(1, 1))
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(34, 816, kernel_size=(1, 1), stride=(1, 1))
+              (gate): Sigmoid()
+            )
+            (conv_pwl): Conv2d(816, 232, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn3): BatchNorm2d(232, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (1): InvertedResidual(
+            (conv_pw): Conv2d(232, 1392, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn1): BatchNorm2d(1392, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act1): SiLU(inplace=True)
+            (conv_dw): Conv2d(1392, 1392, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=1392, bias=False)
+            (bn2): BatchNorm2d(1392, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act2): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(1392, 58, kernel_size=(1, 1), stride=(1, 1))
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(58, 1392, kernel_size=(1, 1), stride=(1, 1))
+              (gate): Sigmoid()
+            )
+            (conv_pwl): Conv2d(1392, 232, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn3): BatchNorm2d(232, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (2): InvertedResidual(
+            (conv_pw): Conv2d(232, 1392, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn1): BatchNorm2d(1392, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act1): SiLU(inplace=True)
+            (conv_dw): Conv2d(1392, 1392, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=1392, bias=False)
+            (bn2): BatchNorm2d(1392, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act2): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(1392, 58, kernel_size=(1, 1), stride=(1, 1))
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(58, 1392, kernel_size=(1, 1), stride=(1, 1))
+              (gate): Sigmoid()
+            )
+            (conv_pwl): Conv2d(1392, 232, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn3): BatchNorm2d(232, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (3): InvertedResidual(
+            (conv_pw): Conv2d(232, 1392, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn1): BatchNorm2d(1392, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act1): SiLU(inplace=True)
+            (conv_dw): Conv2d(1392, 1392, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=1392, bias=False)
+            (bn2): BatchNorm2d(1392, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act2): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(1392, 58, kernel_size=(1, 1), stride=(1, 1))
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(58, 1392, kernel_size=(1, 1), stride=(1, 1))
+              (gate): Sigmoid()
+            )
+            (conv_pwl): Conv2d(1392, 232, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn3): BatchNorm2d(232, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (4): InvertedResidual(
+            (conv_pw): Conv2d(232, 1392, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn1): BatchNorm2d(1392, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act1): SiLU(inplace=True)
+            (conv_dw): Conv2d(1392, 1392, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=1392, bias=False)
+            (bn2): BatchNorm2d(1392, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act2): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(1392, 58, kernel_size=(1, 1), stride=(1, 1))
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(58, 1392, kernel_size=(1, 1), stride=(1, 1))
+              (gate): Sigmoid()
+            )
+            (conv_pwl): Conv2d(1392, 232, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn3): BatchNorm2d(232, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (5): InvertedResidual(
+            (conv_pw): Conv2d(232, 1392, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn1): BatchNorm2d(1392, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act1): SiLU(inplace=True)
+            (conv_dw): Conv2d(1392, 1392, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=1392, bias=False)
+            (bn2): BatchNorm2d(1392, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act2): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(1392, 58, kernel_size=(1, 1), stride=(1, 1))
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(58, 1392, kernel_size=(1, 1), stride=(1, 1))
+              (gate): Sigmoid()
+            )
+            (conv_pwl): Conv2d(1392, 232, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn3): BatchNorm2d(232, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (6): Sequential(
+          (0): InvertedResidual(
+            (conv_pw): Conv2d(232, 1392, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn1): BatchNorm2d(1392, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act1): SiLU(inplace=True)
+            (conv_dw): Conv2d(1392, 1392, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=1392, bias=False)
+            (bn2): BatchNorm2d(1392, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act2): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(1392, 58, kernel_size=(1, 1), stride=(1, 1))
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(58, 1392, kernel_size=(1, 1), stride=(1, 1))
+              (gate): Sigmoid()
+            )
+            (conv_pwl): Conv2d(1392, 384, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn3): BatchNorm2d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (1): InvertedResidual(
+            (conv_pw): Conv2d(384, 2304, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn1): BatchNorm2d(2304, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act1): SiLU(inplace=True)
+            (conv_dw): Conv2d(2304, 2304, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=2304, bias=False)
+            (bn2): BatchNorm2d(2304, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (act2): SiLU(inplace=True)
+            (se): SqueezeExcite(
+              (conv_reduce): Conv2d(2304, 96, kernel_size=(1, 1), stride=(1, 1))
+              (act1): SiLU(inplace=True)
+              (conv_expand): Conv2d(96, 2304, kernel_size=(1, 1), stride=(1, 1))
+              (gate): Sigmoid()
+            )
+            (conv_pwl): Conv2d(2304, 384, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (bn3): BatchNorm2d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+      )
+      (4): Conv2d(384, 1536, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (5): BatchNorm2d(1536, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (6): SiLU(inplace=True)
+    ),Sequential(
+      (0): AdaptiveConcatPool2d(
+        (ap): AdaptiveAvgPool2d(output_size=1)
+        (mp): AdaptiveMaxPool2d(output_size=1)
+      )
+      (1): Flatten(full=False)
+      (2): BatchNorm1d(3072, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (3): Dropout(p=0.25, inplace=False)
+      (4): Linear(in_features=3072, out_features=512, bias=False)
+      (5): ReLU(inplace=True)
+      (6): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (7): Dropout(p=0.5, inplace=False)
+      (8): Linear(in_features=512, out_features=2, bias=False)
+    )]
+</code></pre></td></tr></table>
+</div>
+</div><p>cool! so it works.</p>
+<p>Now, we will build a learner which would enable us to do transfer learning with timm models. Once again we will port <code>cnn_learner</code> for our use and like before let&rsquo;s quickly take a look into the <code>cnn_learner</code> code</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=nd>@delegates</span><span class=p>(</span><span class=n>create_cnn_model</span><span class=p>)</span>
+<span class=k>def</span> <span class=nf>cnn_learner</span><span class=p>(</span><span class=n>dls</span><span class=p>,</span> <span class=n>arch</span><span class=p>,</span> <span class=n>normalize</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span> <span class=n>n_out</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=n>pretrained</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span> <span class=n>config</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span>
+                <span class=c1># learner args</span>
+                <span class=n>loss_func</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=n>opt_func</span><span class=o>=</span><span class=n>Adam</span><span class=p>,</span> <span class=n>lr</span><span class=o>=</span><span class=n>defaults</span><span class=o>.</span><span class=n>lr</span><span class=p>,</span> <span class=n>splitter</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=n>cbs</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=n>metrics</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=n>path</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span>
+                <span class=n>model_dir</span><span class=o>=</span><span class=s1>&#39;models&#39;</span><span class=p>,</span> <span class=n>wd</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=n>wd_bn_bias</span><span class=o>=</span><span class=kc>False</span><span class=p>,</span> <span class=n>train_bn</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span> <span class=n>moms</span><span class=o>=</span><span class=p>(</span><span class=mf>0.95</span><span class=p>,</span><span class=mf>0.85</span><span class=p>,</span><span class=mf>0.95</span><span class=p>),</span>
+                <span class=c1># other model args</span>
+                <span class=o>**</span><span class=n>kwargs</span><span class=p>):</span>
+    <span class=s2>&#34;Build a convnet style learner from `dls` and `arch`&#34;</span>
+
+    <span class=k>if</span> <span class=n>config</span><span class=p>:</span>
+        <span class=n>warnings</span><span class=o>.</span><span class=n>warn</span><span class=p>(</span><span class=s1>&#39;config param is deprecated. Pass your args directly to cnn_learner.&#39;</span><span class=p>)</span>
+        <span class=n>kwargs</span> <span class=o>=</span> <span class=p>{</span><span class=o>**</span><span class=n>config</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>}</span>
+
+    <span class=n>meta</span> <span class=o>=</span> <span class=n>model_meta</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=n>arch</span><span class=p>,</span> <span class=n>_default_meta</span><span class=p>)</span>
+    <span class=k>if</span> <span class=n>normalize</span><span class=p>:</span> <span class=n>_add_norm</span><span class=p>(</span><span class=n>dls</span><span class=p>,</span> <span class=n>meta</span><span class=p>,</span> <span class=n>pretrained</span><span class=p>)</span>
+
+    <span class=k>if</span> <span class=n>n_out</span> <span class=ow>is</span> <span class=kc>None</span><span class=p>:</span> <span class=n>n_out</span> <span class=o>=</span> <span class=n>get_c</span><span class=p>(</span><span class=n>dls</span><span class=p>)</span>
+    <span class=k>assert</span> <span class=n>n_out</span><span class=p>,</span> <span class=s2>&#34;`n_out` is not defined, and could not be inferred from data, set `dls.c` or pass `n_out`&#34;</span>
+    <span class=n>model</span> <span class=o>=</span> <span class=n>create_cnn_model</span><span class=p>(</span><span class=n>arch</span><span class=p>,</span> <span class=n>n_out</span><span class=p>,</span> <span class=n>pretrained</span><span class=o>=</span><span class=n>pretrained</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>)</span>
+
+    <span class=n>splitter</span><span class=o>=</span><span class=n>ifnone</span><span class=p>(</span><span class=n>splitter</span><span class=p>,</span> <span class=n>meta</span><span class=p>[</span><span class=s1>&#39;split&#39;</span><span class=p>])</span>
+    <span class=n>learn</span> <span class=o>=</span> <span class=n>Learner</span><span class=p>(</span><span class=n>dls</span><span class=o>=</span><span class=n>dls</span><span class=p>,</span> <span class=n>model</span><span class=o>=</span><span class=n>model</span><span class=p>,</span> <span class=n>loss_func</span><span class=o>=</span><span class=n>loss_func</span><span class=p>,</span> <span class=n>opt_func</span><span class=o>=</span><span class=n>opt_func</span><span class=p>,</span> <span class=n>lr</span><span class=o>=</span><span class=n>lr</span><span class=p>,</span> <span class=n>splitter</span><span class=o>=</span><span class=n>splitter</span><span class=p>,</span> <span class=n>cbs</span><span class=o>=</span><span class=n>cbs</span><span class=p>,</span>
+                   <span class=n>metrics</span><span class=o>=</span><span class=n>metrics</span><span class=p>,</span> <span class=n>path</span><span class=o>=</span><span class=n>path</span><span class=p>,</span> <span class=n>model_dir</span><span class=o>=</span><span class=n>model_dir</span><span class=p>,</span> <span class=n>wd</span><span class=o>=</span><span class=n>wd</span><span class=p>,</span> <span class=n>wd_bn_bias</span><span class=o>=</span><span class=n>wd_bn_bias</span><span class=p>,</span> <span class=n>train_bn</span><span class=o>=</span><span class=n>train_bn</span><span class=p>,</span>
+                   <span class=n>moms</span><span class=o>=</span><span class=n>moms</span><span class=p>)</span>
+    <span class=k>if</span> <span class=n>pretrained</span><span class=p>:</span> <span class=n>learn</span><span class=o>.</span><span class=n>freeze</span><span class=p>()</span>
+    <span class=c1># keep track of args for loggers</span>
+    <span class=n>store_attr</span><span class=p>(</span><span class=s1>&#39;arch,normalize,n_out,pretrained&#39;</span><span class=p>,</span> <span class=bp>self</span><span class=o>=</span><span class=n>learn</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>)</span>
+    <span class=k>return</span> <span class=n>learn</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=timm_learner>timm_learner</h3>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=c1>#export</span>
+<span class=nd>@delegates</span><span class=p>(</span><span class=n>create_timm_model</span><span class=p>)</span>
+<span class=k>def</span> <span class=nf>timm_learner</span><span class=p>(</span><span class=n>dls</span><span class=p>,</span> <span class=n>arch</span><span class=p>,</span> <span class=n>n_out</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=n>pretrained</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span>
+                <span class=c1># learner args</span>
+                <span class=n>loss_func</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=n>opt_func</span><span class=o>=</span><span class=n>Adam</span><span class=p>,</span> <span class=n>lr</span><span class=o>=</span><span class=n>defaults</span><span class=o>.</span><span class=n>lr</span><span class=p>,</span> <span class=n>splitter</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=n>cbs</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=n>metrics</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=n>path</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span>
+                <span class=n>model_dir</span><span class=o>=</span><span class=s1>&#39;models&#39;</span><span class=p>,</span> <span class=n>wd</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=n>wd_bn_bias</span><span class=o>=</span><span class=kc>False</span><span class=p>,</span> <span class=n>train_bn</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span> <span class=n>moms</span><span class=o>=</span><span class=p>(</span><span class=mf>0.95</span><span class=p>,</span><span class=mf>0.85</span><span class=p>,</span><span class=mf>0.95</span><span class=p>),</span>
+                <span class=c1># other model args</span>
+                <span class=o>**</span><span class=n>kwargs</span><span class=p>):</span>
+    <span class=s2>&#34;Build a convnet style learner from `dls` and `timm arch`&#34;</span>
+
+    <span class=n>kwargs</span> <span class=o>=</span> <span class=p>{</span><span class=o>**</span><span class=n>kwargs</span><span class=p>}</span>
+    <span class=k>if</span> <span class=n>n_out</span> <span class=ow>is</span> <span class=kc>None</span><span class=p>:</span> <span class=n>n_out</span> <span class=o>=</span> <span class=n>get_c</span><span class=p>(</span><span class=n>dls</span><span class=p>)</span>
+    <span class=k>assert</span> <span class=n>n_out</span><span class=p>,</span> <span class=s2>&#34;`n_out` is not defined, and could not be inferred from data, set `dls.c` or pass `n_out`&#34;</span>
+    <span class=n>model</span> <span class=o>=</span> <span class=n>create_timm_model</span><span class=p>(</span><span class=n>arch</span><span class=p>,</span> <span class=n>n_out</span><span class=p>,</span> <span class=n>default_split</span><span class=p>,</span> <span class=n>pretrained</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>)</span>
+
+    <span class=n>learn</span> <span class=o>=</span> <span class=n>Learner</span><span class=p>(</span><span class=n>dls</span><span class=o>=</span><span class=n>dls</span><span class=p>,</span> <span class=n>model</span><span class=o>=</span><span class=n>model</span><span class=p>,</span> <span class=n>loss_func</span><span class=o>=</span><span class=n>loss_func</span><span class=p>,</span> <span class=n>opt_func</span><span class=o>=</span><span class=n>opt_func</span><span class=p>,</span> <span class=n>lr</span><span class=o>=</span><span class=n>lr</span><span class=p>,</span> <span class=n>splitter</span><span class=o>=</span><span class=n>default_split</span><span class=p>,</span> <span class=n>cbs</span><span class=o>=</span><span class=n>cbs</span><span class=p>,</span>
+                   <span class=n>metrics</span><span class=o>=</span><span class=n>metrics</span><span class=p>,</span> <span class=n>path</span><span class=o>=</span><span class=n>path</span><span class=p>,</span> <span class=n>model_dir</span><span class=o>=</span><span class=n>model_dir</span><span class=p>,</span> <span class=n>wd</span><span class=o>=</span><span class=n>wd</span><span class=p>,</span> <span class=n>wd_bn_bias</span><span class=o>=</span><span class=n>wd_bn_bias</span><span class=p>,</span> <span class=n>train_bn</span><span class=o>=</span><span class=n>train_bn</span><span class=p>,</span>
+                   <span class=n>moms</span><span class=o>=</span><span class=n>moms</span><span class=p>)</span>
+    <span class=k>if</span> <span class=n>pretrained</span><span class=p>:</span> <span class=n>learn</span><span class=o>.</span><span class=n>freeze</span><span class=p>()</span>
+    <span class=c1># keep track of args for loggers</span>
+    <span class=n>store_attr</span><span class=p>(</span><span class=s1>&#39;arch,n_out,pretrained&#39;</span><span class=p>,</span> <span class=bp>self</span><span class=o>=</span><span class=n>learn</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>)</span>
+    <span class=k>return</span> <span class=n>learn</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Here we go. We have managed to get a port of the learner code which looks the part. Does it work?</p>
+<p>Let us find out.</p>
+<div class="details admonition tip open">
+<div class="details-summary admonition-title">
+<i class="icon fas fa-lightbulb fa-fw"></i>Tip<i class="details-icon fas fa-angle-right fa-fw"></i>
+</div>
+<div class=details-content>
+<div class=admonition-content>ATo find the list of models available in the timm library use <code>list_models</code></div>
+</div>
+</div>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>list_models</span><span class=p>(</span><span class=s2>&#34;efficient*&#34;</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>['efficientnet_b0',
+ 'efficientnet_b1',
+ 'efficientnet_b1_pruned',
+ 'efficientnet_b2',
+ 'efficientnet_b2_pruned',
+ 'efficientnet_b2a',
+ 'efficientnet_b3',
+ 'efficientnet_b3_pruned',
+ 'efficientnet_b3a',
+ 'efficientnet_b4',
+ 'efficientnet_b5',
+ 'efficientnet_b6',
+ 'efficientnet_b7',
+ 'efficientnet_b8',
+ 'efficientnet_cc_b0_4e',
+ 'efficientnet_cc_b0_8e',
+ 'efficientnet_cc_b1_8e',
+ 'efficientnet_el',
+ 'efficientnet_el_pruned',
+ 'efficientnet_em',
+ 'efficientnet_es',
+ 'efficientnet_es_pruned',
+ 'efficientnet_l2',
+ 'efficientnet_lite0',
+ 'efficientnet_lite1',
+ 'efficientnet_lite2',
+ 'efficientnet_lite3',
+ 'efficientnet_lite4',
+ 'efficientnetv2_l',
+ 'efficientnetv2_m',
+ 'efficientnetv2_rw_m',
+ 'efficientnetv2_rw_s',
+ 'efficientnetv2_s']
+</code></pre>
+<h2 id=the-learner>The learner👩‍🏫</h2>
+<p>Now that we have the model in place, we can go ahead and create the learner the usual way. We have kept the batch size to default.</p>
+<p>There is one little thing that I would like to do before creating a learner. I will create a helper function which can help me to get the suggested learning rate quickly.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=c1>#export</span>
+<span class=k>def</span> <span class=nf>show_me_lrs</span><span class=p>(</span><span class=n>learn</span><span class=p>,</span> <span class=n>num_it</span><span class=p>:</span><span class=nb>int</span><span class=o>=</span> <span class=mi>10</span><span class=p>):</span>
+    <span class=n>Suggested_lrs</span> <span class=o>=</span> <span class=n>namedtuple</span><span class=p>(</span><span class=s1>&#39;Suggested_lrs&#39;</span><span class=p>,</span> <span class=p>[</span><span class=s2>&#34;min&#34;</span><span class=p>,</span> <span class=s2>&#34;steep&#34;</span><span class=p>,</span>
+                                            <span class=s2>&#34;valley&#34;</span><span class=p>,</span> <span class=s2>&#34;slide&#34;</span><span class=p>])</span>
+    <span class=n>lrs</span> <span class=o>=</span> <span class=n>learn</span><span class=o>.</span><span class=n>lr_find</span><span class=p>(</span><span class=n>suggest_funcs</span><span class=o>=</span><span class=p>(</span><span class=n>minimum</span><span class=p>,</span> <span class=n>steep</span><span class=p>,</span><span class=n>valley</span><span class=p>,</span> <span class=n>slide</span><span class=p>))</span>
+    <span class=n>suggested_lrs</span> <span class=o>=</span> <span class=n>Suggested_lrs</span><span class=p>(</span><span class=n>lrs</span><span class=p>[</span><span class=mi>0</span><span class=p>],</span> <span class=n>lrs</span><span class=p>[</span><span class=mi>1</span><span class=p>],</span> <span class=n>lrs</span><span class=p>[</span><span class=mi>2</span><span class=p>],</span> <span class=n>lrs</span><span class=p>[</span><span class=mi>3</span><span class=p>])</span>
+    
+    <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;Minimum/10:</span><span class=se>\t</span><span class=si>{</span><span class=n>lrs</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span><span class=si>:</span><span class=s2>.2e</span><span class=si>}</span><span class=se>\
+</span><span class=se></span><span class=s2>          </span><span class=se>\n</span><span class=s2>Steepest point:</span><span class=se>\t</span><span class=si>{</span><span class=n>lrs</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span><span class=si>:</span><span class=s2>.2e</span><span class=si>}</span><span class=se>\
+</span><span class=se></span><span class=s2>          </span><span class=se>\n</span><span class=s2>Longest valley:</span><span class=se>\t</span><span class=si>{</span><span class=n>lrs</span><span class=p>[</span><span class=mi>2</span><span class=p>]</span><span class=si>:</span><span class=s2>.2e</span><span class=si>}</span><span class=se>\
+</span><span class=se></span><span class=s2>          </span><span class=se>\n</span><span class=s2>Slide interval:</span><span class=se>\t</span><span class=si>{</span><span class=n>lrs</span><span class=p>[</span><span class=mi>3</span><span class=p>]</span><span class=si>:</span><span class=s2>.2e</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+    
+    <span class=k>return</span> <span class=n>suggested_lrs</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>learn</span> <span class=o>=</span> <span class=n>timm_learner</span><span class=p>(</span><span class=n>dls</span><span class=p>,</span> <span class=s1>&#39;efficientnet_b7&#39;</span><span class=p>,</span> <span class=n>loss_func</span><span class=o>=</span><span class=n>CrossEntropyLossFlat</span><span class=p>(),</span> <span class=n>metrics</span><span class=o>=</span><span class=p>[</span><span class=n>RocAucBinary</span><span class=p>(</span><span class=n>axis</span><span class=o>=</span><span class=mi>0</span><span class=p>)],</span> <span class=n>n_out</span><span class=o>=</span><span class=mi>2</span><span class=p>)</span><span class=o>.</span><span class=n>to_fp16</span><span class=p>()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Fit one epoch to see how it behaves</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>learn</span><span class=o>.</span><span class=n>fit_one_cycle</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span> <span class=mf>3e-3</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><table border=1 class=dataframe>
+<thead>
+<tr style=text-align:left>
+<th>epoch</th>
+<th>train_loss</th>
+<th>valid_loss</th>
+<th>roc_auc_score</th>
+<th>time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>1.216163</td>
+<td>0.700841</td>
+<td>0.482039</td>
+<td>00:37</td>
+</tr>
+</tbody>
+</table>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=c1>#to recover gpu ram</span>
+<span class=n>learn</span><span class=o>.</span><span class=n>save</span><span class=p>(</span><span class=s1>&#39;epoch1&#39;</span><span class=p>)</span>
+<span class=n>learn</span><span class=o>.</span><span class=n>load</span><span class=p>(</span><span class=s1>&#39;epoch1&#39;</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>&lt;fastai.learner.Learner at 0x7fdc87c14890&gt;
+</code></pre>
+<p>Using the learning rate finder to get the learning rate</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=kn>import</span> <span class=nn>gc</span><span class=p>;</span> <span class=n>gc</span><span class=o>.</span><span class=n>collect</span><span class=p>()</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>66411
+</code></pre>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>suggested_lrs</span> <span class=o>=</span> <span class=n>show_me_lrs</span><span class=p>(</span><span class=n>learn</span><span class=p>)</span>
+<span class=c1>#learn.lr_find(suggest_funcs=(minimum, steep,valley, slide))</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>Minimum/10:	1.00e-06          
+Steepest point:	1.10e-06          
+Longest valley:	6.92e-06          
+Slide interval:	4.37e-03
+</code></pre>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_127_3.png title=/posts/Extending-Fastai-For-Custom-Task/output_127_3.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_127_3.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_127_3.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_127_3.png, /posts/Extending-Fastai-For-Custom-Task/output_127_3.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_127_3.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_127_3.png height=400 width=400>
+</a>
+<p>I will use the slide algorithm here to get the optimal learning rate.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>learn</span><span class=o>.</span><span class=n>unfreeze</span><span class=p>()</span>
+<span class=n>learn</span><span class=o>.</span><span class=n>fit_one_cycle</span><span class=p>(</span><span class=mi>3</span><span class=p>,</span> <span class=n>suggested_lrs</span><span class=o>.</span><span class=n>slide</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><table border=1 class=dataframe>
+<thead>
+<tr style=text-align:left>
+<th>epoch</th>
+<th>train_loss</th>
+<th>valid_loss</th>
+<th>roc_auc_score</th>
+<th>time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>1.114650</td>
+<td>1.825437</td>
+<td>0.465078</td>
+<td>00:36</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1.011949</td>
+<td>0.750606</td>
+<td>0.491870</td>
+<td>00:37</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.917761</td>
+<td>0.708508</td>
+<td>0.516685</td>
+<td>00:37</td>
+</tr>
+</tbody>
+</table>
+<p>Ok! The performance is not that great but the goal of this exercise was not to have a SOTA model but rather to learn how to create a custom code base by using Fastai internals.</p>
+<p>However, with proper data augmentation and more data the performance can be much better.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>learn</span><span class=o>.</span><span class=n>export</span><span class=p>(</span><span class=s2>&#34;./final&#34;</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=inference>Inference🧐</h2>
+<p>For inference you will need to use the previous dataloader to create a test dataloader by passing the test files to it.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=o>%%</span><span class=n>time</span>
+<span class=n>test_path</span> <span class=o>=</span> <span class=n>path</span><span class=o>/</span><span class=s1>&#39;g2net-gravitational-wave-detection/test&#39;</span>
+<span class=n>test_files</span> <span class=o>=</span> <span class=n>getfiles</span><span class=p>(</span><span class=n>test_path</span><span class=p>,</span> <span class=s2>&#34;npy&#34;</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>CPU times: user 2.65 s, sys: 1.22 s, total: 3.86 s
+Wall time: 1min 5s
+</code></pre>
+<h2 id=inference-1>Inference</h2>
+<p>For inference we first load the learner</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>learn</span> <span class=o>=</span> <span class=n>load_learner</span><span class=p>(</span><span class=s1>&#39;./final&#39;</span><span class=p>,</span> <span class=n>cpu</span><span class=o>=</span><span class=kc>False</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Create a test dataloader. This will take in the test files and apply the transforms that we had created during trainign timebut on the inference data and give you a dataloader.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>test_dls</span> <span class=o>=</span> <span class=n>learn</span><span class=o>.</span><span class=n>dls</span><span class=o>.</span><span class=n>test_dl</span><span class=p>(</span><span class=n>test_files</span><span class=p>[:</span><span class=mi>100</span><span class=p>])</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>check the batch</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>test_dls</span><span class=o>.</span><span class=n>show_batch</span><span class=p>()</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_140_1.png title=/posts/Extending-Fastai-For-Custom-Task/output_140_1.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_140_1.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_140_1.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_140_1.png, /posts/Extending-Fastai-For-Custom-Task/output_140_1.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_140_1.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_140_1.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_140_2.png title=/posts/Extending-Fastai-For-Custom-Task/output_140_2.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_140_2.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_140_2.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_140_2.png, /posts/Extending-Fastai-For-Custom-Task/output_140_2.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_140_2.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_140_2.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_140_3.png title=/posts/Extending-Fastai-For-Custom-Task/output_140_3.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_140_3.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_140_3.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_140_3.png, /posts/Extending-Fastai-For-Custom-Task/output_140_3.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_140_3.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_140_3.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_140_4.png title=/posts/Extending-Fastai-For-Custom-Task/output_140_4.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_140_4.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_140_4.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_140_4.png, /posts/Extending-Fastai-For-Custom-Task/output_140_4.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_140_4.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_140_4.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_140_5.png title=/posts/Extending-Fastai-For-Custom-Task/output_140_5.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_140_5.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_140_5.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_140_5.png, /posts/Extending-Fastai-For-Custom-Task/output_140_5.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_140_5.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_140_5.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_140_6.png title=/posts/Extending-Fastai-For-Custom-Task/output_140_6.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_140_6.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_140_6.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_140_6.png, /posts/Extending-Fastai-For-Custom-Task/output_140_6.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_140_6.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_140_6.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_140_7.png title=/posts/Extending-Fastai-For-Custom-Task/output_140_7.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_140_7.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_140_7.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_140_7.png, /posts/Extending-Fastai-For-Custom-Task/output_140_7.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_140_7.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_140_7.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_140_8.png title=/posts/Extending-Fastai-For-Custom-Task/output_140_8.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_140_8.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_140_8.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_140_8.png, /posts/Extending-Fastai-For-Custom-Task/output_140_8.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_140_8.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_140_8.png height=100 width=400>
+</a>
+<a class=lightgallery href=/posts/Extending-Fastai-For-Custom-Task/output_140_9.png title=/posts/Extending-Fastai-For-Custom-Task/output_140_9.png data-thumbnail=/posts/Extending-Fastai-For-Custom-Task/output_140_9.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/Extending-Fastai-For-Custom-Task/output_140_9.png data-srcset="/posts/Extending-Fastai-For-Custom-Task/output_140_9.png, /posts/Extending-Fastai-For-Custom-Task/output_140_9.png 1.5x, /posts/Extending-Fastai-For-Custom-Task/output_140_9.png 2x" data-sizes=auto alt=/posts/Extending-Fastai-For-Custom-Task/output_140_9.png height=100 width=400>
+</a>
+<p>Use <code>get_preds</code> to get predictions in batches.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>preds</span> <span class=o>=</span> <span class=n>learn</span><span class=o>.</span><span class=n>get_preds</span><span class=p>(</span><span class=n>dl</span><span class=o>=</span><span class=n>test_dls</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Have a look at your predictions.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>preds</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>(tensor([[0.5247, 0.4753],
+         [0.5247, 0.4753],
+         [0.5248, 0.4752],
+         [0.5247, 0.4753],
+         [0.5252, 0.4748],
+         [0.5249, 0.4751],
+         [0.4635, 0.5365],
+         [0.5260, 0.4740],
+         [0.5246, 0.4754],
+         [0.5247, 0.4753],
+         [0.4650, 0.5350],
+         [0.5247, 0.4753],
+         [0.5270, 0.4730],
+         [0.5247, 0.4753],
+         [0.5247, 0.4753],
+         [0.4974, 0.5026],
+         [0.5246, 0.4754],
+         [0.5246, 0.4754],
+         [0.5247, 0.4753],
+         [0.4956, 0.5044],
+         [0.4867, 0.5133],
+         [0.4694, 0.5306],
+         [0.5264, 0.4736],
+         [0.5246, 0.4754],
+         [0.5247, 0.4753],
+         [0.5247, 0.4753],
+         [0.4893, 0.5107],
+         [0.4874, 0.5126],
+         [0.4887, 0.5113],
+         [0.5246, 0.4754],
+         [0.5247, 0.4753],
+         [0.5246, 0.4754],
+         [0.5248, 0.4752],
+         [0.5247, 0.4753],
+         [0.4840, 0.5160],
+         [0.5248, 0.4752],
+         [0.5247, 0.4753],
+         [0.4933, 0.5067],
+         [0.5247, 0.4753],
+         [0.5247, 0.4753],
+         [0.4694, 0.5306],
+         [0.4978, 0.5022],
+         [0.4897, 0.5103],
+         [0.5247, 0.4753],
+         [0.4885, 0.5115],
+         [0.4894, 0.5106],
+         [0.5246, 0.4754],
+         [0.5247, 0.4753],
+         [0.4868, 0.5132],
+         [0.5247, 0.4753],
+         [0.4903, 0.5097],
+         [0.5247, 0.4753],
+         [0.5247, 0.4753],
+         [0.4875, 0.5125],
+         [0.5250, 0.4750],
+         [0.4724, 0.5276],
+         [0.4901, 0.5099],
+         [0.5250, 0.4750],
+         [0.5247, 0.4753],
+         [0.4883, 0.5117],
+         [0.4836, 0.5164],
+         [0.4875, 0.5125],
+         [0.5246, 0.4754],
+         [0.4853, 0.5147],
+         [0.4876, 0.5124],
+         [0.5247, 0.4753],
+         [0.4884, 0.5116],
+         [0.4890, 0.5110],
+         [0.5247, 0.4753],
+         [0.4846, 0.5154],
+         [0.5247, 0.4753],
+         [0.5246, 0.4754],
+         [0.5247, 0.4753],
+         [0.4892, 0.5108],
+         [0.4853, 0.5147],
+         [0.4899, 0.5101],
+         [0.4841, 0.5159],
+         [0.5247, 0.4753],
+         [0.4905, 0.5095],
+         [0.4673, 0.5327],
+         [0.5246, 0.4754],
+         [0.5677, 0.4323],
+         [0.4856, 0.5144],
+         [0.5247, 0.4753],
+         [0.4878, 0.5122],
+         [0.5247, 0.4753],
+         [0.5259, 0.4741],
+         [0.4909, 0.5091],
+         [0.5004, 0.4996],
+         [0.4859, 0.5141],
+         [0.5247, 0.4753],
+         [0.5247, 0.4753],
+         [0.5247, 0.4753],
+         [0.5246, 0.4754],
+         [0.5246, 0.4754],
+         [0.5171, 0.4829],
+         [0.5247, 0.4753],
+         [0.5275, 0.4725],
+         [0.4877, 0.5123],
+         [0.4890, 0.5110]]),
+ None)
+</code></pre>
+<h2 id=conclusion>Conclusion</h2>
+<p>I prepared this post as part of my experimentation for the <a href=https://www.kaggle.com/c/g2net-gravitational-wave-detection target=_blank rel="noopener noreffer">g2net-gravitational-wave-detection</a> competition. My goal for preparing this notebook was to design an end-to-end flow to learn about extending fastai for a custom new task and how to extend the library to work well with other libraries.</p>
+<p>It took quite a long time to get my head around the low-level and mid level API in fastai.</p>
+<p>Part of the reason being that I couldn&rsquo;t spend much time on this competition and the other part was that there are very few resources available at this moment which provide good detail about creating custom bits using fastai&rsquo;s mid-level and low-level APIs.</p>
+<p>I would like to say that the effort that it took to complete this post was worth it and I came to know how powerful the modular structure of fastai is.</p>
+<p>I would like to create an extension library using the code that I have developed for this post but at this moment I can&rsquo;t say how soon I would be able to do it and when but stay tuned as I would keep posting my progress on this.</p></div><div class=post-footer id=post-footer>
+<div class=post-info>
+<div class=post-info-line>
+<div class=post-info-mod>
+<span>Updated on 2021-10-12</span>
+</div>
+<div class=post-info-license></div>
+</div>
+<div class=post-info-line>
+<div class=post-info-md><span>
+<a class=link-to-markdown href=/extending-fastai-for-custom-task/index.md target=_blank>Read Markdown</a>
+</span></div>
+<div class=post-info-share>
+<span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=http://satyabratapal.com/extending-fastai-for-custom-task/ data-title="Extending Fastai For Custom Task" data-via=thecodingprojec data-hashtags="Deep Learning,Fastai"><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=http://satyabratapal.com/extending-fastai-for-custom-task/ data-hashtag="Deep Learning"><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="Share on WhatsApp" data-sharer=whatsapp data-url=http://satyabratapal.com/extending-fastai-for-custom-task/ data-title="Extending Fastai For Custom Task" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href=javascript:void(0); title="Share on Line" data-sharer=line data-url=http://satyabratapal.com/extending-fastai-for-custom-task/ data-title="Extending Fastai For Custom Task"><i data-svg-src=/lib/simple-icons/icons/line.min.svg></i></a><a href=javascript:void(0); title="Share on 微博" data-sharer=weibo data-url=http://satyabratapal.com/extending-fastai-for-custom-task/ data-title="Extending Fastai For Custom Task"><i class="fab fa-weibo fa-fw"></i></a><a href=javascript:void(0); title="Share on Myspace" data-sharer=myspace data-url=http://satyabratapal.com/extending-fastai-for-custom-task/ data-title="Extending Fastai For Custom Task" data-description="How to extend Fastai for a custom task."><i data-svg-src=/lib/simple-icons/icons/myspace.min.svg></i></a><a href=javascript:void(0); title="Share on Blogger" data-sharer=blogger data-url=http://satyabratapal.com/extending-fastai-for-custom-task/ data-title="Extending Fastai For Custom Task" data-description="How to extend Fastai for a custom task."><i class="fab fa-blogger fa-fw"></i></a><a href=javascript:void(0); title="Share on Evernote" data-sharer=evernote data-url=http://satyabratapal.com/extending-fastai-for-custom-task/ data-title="Extending Fastai For Custom Task"><i class="fab fa-evernote fa-fw"></i></a></span>
+</div>
+</div>
+</div>
+<div class=post-info-more>
+<section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/deep-learning/>Deep Learning</a>,&nbsp;<a href=/tags/fastai/>Fastai</a></section>
+<section>
+<span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span>
+</section>
+</div>
+<div class=post-nav></div>
+</div>
+<div id=comments></div></article></div>
+</main><footer class=footer>
+<div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.88.1">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+</div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2019 - 2021</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Satyabrata pal</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div>
+</div>
+</footer></div>
+<div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top">
+<i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments">
+<i class="fas fa-comment fa-fw"></i>
+</a>
+</div><link rel=stylesheet href=/lib/lightgallery/lightgallery.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/lightgallery/lightgallery.min.js></script><script type=text/javascript src=/lib/lightgallery/lg-thumbnail.min.js></script><script type=text/javascript src=/lib/lightgallery/lg-zoom.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/typeit/typeit.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:10},comment:{},cookieconsent:{content:{dismiss:"Got it!",link:"Learn more",message:"This website uses Cookies to improve your experience."},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},data:{"id-1":"Satyabrata pal","id-2":"Satyabrata pal"},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",maxResultLength:10,noResultsFound:"No results found",snippetLength:30,type:"lunr"},typeit:{cursorChar:"|",cursorSpeed:1e3,data:{"id-1":["id-1"],"id-2":["id-2"]},duration:-1,speed:100}}</script><script type=text/javascript src=/js/theme.min.js></script></body>
+</html>
