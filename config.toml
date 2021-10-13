@@ -1,4 +1,4 @@
-baseURL = "sapal6.github.io/website-blog"
+#baseURL = "./public"
 # [en, zh-cn, fr, ...] determines default content language
 defaultContentLanguage = "en"
 # language code
@@ -8,7 +8,7 @@ title = "Satyabrata pal"
 # Change the default theme to be use when building the site with Hugo
 theme = "LoveIt"
 # themes directory
-themesDir = "./themes"
+# themesDir = "./themes"
 
 [params]
   # LoveIt CHANGED | 0.2.0 LoveIt theme version
@@ -148,9 +148,6 @@ themesDir = "./themes"
       enable = true
       # special amount of posts in each home posts page
       paginate = 6
-      # LoveIt DELETED | 0.2.0 replaced with hiddenFromHomePage in params.page
-      # default behavior when you don't set "hiddenFromHomePage" in front matter
-      defaultHiddenFromHomePage = false
 	  
   # Social config about the author
   [params.social]
@@ -492,23 +489,7 @@ themesDir = "./themes"
     # title will be shown when you hover on this menu link
     title = ""
     weight = 1
-  [[menu.main]]
-    identifier = "tags"
-    pre = ""
-    post = ""
-    name = "Tags"
-    url = "/tags/"
-    title = ""
-    weight = 2
-  [[menu.main]]
-    identifier = "categories"
-    pre = ""
-    post = ""
-    name = "Categories"
-    url = "/categories/"
-    title = ""
-    weight = 3
-
+ 
 # Markup related configuration in Hugo
 #[markup]
 #  # Syntax Highlighting (https://gohugo.io/content-management/syntax-highlighting)
