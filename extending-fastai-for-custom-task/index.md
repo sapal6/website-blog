@@ -358,15 +358,15 @@ for i in range(5):
     plt.title(f"target: {target}")
     plt.show()
 ```
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_42_0.png" height="100" width="400" >}}
+{{< image src="output_42_0.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_42_1.png" height="100" width="400" >}}
+{{< image src="output_42_1.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_42_2.png" height="100" width="400" >}}
+{{< image src="output_42_2.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_42_3.png" height="100" width="400" >}}
+{{< image src="output_42_3.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_42_4.png" height="100" width="400" >}}
+{{< image src="output_42_4.png" height="100" width="400" >}}
 
     CPU times: user 5.37 s, sys: 391 ms, total: 5.77 s
     Wall time: 5.23 s
@@ -465,7 +465,7 @@ s.show()
 
 
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_53_1.png" height="100" width="400" >}}
+{{< image src="output_53_1.png" height="100" width="400" >}}
 
 You can create a Dataset in fastai by creating a custom Transform . Creating a `Transform` has come advantages as compared to a pytorch Dataset. For example, you don't need to have a `len` component or a `get_item` component.
 
@@ -607,7 +607,7 @@ show_at(tls.train, 1)
 
     <AxesSubplot:title={'center':'0'}>
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_72_1.png" height="100" width="400" >}}
+{{< image src="output_72_1.png" height="100" width="400" >}}
 
 
 ## Create the Dataloader🖨️
@@ -647,26 +647,26 @@ dls.show_batch()
     Wall time: 1.62 s
     
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_79_1.png" height="100" width="400" >}}
+{{< image src="output_79_1.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_79_2.png" height="100" width="400" >}}
+{{< image src="output_79_2.png" height="100" width="400" >}}
 
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_79_3.png" height="100" width="400" >}}
+{{< image src="output_79_3.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_79_4.png" height="100" width="400" >}}
+{{< image src="output_79_4.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_79_5.png" height="100" width="400" >}}
+{{< image src="output_79_5.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_79_6.png" height="100" width="400" >}}
+{{< image src="output_79_6.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_79_7.png" height="100" width="400" >}}
+{{< image src="output_79_7.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_79_8.png" height="100" width="400" >}}
+{{< image src="output_79_8.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_79_9.png" height="100" width="400" >}}
+{{< image src="output_79_9.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_79_2.png" height="100" width="400" >}}
+{{< image src="output_79_2.png" height="100" width="400" >}}
 
 
 ## Modularity 🧩
@@ -738,7 +738,7 @@ spectrogram.show()
 
 
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_86_1.png" height="100" width="400" >}}
+{{< image src="output_86_1.png" height="100" width="400" >}}
 
 
 Voila! it knows how to show itself.
@@ -795,23 +795,23 @@ dls.show_batch()
     Wall time: 1.7 s
     
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_96_1.png" height="100" width="400" >}}
+{{< image src="output_96_1.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_96_2.png" height="100" width="400" >}}
+{{< image src="output_96_2.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_96_3.png" height="100" width="400" >}}
+{{< image src="output_96_3.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_96_4.png" height="100" width="400" >}}
+{{< image src="output_96_4.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_96_5.png" height="100" width="400" >}}
+{{< image src="output_96_5.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_96_6.png" height="100" width="400" >}}
+{{< image src="output_96_6.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_96_7.png" height="100" width="400" >}}
+{{< image src="output_96_7.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_96_8.png" height="100" width="400" >}}
+{{< image src="output_96_8.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_96_9.png" height="100" width="400" >}}
+{{< image src="output_96_9.png" height="100" width="400" >}}
 
 
 
@@ -1613,7 +1613,7 @@ suggested_lrs = show_me_lrs(learn)
     Slide interval:	4.37e-03
     
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_127_3.png" height="400" width="400" >}}
+{{< image src="output_127_3.png" height="400" width="400" >}}
 
 
 I will use the slide algorithm here to get the optimal learning rate.
@@ -1710,23 +1710,23 @@ test_dls.show_batch()
 ```
 
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_140_1.png" height="100" width="400" >}}
+{{< image src="output_140_1.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_140_2.png" height="100" width="400" >}}
+{{< image src="output_140_2.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_140_3.png" height="100" width="400" >}}
+{{< image src="output_140_3.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_140_4.png" height="100" width="400" >}}
+{{< image src="output_140_4.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_140_5.png" height="100" width="400" >}}
+{{< image src="output_140_5.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_140_6.png" height="100" width="400" >}}
+{{< image src="output_140_6.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_140_7.png" height="100" width="400" >}}
+{{< image src="output_140_7.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_140_8.png" height="100" width="400" >}}
+{{< image src="output_140_8.png" height="100" width="400" >}}
 
-{{< image src="/posts/Extending-Fastai-For-Custom-Task/output_140_9.png" height="100" width="400" >}}
+{{< image src="output_140_9.png" height="100" width="400" >}}
 
 Use `get_preds` to get predictions in batches.
 
