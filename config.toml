@@ -1,4 +1,4 @@
-#baseURL = "./public"
+baseURL = "https://sapal6.github.io/"
 # [en, zh-cn, fr, ...] determines default content language
 defaultContentLanguage = "en"
 # language code
@@ -6,12 +6,12 @@ languageCode = "en"
 title = "Satyabrata pal"
 
 # Change the default theme to be use when building the site with Hugo
-theme = "LoveIt"
+theme = "DoIt"
 # themes directory
 # themesDir = "./themes"
 
 [params]
-  # LoveIt CHANGED | 0.2.0 LoveIt theme version
+  # DoIt CHANGED | 0.2.0 DoIt theme version
   version = "0.2.X"
   # site description
   description = "This is My New Hugo Site"
@@ -21,15 +21,15 @@ theme = "LoveIt"
   defaultTheme = "auto"
   # public git repo url only then enableGitInfo is true
   gitRepo = ""
-  # LoveIt NEW | 0.1.1 which hash function used for SRI, when empty, no SRI is used
+  # DoIt NEW | 0.1.1 which hash function used for SRI, when empty, no SRI is used
   # ("sha256", "sha384", "sha512", "md5")
   fingerprint = ""
-  # LoveIt NEW | 0.2.0 date format
+  # DoIt NEW | 0.2.0 date format
   dateFormat = "2006-01-02"
   # website images for Open Graph and Twitter Cards
   images = ["/logo.png"]
   
-  # LoveIt NEW | 0.2.0 App icon config
+  # DoIt NEW | 0.2.0 App icon config
   [params.app]
     # optional site title override for the app when added to an iOS home screen or Android launcher
     title = "Satyabrata pal"
@@ -44,7 +44,7 @@ theme = "LoveIt"
     # Windows v8-10 tile color
     tileColor = "#da532c"
 	
-  # LoveIt NEW | 0.2.0 Search config
+  # DoIt NEW | 0.2.0 Search config
   [params.search]
     enable = true
     # type of search engine ("lunr", "algolia")
@@ -53,13 +53,13 @@ theme = "LoveIt"
     contentLength = 4000
     # placeholder of the search bar
     placeholder = ""
-    # LoveIt NEW | 0.2.1 max number of results length
+    # DoIt NEW | 0.2.1 max number of results length
     maxResultLength = 10
-    # LoveIt NEW | 0.2.3 snippet length of the result
+    # DoIt NEW | 0.2.3 snippet length of the result
     snippetLength = 30
-    # LoveIt NEW | 0.2.1 HTML tag name of the highlight part in results
+    # DoIt NEW | 0.2.1 HTML tag name of the highlight part in results
     highlightTag = "em"
-    # LoveIt NEW | 0.2.4 whether to use the absolute URL based on the baseURL in search index
+    # DoIt NEW | 0.2.4 whether to use the absolute URL based on the baseURL in search index
     absoluteURL = false
     [params.search.algolia]
       index = ""
@@ -72,7 +72,7 @@ theme = "LoveIt"
     desktopMode = "fixed"
     # mobile header mode ("fixed", "normal", "auto")
     mobileMode = "auto"
-    # LoveIt NEW | 0.2.0 Header title config
+    # DoIt NEW | 0.2.0 Header title config
     [params.header.title]
       # URL of the LOGO
       logo = ""
@@ -82,19 +82,19 @@ theme = "LoveIt"
       pre = ""
       # you can add extra information after the name (HTML format is supported), such as icons
       post = ""
-      # LoveIt NEW | 0.2.5 whether to use typeit animation for title name
+      # DoIt NEW | 0.2.5 whether to use typeit animation for title name
       typeit = true
 	  
   # Footer config
   [params.footer]
     enable = true
-    # LoveIt NEW | 0.2.0 Custom content (HTML format is supported)
+    # DoIt NEW | 0.2.0 Custom content (HTML format is supported)
     custom = ''
-    # LoveIt NEW | 0.2.0 whether to show Hugo and theme info
+    # DoIt NEW | 0.2.0 whether to show Hugo and theme info
     hugo = true
-    # LoveIt NEW | 0.2.0 whether to show copyright info
+    # DoIt NEW | 0.2.0 whether to show copyright info
     copyright = true
-    # LoveIt NEW | 0.2.0 whether to show the author
+    # DoIt NEW | 0.2.0 whether to show the author
     author = true
     # Site creation time
     since = 2019
@@ -103,7 +103,7 @@ theme = "LoveIt"
     # license info (HTML format is supported)
     license = '<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>'
 	
-  # LoveIt NEW | 0.2.0 Section (all posts) page config
+  # DoIt NEW | 0.2.0 Section (all posts) page config
   [params.section]
     # special amount of posts in each section page
     paginate = 20
@@ -112,7 +112,7 @@ theme = "LoveIt"
     # amount of RSS pages
     rss = 10
 	
-  # LoveIt NEW | 0.2.0 List (category or tag) page config
+  # DoIt NEW | 0.2.0 List (category or tag) page config
   [params.list]
     # special amount of posts in each list page
     paginate = 20
@@ -123,7 +123,7 @@ theme = "LoveIt"
 	
   # Home page config
   [params.home]
-    # LoveIt NEW | 0.2.0 amount of RSS pages
+    # DoIt NEW | 0.2.0 amount of RSS pages
     rss = 10
     # Home page profile
     [params.home.profile]
@@ -132,7 +132,7 @@ theme = "LoveIt"
       gravatarEmail = ""
       # URL of avatar shown in home page
       avatarURL = "/images/avatar.jpg"
-      # LoveIt CHANGED | 0.2.7 title shown in home page (HTML format is supported)
+      # DoIt CHANGED | 0.2.7 title shown in home page (HTML format is supported)
       title = ""
       # subtitle shown in home page
       subtitle = "A Place to put my random ideas."
@@ -140,7 +140,7 @@ theme = "LoveIt"
       typeit = true
       # whether to show social links
       social = true
-      # LoveIt NEW | 0.2.0 disclaimer (HTML format is supported)
+      # DoIt NEW | 0.2.0 disclaimer (HTML format is supported)
       disclaimer = ""
 	  
     # Home page posts
@@ -155,37 +155,37 @@ theme = "LoveIt"
     Linkedin = "satyabratapal"
     Twitter = "thecodingprojec"
     Email = "satyabrata.pal1@gmail.com"
-    #RSS = true # LoveIt NEW | 0.2.0
+    #RSS = true # DoIt NEW | 0.2.0
 
-  # LoveIt CHANGED | 0.2.0 Page config
+  # DoIt CHANGED | 0.2.0 Page config
   [params.page]
-    # LoveIt NEW | 0.2.0 whether to hide a page from home page
+    # DoIt NEW | 0.2.0 whether to hide a page from home page
     hiddenFromHomePage = false
-    # LoveIt NEW | 0.2.0 whether to hide a page from search results
+    # DoIt NEW | 0.2.0 whether to hide a page from search results
     hiddenFromSearch = false
-    # LoveIt NEW | 0.2.0 whether to enable twemoji
+    # DoIt NEW | 0.2.0 whether to enable twemoji
     twemoji = false
     # whether to enable lightgallery
     lightgallery = false
-    # LoveIt NEW | 0.2.0 whether to enable the ruby extended syntax
+    # DoIt NEW | 0.2.0 whether to enable the ruby extended syntax
     ruby = true
-    # LoveIt NEW | 0.2.0 whether to enable the fraction extended syntax
+    # DoIt NEW | 0.2.0 whether to enable the fraction extended syntax
     fraction = true
-    # LoveIt NEW | 0.2.0 whether to enable the fontawesome extended syntax
+    # DoIt NEW | 0.2.0 whether to enable the fontawesome extended syntax
     fontawesome = true
     # whether to show link to Raw Markdown content of the content
     linkToMarkdown = true
-    # LoveIt NEW | 0.2.4 whether to show the full text content in RSS
+    # DoIt NEW | 0.2.4 whether to show the full text content in RSS
     rssFullText = false
-    # LoveIt NEW | 0.2.0 Table of the contents config
+    # DoIt NEW | 0.2.0 Table of the contents config
     [params.page.toc]
       # whether to enable the table of the contents
       enable = true
-      # LoveIt NEW | 0.2.9 whether to keep the static table of the contents in front of the post
+      # DoIt NEW | 0.2.9 whether to keep the static table of the contents in front of the post
       keepStatic = false
       # whether to make the table of the contents in the sidebar automatically collapsed
       auto = true
-    # LoveIt CHANGED | 0.2.0 KaTeX mathematical formulas
+    # DoIt CHANGED | 0.2.0 KaTeX mathematical formulas
     [params.page.math]
       enable = true
       # default block delimiter is $$ ... $$ and \\[ ... \\]
@@ -198,13 +198,13 @@ theme = "LoveIt"
       copyTex = true
       # KaTeX extension mhchem
       mhchem = true
-    # LoveIt NEW | 0.2.0 Code config
+    # DoIt NEW | 0.2.0 Code config
     [params.page.code]
       # whether to show the copy button of the code block
       copy = true
       # the maximum number of lines of displayed code by default
       maxShownLines = 10
-    # LoveIt NEW | 0.2.0 Mapbox GL JS config
+    # DoIt NEW | 0.2.0 Mapbox GL JS config
     [params.page.mapbox]
       # access token of Mapbox GL JS
       accessToken = ""
@@ -220,7 +220,7 @@ theme = "LoveIt"
       scale = true
       # whether to add FullscreenControl
       fullscreen = true
-    # LoveIt CHANGED | 0.2.0 social share links in post page
+    # DoIt CHANGED | 0.2.0 social share links in post page
     [params.page.share]
       enable = true
       Twitter = true
@@ -250,18 +250,18 @@ theme = "LoveIt"
       Skype = false
       Trello = false
       Mix = false
-    # LoveIt CHANGED | 0.2.0 Comment config
+    # DoIt CHANGED | 0.2.0 Comment config
     [params.page.comment]
       enable = true
       # Disqus comment config
       [params.page.comment.disqus]
-        # LoveIt NEW | 0.1.1
+        # DoIt NEW | 0.1.1
         enable = false
         # Disqus shortname to use Disqus in posts
         shortname = ""
       # Gitalk comment config
       [params.page.comment.gitalk]
-        # LoveIt NEW | 0.1.1
+        # DoIt NEW | 0.1.1
         enable = false
         owner = ""
         repo = ""
@@ -282,9 +282,9 @@ theme = "LoveIt"
         highlight = true
         enableQQ = false
         serverURLs = ""
-        # LoveIt NEW | 0.2.6 emoji data file name, default is "google.yml"
+        # DoIt NEW | 0.2.6 emoji data file name, default is "google.yml"
         # ("apple.yml", "google.yml", "facebook.yml", "twitter.yml")
-        # located in "themes/LoveIt/assets/data/emoji/" directory
+        # located in "themes/DoIt/assets/data/emoji/" directory
         # you can store your own data files in the same path under your project:
         # "assets/data/emoji/"
         emoji = ""
@@ -295,7 +295,7 @@ theme = "LoveIt"
         numPosts = 10
         appId = ""
         languageCode = ""
-      # LoveIt NEW | 0.2.0 Telegram comments config
+      # DoIt NEW | 0.2.0 Telegram comments config
       [params.page.comment.telegram]
         enable = false
         siteID = ""
@@ -305,10 +305,10 @@ theme = "LoveIt"
         colorful = true
         dislikes = false
         outlined = false
-      # LoveIt NEW | 0.2.0 Commento comment config
+      # DoIt NEW | 0.2.0 Commento comment config
       [params.page.comment.commento]
         enable = false
-      # LoveIt NEW | 0.2.5 Utterances comment config
+      # DoIt NEW | 0.2.5 Utterances comment config
       [params.page.comment.utterances]
         enable = false
         # owner/repo
@@ -317,7 +317,7 @@ theme = "LoveIt"
         label = ""
         lightTheme = "github-light"
         darkTheme = "github-dark"
-    # LoveIt NEW | 0.2.7 Third-party library config
+    # DoIt NEW | 0.2.7 Third-party library config
     [params.page.library]
       [params.page.library.css]
         # someCSS = "some.css"
@@ -329,7 +329,7 @@ theme = "LoveIt"
         # located in "assets/"
         # Or
         # someJavascript = "https://cdn.example.com/some.js"
-    # LoveIt CHANGED | 0.2.10 Page SEO config
+    # DoIt CHANGED | 0.2.10 Page SEO config
     [params.page.seo]
       # image URL
       images = []
@@ -338,7 +338,7 @@ theme = "LoveIt"
         name = ""
         logoUrl = ""
 
-  # LoveIt NEW | 0.2.5 TypeIt config
+  # DoIt NEW | 0.2.5 TypeIt config
   [params.typeit]
     # typing speed between each step (measured in milliseconds)
     speed = 100
@@ -356,14 +356,14 @@ theme = "LoveIt"
     yandex = ""
     pinterest = ""
     baidu = ""
-  # LoveIt NEW | 0.2.10 Site SEO config
+  # DoIt NEW | 0.2.10 Site SEO config
   [params.seo]
     # image URL
     image = ""
     # thumbnail URL
     thumbnailUrl = ""
 
-  # LoveIt NEW | 0.2.0 Analytics config
+  # DoIt NEW | 0.2.0 Analytics config
   [params.analytics]
     enable = false
     # Google Analytics
@@ -377,7 +377,7 @@ theme = "LoveIt"
       # server url for your tracker if you're self hosting
       server = ""
 
-  # LoveIt NEW | 0.2.7 Cookie consent config
+  # DoIt NEW | 0.2.7 Cookie consent config
   [params.cookieconsent]
     enable = true
     # text strings used for Cookie consent banner
@@ -386,16 +386,16 @@ theme = "LoveIt"
       dismiss = ""
       link = ""
 
-  # LoveIt CHANGED | 0.2.7 CDN config for third-party library files
+  # DoIt CHANGED | 0.2.7 CDN config for third-party library files
   [params.cdn]
     # CDN data file name, disabled by default
     # ("jsdelivr.yml")
-    # located in "themes/LoveIt/assets/data/cdn/" directory
+    # located in "themes/DoIt/assets/data/cdn/" directory
     # you can store your own data files in the same path under your project:
     # "assets/data/cdn/"
     data = ""
 
-  # LoveIt NEW | 0.2.8 Compatibility config
+  # DoIt NEW | 0.2.8 Compatibility config
   [params.compatibility]
     # whether to use Polyfill.io to be compatible with older browsers
     polyfill = false
@@ -410,7 +410,7 @@ theme = "LoveIt"
     lineNos = true
     lineNumbersInTable = true
     # false is a necessary configuration
-    # (https://github.com/dillonzq/LoveIt/issues/158)
+    # (https://github.com/dillonzq/DoIt/issues/158)
     noClasses = false
   # Goldmark is from Hugo 0.60 the default library used for Markdown
   [markup.goldmark]
@@ -449,7 +449,7 @@ theme = "LoveIt"
 
 # Privacy config
 [privacy]
-  # LoveIt DELETED | 0.2.0 privacy of the Google Analytics (replaced by params.analytics.google)
+  # DoIt DELETED | 0.2.0 privacy of the Google Analytics (replaced by params.analytics.google)
   [privacy.googleAnalytics]
     # ...
   [privacy.twitter]
@@ -470,7 +470,7 @@ theme = "LoveIt"
 
 # Options to make hugo output files
 [outputs]
-  # LoveIt CHANGED | 0.2.0
+  # DoIt CHANGED | 0.2.0
   home = ["HTML", "RSS", "JSON"]
   page = ["HTML", "MarkDown"]
   section = ["HTML", "RSS"]
@@ -494,5 +494,5 @@ theme = "LoveIt"
 #[markup]
 #  # Syntax Highlighting (https://gohugo.io/content-management/syntax-highlighting)
 #  [markup.highlight]
-#    # false is a necessary configuration (https://github.com/dillonzq/LoveIt/issues/158)
+#    # false is a necessary configuration (https://github.com/dillonzq/DoIt/issues/158)
 #    noClasses = false
