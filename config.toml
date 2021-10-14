@@ -1,4 +1,4 @@
-baseURL = "https://sapal6.github.io/"
+baseURL = "https://github.com/sapal6/website-blog/"
 # [en, zh-cn, fr, ...] determines default content language
 defaultContentLanguage = "en"
 # language code
