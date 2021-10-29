@@ -17,7 +17,7 @@ This article contains my notes to summerize the article ["The Eternal Warrior Pl
 
 I have been a long time reader of [T-nation](https://www.t-nation.com/) especially articles by [Christian Thibaudeau](https://www.t-nation.com/author/christian-thibaudeau/). This man is so full of knowledge that's practicle for experts, beginner, pros and all the rest. 
 
-During the month of October there was an awsome article named ["The Eternal Warrior Plan"](https://www.t-nation.com/training/news-bodybuilding-longevity-workout/) wherein Christian sahred some very insightful thoughts about how to train for longetivity and in this article I have tried to summerize a few points and I hope that this summary would help you to get a gist of the original article in case you are in a hurry and you want to distill the article down to the essential points.
+During the month of October there was an awsome article named ["The Eternal Warrior Plan"](https://www.t-nation.com/training/news-bodybuilding-longevity-workout/) wherein Christian shared some very insightful thoughts about how to train for longetivity and in this article I have tried to summerize a few points and I hope that this summary would help you to get a gist of the original article in case you are in a hurry and you want to distill the article down to the essential points.
 
 ## What the research says?👩‍🔬
 * Carb surplus and Caloric surplus will favor muscle growth, but they can reduce longevity. Carb deficit and caloric deficit can increase longevity, but it'll make it harder to build muscle.
