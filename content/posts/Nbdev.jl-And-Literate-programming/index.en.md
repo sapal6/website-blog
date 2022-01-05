@@ -17,7 +17,7 @@ Litrerate programming is a term coined by [Donald_Knuth](https://en.wikipedia.or
 ## Why this makes sense ?
 You all know that whatever instructions we give to the computer, it "percieves" it in the following way 
 
-{{< image src="matrix.gif" height=300 width=300 >}}
+{{< image src="matrix.gif" height="300" width="300" >}}
 
 Oops! I got carried away.. It looks more like this
 
