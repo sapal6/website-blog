@@ -1,0 +1,215 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="noodp">
+<title class=pjax-title>Nbdev.jl-And-Literate-programming - Satyabrata pal</title><meta name=Description content="Literate programming and how Nbdev.jl figures into this."><meta property="og:title" content="Nbdev.jl-And-Literate-programming">
+<meta property="og:description" content="Literate programming and how Nbdev.jl figures into this.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="/nbdev.jl-and-literate-programming/"><meta property="og:image" content="/logo.png"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2022-01-05T00:00:00+00:00">
+<meta property="article:modified_time" content="2022-01-05T00:00:00+00:00">
+<meta name=twitter:card content="summary_large_image">
+<meta name=twitter:image content="/logo.png">
+<meta name=twitter:title content="Nbdev.jl-And-Literate-programming">
+<meta name=twitter:description content="Literate programming and how Nbdev.jl figures into this.">
+<meta name=application-name content="Satyabrata pal">
+<meta name=apple-mobile-web-app-title content="Satyabrata pal">
+<meta name=theme-color content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=../favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=../favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=../favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=../apple-touch-icon.png><link rel=mask-icon href=../safari-pinned-tab.svg color=#5bbad5><link rel=canonical href=../nbdev.jl-and-literate-programming/><link rel=prev href=../extending-fastai-for-custom-task/><link rel=stylesheet href=../lib/normalize/normalize.min.css><link rel=stylesheet href=../css/style.min.css><link rel=preload as=style onload="this.onload=null,this.rel='stylesheet'" href=../lib/fontawesome-free/all.min.css>
+<noscript><link rel=stylesheet href=../lib/fontawesome-free/all.min.css></noscript><link rel=preload as=style onload="this.onload=null,this.rel='stylesheet'" href=../lib/animate/animate.min.css>
+<noscript><link rel=stylesheet href=../lib/animate/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Nbdev.jl-And-Literate-programming","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"\/nbdev.jl-and-literate-programming\/"},"genre":"posts","keywords":"Julia, Developer tools, coding, Nbdev","wordcount":1102,"url":"\/nbdev.jl-and-literate-programming\/","datePublished":"2022-01-05T00:00:00+00:00","dateModified":"2022-01-05T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Satyabrata pal"},"description":"Literate programming and how Nbdev.jl figures into this."}</script></head>
+<body header-desktop=fixed header-mobile=auto><script type=text/javascript>function setTheme(a){document.body.setAttribute('theme',a)}function saveTheme(a){window.localStorage&&localStorage.setItem('theme',a)}function getMeta(b){const a=document.getElementsByTagName('meta');for(let c=0;c<a.length;c++)if(a[c].getAttribute('name')===b)return a[c];return''}if(window.localStorage&&localStorage.getItem('theme')){let a=localStorage.getItem('theme');a==='light'||a==='dark'||a==='black'?setTheme(a):window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?setTheme('dark'):setTheme('light')}else'auto'==='light'||'auto'==='dark'||'auto'==='black'?(setTheme('auto'),saveTheme('auto')):(saveTheme('auto'),window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?setTheme('dark'):setTheme('light'));let metaColors={light:'#f8f8f8',dark:'#252627',black:'#000000'};getMeta('theme-color').content=metaColors[document.body.getAttribute('theme')]</script>
+<div id=back-to-top></div>
+<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=../ title="Satyabrata pal"><span id=desktop-header-typeit class=typeit></span></a>
+</div>
+<div class=menu>
+<div class=menu-inner><a class=menu-item href=../posts/> Posts </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder="Search titles or contents..." id=search-input-desktop>
+<a href=# onclick=return!1 class="search-button search-toggle" id=search-toggle-desktop title=Search>
+<i class="fas fa-search fa-fw"></i>
+</a>
+<a href=# onclick=return!1 class="search-button search-clear" id=search-clear-desktop title=Clear>
+<i class="fas fa-times-circle fa-fw"></i>
+</a>
+<span class="search-button search-loading" id=search-loading-desktop>
+<i class="fas fa-spinner fa-fw fa-spin"></i>
+</span>
+</span><a href=# onclick=return!1 class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw"></i>
+</a></div>
+</div>
+</div>
+</header><header class=mobile id=header-mobile>
+<div class=header-container>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=../ title="Satyabrata pal"><span id=mobile-header-typeit class=typeit></span></a>
+</div>
+<div class=menu-toggle id=menu-toggle-mobile>
+<span></span><span></span><span></span>
+</div>
+</div>
+<div class=menu id=menu-mobile><div class=search-wrapper>
+<div class="search mobile" id=search-mobile>
+<input type=text placeholder="Search titles or contents..." id=search-input-mobile>
+<a href=# onclick=return!1 class="search-button search-toggle" id=search-toggle-mobile title=Search>
+<i class="fas fa-search fa-fw"></i>
+</a>
+<a href=# onclick=return!1 class="search-button search-clear" id=search-clear-mobile title=Clear>
+<i class="fas fa-times-circle fa-fw"></i>
+</a>
+<span class="search-button search-loading" id=search-loading-mobile>
+<i class="fas fa-spinner fa-fw fa-spin"></i>
+</span>
+</div>
+<a href=# onclick=return!1 class=search-cancel id=search-cancel-mobile>
+Cancel
+</a>
+</div><a class=menu-item href=../posts/ title>Posts</a><a href=# onclick=return!1 class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw"></i>
+</a></div>
+</div>
+</header>
+<div class="search-dropdown desktop">
+<div id=search-dropdown-desktop></div>
+</div>
+<div class="search-dropdown mobile">
+<div id=search-dropdown-mobile></div>
+</div>
+<main class=main>
+<div class=container><div class=toc id=toc-auto>
+<h2 class=toc-title>Contents</h2>
+<div class=toc-content id=toc-content-auto></div>
+</div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle","normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC","true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Nbdev.jl-And-Literate-programming</h1><div class=post-meta>
+<div class=post-meta-line>
+<span class=post-author><i class="author fas fa-user-circle fa-fw"></i><a href=../ title=Author rel=author class=author>Satyabrata pal</a>
+</span>&nbsp;<span class=post-category>included in </span>&nbsp;<span class=post-category>category <a href=../categories/project-announcement/><i class="far fa-folder fa-fw"></i>Project announcement</a></span></div>
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2022-01-05>2022-01-05</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime=2022-01-05>2022-01-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1102 words&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;6 minutes&nbsp;</div>
+</div><div class="details toc" id=toc-static kept>
+<div class="details-summary toc-title">
+<span>Contents</span>
+<span><i class="details-icon fas fa-angle-right"></i></span>
+</div>
+<div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
+<ul>
+<li><a href=#what-is-literate-programming>What is literate programming</a></li>
+<li><a href=#why-this-makes-sense->Why this makes sense ?</a></li>
+<li><a href=#writing-code-containing-documentation-vs-writing-documentation-containing-code>Writing code containing documentation vs writing documentation containing code</a></li>
+<li><a href=#literate-programming-tool>Literate programming tool</a></li>
+<li><a href=#nbdevjl>Nbdev.jl</a></li>
+<li><a href=#further-reads>Further reads</a></li>
+</ul>
+</nav></div>
+</div><div class=content id=content><h2 id=what-is-literate-programming>What is literate programming</h2>
+<p>Litrerate programming is a term coined by <a href=https://en.wikipedia.org/wiki/Donald_Knuth target=_blank rel="noopener noreffer">Donald_Knuth</a>. Under this programming paradigm, one would write human redeable code documentation writing code.</p>
+<h2 id=why-this-makes-sense->Why this makes sense ?</h2>
+<p>You all know that whatever instructions we give to the computer, it &ldquo;percieves&rdquo; it in the following way</p>
+<img src=matrix.gif height=300 width=300>
+<p>Oops! I got carried away.. It looks more like this</p>
+<img src=binary.png>
+<p>So, for a computer it&rsquo;s all binary number. So, what is this that we write when we say that we are writing a computer program ?</p>
+<img src=program.png>
+<p>Some of you will say this is a programming language, but I ask why it&rsquo;s called a &ldquo;language&rdquo; ? Well! if you ask me I would say that it&rsquo;s a language and like every other language that exists, it&rsquo;s sole purpose is to enable communication, share stories, share thoughts. Not to a machine but to another human, that&rsquo;s why it&rsquo;s called a programming &ldquo;language&rdquo;.</p>
+<p>Ultimately this programming instructions get&rsquo;s converted into machine code but if this piece of code which when I show to a fellow human then that person would know what instructions I want to give a computer. See! that&rsquo;s communication&mldr;that&rsquo;s what languages do.</p>
+<p>So, in short we invented programming languages for communicating our thoughts to another person, our thoughts about what we want a machine to do and that&rsquo;s why we want the programming or coding to be as clear and as human readable as possible.</p>
+<h2 id=writing-code-containing-documentation-vs-writing-documentation-containing-code>Writing code containing documentation vs writing documentation containing code</h2>
+<p>Usually we write code the folowing way</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=k>def</span> <span class=nf>funny_func</span><span class=p>(</span><span class=n>who_is_funny</span><span class=p>):</span>
+    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;I am funny&#34;</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Over here the function is self explanatory but to make it extra clear for your friend, you might include an elaborate comment like this</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=k>def</span> <span class=nf>funny_func</span><span class=p>(</span><span class=n>who_is_funny</span><span class=p>):</span>
+    <span class=s2>&#34;&#34;&#34;function to tell who is funny and who is not.</span><span class=se>\
+</span><span class=se></span><span class=s2>    Takes in an argument about the name and then prints a string&#34;&#34;&#34;</span>
+    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;I am funny&#34;</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>You can insert as much elaborate documentation as you may wish. All is well till now.</p>
+<p>But wait! what would happen when you have thousands of lines of code? Unsurprisengly there would be thousands of lines of documentation on top of that which makes it difficult for a clear communication of your thoughts via that piece of code. Not only this, in all possibilities, you will also end up writing a separate detailed documentation explaining your code.</p>
+<p>This is the problem that literate programming tries to solve. Under literate programming paradigm you write documentation containing code like this.</p>
+<img src=literate_program.png>
+<p>In the above example, you can see that the document contains an heading which is the name of the function followed by a description of what the function is all about then that is followed by the code itself.</p>
+<p>If I were to show this code document to you then you could easily understand what the code is all about and at teh same time you would also appreciate the &ldquo;lengthy document free&rdquo; code. This in short is what a literate programming style would look like.</p>
+<h2 id=literate-programming-tool>Literate programming tool</h2>
+<p>To implement a literate programming style you would need special tools. These tools come under the umbrella of literate programming tools, which read through your document, separate out the code and the documentations and put the code in a source code file and the documentation in a text file.</p>
+<p>While talking about literate programming tools, one can not ignore the role of &ldquo;notebooks&rdquo; in making it easier for developers to write literate programs. Notebooks are web based interactive computing platforms that let&rsquo;s you write text and code in a web based editor and let&rsquo;s you execute your code interactively.</p>
+<p><img class=lazyload data-src=notebooks.png data-srcset="../nbdev.jl-and-literate-programming/notebooks.png, notebooks.png 1.5x, ../nbdev.jl-and-literate-programming/notebooks.png 2x" data-sizes=auto alt=/nbdev.jl-and-literate-programming/notebooks.png title=/nbdev.jl-and-literate-programming/notebooks.png></p>
+<p>Two of the notable notebooks are <a href=https://jupyter.org/ target=_blank rel="noopener noreffer">Jupyter notebooks</a> and <a href=https://github.com/fonsp/Pluto.jl target=_blank rel="noopener noreffer">Pluto.jl</a>. Both of these projects differ in their behaviour and the extent of languages they support but both of these projects have a common goal, that is to provide developers with a web based literate programming and exploratory platform. With these projects you can write your documentation and code in the same notebook, interactively execute your code and also share that across as a reproducible environment.</p>
+<p>Due to the very nature of these notebooks projects, they provide a very good foundation of a literate programming environment and using this foundation, <a href=https://www.fast.ai/2019/12/02/nbdev/ target=_blank rel="noopener noreffer">Jeremy howard announced the creation of Nbdev</a>. At a very high level Nbdev is a system that let&rsquo;s you write your python code and documentation in jupyter notebook and then generates source code files and the related documentation for your project among other things. However, this is a very lazy explanation of Nbdev. So, I suggest you to read the original launch <a href=https://www.fast.ai/2019/12/02/nbdev/ target=_blank rel="noopener noreffer">blog</a> and the <a href=https://nbdev.fast.ai/tutorial.html target=_blank rel="noopener noreffer">documentation</a> to truly appreciate the capabilities of Nbdev.</p>
+<p>The original Nbdev supports the creation of Python projects from a jupyter notebook and it does really superb job at that but there is another popular language ecosystem and notebook environment which the original nbdev doesn&rsquo;t support. That language is <a href=https://julialang.org/ target=_blank rel="noopener noreffer">Julia</a> and the notebook environment is <a href=https://github.com/fonsp/Pluto.jl target=_blank rel="noopener noreffer">Pluto.jl</a>.</p>
+<p>Pluto is a reactive notebook environment and differs from jupyter notebook environment in many ways. I would suggest you to explore the project <a href=https://github.com/fonsp/Pluto.jl target=_blank rel="noopener noreffer">Readme</a> to get an idea about teh awsomeness of Pluto.</p>
+<p>Pluto is a great exploratory developement platform and really love using it for my Julia project. I love Julia and python equally 😉 and I am big fan of Nbdev (python version) and use it extensively when I am developing projects in python. I always wanted a literate programming tool similar to Nbdev for Pluto/julia and while searching through the Julia forums found this <a href=https://discourse.julialang.org/t/nbdev-for-julia/32450 target=_blank rel="noopener noreffer">discussion</a> &ndash;></p>
+<p><img class=lazyload data-src=nbdev-discussion.png data-srcset="../nbdev.jl-and-literate-programming/nbdev-discussion.png, nbdev-discussion.png 1.5x, ../nbdev.jl-and-literate-programming/nbdev-discussion.png 2x" data-sizes=auto alt=/nbdev.jl-and-literate-programming/nbdev-discussion.png title=/nbdev.jl-and-literate-programming/nbdev-discussion.png></p>
+<p>Scrolling down the discussion thread I could see that lot many folks were also in search of something similar. This is when I decided to do something in this direction and started working on porting Nbdev to Julia.</p>
+<h2 id=nbdevjl>Nbdev.jl</h2>
+<p>Last month I released the alpha version of <a href=https://sapal6.github.io/Nbdev.jl/ target=_blank rel="noopener noreffer">Nbdev.jl</a>. With Nbdev.jl I hope to work towards building a developer tool which would do justice to the awesome user experience that is provided by the original Nbdev.</p>
+<p>This is just the begining and there are lots of things that I need to fix and many things which are yet to come to Nbdev.jl. However, if you would like to take Nbdev.jl for a spin then follow the getting started tutorial [here])(<a href=https://sapal6.github.io/Nbdev.jl/tutorial/%29 target=_blank rel="noopener noreffer">https://sapal6.github.io/Nbdev.jl/tutorial/)</a>.</p>
+<p>If you want to take part in the twitter discussion then hope onto this thread &ndash;></p>
+<blockquote class=twitter-tweet><p lang=en dir=ltr>I am happy to announce that I have released the Alpha version of Nbdev.jl (port of <a href="https://twitter.com/fastdotai?ref_src=twsrc%5Etfw">@fastdotai</a> 's Nbdev to <a href="https://twitter.com/hashtag/julialang?src=hash&ref_src=twsrc%5Etfw">#julialang</a> ) . Follow the tutorial - <a href=https://t.co/BwLlUPw9KQ>https://t.co/BwLlUPw9KQ</a> to start experimenting with Nbdev. <br><br>A short 🧵 on my thoughts 👇.</p>&mdash; Satyabrata pal (@TheCodingProjec) <a href="https://twitter.com/TheCodingProjec/status/1475354805987991555?ref_src=twsrc%5Etfw">December 27, 2021</a></blockquote> <script async src=https://platform.twitter.com/widgets.js></script>
+<h2 id=further-reads>Further reads</h2>
+<ul>
+<li><a href=http://ross.net/funnelweb/tutorial/intro_what.html target=_blank rel="noopener noreffer">http://ross.net/funnelweb/tutorial/intro_what.html</a></li>
+<li><a href=https://www.fast.ai/2019/12/02/nbdev/ target=_blank rel="noopener noreffer">https://www.fast.ai/2019/12/02/nbdev/</a></li>
+<li><a href=https://nbdev.fast.ai/tutorial.html target=_blank rel="noopener noreffer">https://nbdev.fast.ai/tutorial.html</a></li>
+</ul>
+</div>
+<div class=post-footer id=post-footer>
+<div class=post-info>
+<div class=post-info-line>
+<div class=post-info-mod>
+<span>Updated on 2022-01-05</span>
+</div>
+<div class=post-info-license></div>
+</div>
+<div class=post-info-line>
+<div class=post-info-md><span><a class=link-to-mardown href=../nbdev.jl-and-literate-programming/index.md target=_blank rel="noopener noreferrer">Read markdown</a>
+</span></div>
+<div class=post-info-share>
+<span><a href=# onclick=return!1 title="Share on Twitter" data-sharer=twitter data-url=../nbdev.jl-and-literate-programming/ data-title=Nbdev.jl-And-Literate-programming data-via=thecodingprojec data-hashtags="Julia,Developer tools,coding,Nbdev"><i class="fab fa-twitter fa-fw"></i></a><a href=# onclick=return!1 title="Share on Facebook" data-sharer=facebook data-url=../nbdev.jl-and-literate-programming/ data-hashtag=Julia><i class="fab fa-facebook-square fa-fw"></i></a><a href=# onclick=return!1 title="Share on WhatsApp" data-sharer=whatsapp data-url=../nbdev.jl-and-literate-programming/ data-title=Nbdev.jl-And-Literate-programming data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href=# onclick=return!1 title="Share on Line" data-sharer=line data-url=../nbdev.jl-and-literate-programming/ data-title=Nbdev.jl-And-Literate-programming><i data-svg-src=../lib/simple-icons/icons/line.min.svg></i></a><a href=# onclick=return!1 title="Share on 微博" data-sharer=weibo data-url=../nbdev.jl-and-literate-programming/ data-title=Nbdev.jl-And-Literate-programming><i class="fab fa-weibo fa-fw"></i></a><a href=# onclick=return!1 title="Share on Myspace" data-sharer=myspace data-url=../nbdev.jl-and-literate-programming/ data-title=Nbdev.jl-And-Literate-programming data-description="Literate programming and how Nbdev.jl figures into this."><i data-svg-src=../lib/simple-icons/icons/myspace.min.svg></i></a><a href=# onclick=return!1 title="Share on Blogger" data-sharer=blogger data-url=../nbdev.jl-and-literate-programming/ data-title=Nbdev.jl-And-Literate-programming data-description="Literate programming and how Nbdev.jl figures into this."><i class="fab fa-blogger fa-fw"></i></a><a href=# onclick=return!1 title="Share on Evernote" data-sharer=evernote data-url=../nbdev.jl-and-literate-programming/ data-title=Nbdev.jl-And-Literate-programming><i class="fab fa-evernote fa-fw"></i></a></span>
+</div>
+</div>
+</div>
+<div class=post-info-more>
+<section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=../tags/julia/>Julia</a>,&nbsp;<a href=../tags/developer-tools/>Developer tools</a>,&nbsp;<a href=../tags/coding/>coding</a>,&nbsp;<a href=../tags/nbdev/>Nbdev</a></section>
+<section>
+<span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=../>Home</a></span>
+</section>
+</div>
+<div class=post-nav><a href=../extending-fastai-for-custom-task/ class=prev rel=prev title="Extending Fastai For Custom Task"><i class="fas fa-angle-left fa-fw"></i>Extending Fastai For Custom Task</a></div>
+</div>
+<div id=comments></div></article></div>
+</main><footer class=footer>
+<div class=footer-container><div class=footer-line>
+Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a>&nbsp;|&nbsp;Theme - <a href=https://github.com/HEIGE-PCloud/DoIt target=_blank rel="noopener noreffer" title="DoIt 0.2.13"><i class="far fa-edit fa-fw"></i> DoIt</a>
+</div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2019 - 2022</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=../ target=_blank rel="noopener noreferrer">Satyabrata pal</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div>
+</div></footer></div>
+<div id=fixed-buttons><a href=#back-to-top id=back-to-top-button class=fixed-button title="Back to Top">
+<i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments">
+<i class="fas fa-comment fa-fw"></i>
+</a>
+</div><div id=cookieconsent-container></div><div class=assets><link rel=stylesheet href=../lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=../lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=../lib/lunr/lunr.min.js></script><script type=text/javascript src=../lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=../lib/cookieconsent/cookieconsent.min.js defer></script><script type=text/javascript src=../lib/topbar/topbar.min.js></script><script type=text/javascript src=../lib/pjax/pjax.min.js></script><script type=text/javascript src=../js/theme.min.js></script></div>
+<div class=pjax-assets><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:10},comment:{},cookieconsent:{content:{dismiss:"Got it!",link:"Learn more",message:"This website uses Cookies to improve your experience."},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},data:{"desktop-header-typeit":"Satyabrata pal","mobile-header-typeit":"Satyabrata pal"},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",maxResultLength:10,noResultsFound:"No results found",snippetLength:30,type:"lunr"},sharerjs:!0,typeit:{cursorChar:"|",cursorSpeed:1e3,data:{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},duration:-1,speed:100}}</script><script type=text/javascript src=../lib/lightgallery/lightgallery.min.js></script><script type=text/javascript src=../lib/lightgallery/lg-thumbnail.min.js></script><script type=text/javascript src=../lib/lightgallery/lg-zoom.min.js></script><script type=text/javascript src=../lib/clipboard/clipboard.min.js></script><script type=text/javascript src=../lib/sharer/sharer.min.js></script><script type=text/javascript src=../lib/typeit/typeit.min.js></script><script type=text/javascript src=../lib/katex/katex.min.js defer></script><script type=text/javascript src=../lib/katex/auto-render.min.js defer></script><script type=text/javascript src=../lib/katex/copy-tex.min.js defer></script><script type=text/javascript src=../lib/katex/mhchem.min.js defer></script><script type=text/javascript src=../js/katex.min.js defer></script><script type=text/javascript src=../js/cookieconsent.min.js defer></script><link rel=stylesheet href=../lib/lightgallery/lightgallery.min.css><link rel=stylesheet href=../lib/katex/katex.min.css><link rel=stylesheet href=../lib/katex/copy-tex.min.css></div>
+</body>
+</html>
