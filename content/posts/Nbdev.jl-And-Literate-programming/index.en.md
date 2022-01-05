@@ -17,15 +17,15 @@ Litrerate programming is a term coined by [Donald_Knuth](https://en.wikipedia.or
 ## Why this makes sense ?
 You all know that whatever instructions we give to the computer, it "percieves" it in the following way 
 
-<img src="matrix.gif" height=300 width=300>
+{{< image src="matrix.gif" height=300 width=300 >}}
 
 Oops! I got carried away.. It looks more like this
 
-<img src="binary.png">
+{{< image src="binary.png" >}}
 
 So, for a computer it's all binary number. So, what is this that we write when we say that we are writing a computer program ?
 
-<img src="program.png">
+{{< image src="program.png" >}}
 
 Some of you will say this is a programming language, but I ask why it's called a "language" ? Well! if you ask me I would say that it's a language and like every other language that exists, it's sole purpose is to enable communication, share stories, share thoughts. Not to a machine but to another human, that's why it's called a programming "language".
 
@@ -58,7 +58,7 @@ But wait! what would happen when you have thousands of lines of code? Unsurprise
 
 This is the problem that literate programming tries to solve. Under literate programming paradigm you write documentation containing code like this.
 
-<img src="literate_program.png">
+{{< image src="literate_program.png" >}}
 
 In the above example, you can see that the document contains an heading which is the name of the function followed by a description of what the function is all about then that is followed by the code itself. 
 
@@ -69,7 +69,7 @@ To implement a literate programming style you would need special tools. These to
 
 While talking about literate programming tools, one can not ignore the role of "notebooks" in making it easier for developers to write literate programs. Notebooks are web based interactive computing platforms that let's you write text and code in a web based editor and let's you execute your code interactively.
 
-![](notebooks.png)
+{{< image src="notebooks.png" >}}
 
 Two of the notable notebooks are [Jupyter notebooks](https://jupyter.org/) and [Pluto.jl](https://github.com/fonsp/Pluto.jl). Both of these projects differ in their behaviour and the extent of languages they support but both of these projects have a common goal, that is to provide developers with a web based literate programming and exploratory platform. With these projects you can write your documentation and code in the same notebook, interactively execute your code and also share that across as a reproducible environment.
 
@@ -81,7 +81,7 @@ Pluto is a reactive notebook environment and differs from jupyter notebook envir
 
 Pluto is a great exploratory developement platform and really love using it for my Julia project. I love Julia and python equally 😉 and I am big fan of Nbdev (python version) and use it extensively when I am developing projects in python. I always wanted a literate programming tool similar to Nbdev for Pluto/julia and while searching through the Julia forums found this [discussion](https://discourse.julialang.org/t/nbdev-for-julia/32450) -->
 
-![](nbdev-discussion.png)
+{{< image src="nbdev-discussion.png" >}}
 
 Scrolling down the discussion thread I could see that lot many folks were also in search of something similar. This is when I decided to do something in this direction and started working on porting Nbdev to Julia. 
 
