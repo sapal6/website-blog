@@ -1,0 +1,607 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="noodp">
+<title class=pjax-title>Can we use neural network to understand data? - Satyabrata pal</title><meta name=Description content="Using a Class Activation Map to explain the decision made by a neural network"><meta property="og:title" content="Can we use neural network to understand data?">
+<meta property="og:description" content="Using a Class Activation Map to explain the decision made by a neural network">
+<meta property="og:type" content="article">
+<meta property="og:url" content="/can-we-use-neural-network-to-understand-data/"><meta property="og:image" content="/logo.png"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2022-02-23T00:00:00+00:00">
+<meta property="article:modified_time" content="2022-02-23T00:00:00+00:00">
+<meta name=twitter:card content="summary_large_image">
+<meta name=twitter:image content="/logo.png">
+<meta name=twitter:title content="Can we use neural network to understand data?">
+<meta name=twitter:description content="Using a Class Activation Map to explain the decision made by a neural network">
+<meta name=application-name content="Satyabrata pal">
+<meta name=apple-mobile-web-app-title content="Satyabrata pal">
+<meta name=theme-color content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=../favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=../favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=../favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=../apple-touch-icon.png><link rel=mask-icon href=../safari-pinned-tab.svg color=#5bbad5><link rel=canonical href=../can-we-use-neural-network-to-understand-data/><link rel=prev href=../nbdev.jl-and-literate-programming/><link rel=stylesheet href=../lib/normalize/normalize.min.css><link rel=stylesheet href=../css/style.min.css><link rel=preload as=style onload="this.onload=null,this.rel='stylesheet'" href=../lib/fontawesome-free/all.min.css>
+<noscript><link rel=stylesheet href=../lib/fontawesome-free/all.min.css></noscript><link rel=preload as=style onload="this.onload=null,this.rel='stylesheet'" href=../lib/animate/animate.min.css>
+<noscript><link rel=stylesheet href=../lib/animate/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Can we use neural network to understand data?","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"\/can-we-use-neural-network-to-understand-data\/"},"genre":"posts","keywords":"Deep Learning, Fastai, CAM, model explainability","wordcount":1695,"url":"\/can-we-use-neural-network-to-understand-data\/","datePublished":"2022-02-23T00:00:00+00:00","dateModified":"2022-02-23T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"Satyabrata pal"},"description":"Using a Class Activation Map to explain the decision made by a neural network"}</script></head>
+<body header-desktop=fixed header-mobile=auto><script type=text/javascript>function setTheme(a){document.body.setAttribute('theme',a)}function saveTheme(a){window.localStorage&&localStorage.setItem('theme',a)}function getMeta(b){const a=document.getElementsByTagName('meta');for(let c=0;c<a.length;c++)if(a[c].getAttribute('name')===b)return a[c];return''}if(window.localStorage&&localStorage.getItem('theme')){let a=localStorage.getItem('theme');a==='light'||a==='dark'||a==='black'?setTheme(a):window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?setTheme('dark'):setTheme('light')}else'auto'==='light'||'auto'==='dark'||'auto'==='black'?(setTheme('auto'),saveTheme('auto')):(saveTheme('auto'),window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?setTheme('dark'):setTheme('light'));let metaColors={light:'#f8f8f8',dark:'#252627',black:'#000000'};getMeta('theme-color').content=metaColors[document.body.getAttribute('theme')]</script>
+<div id=back-to-top></div>
+<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=../ title="Satyabrata pal"><span id=desktop-header-typeit class=typeit></span></a>
+</div>
+<div class=menu>
+<div class=menu-inner><a class=menu-item href=../posts/> Posts </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder="Search titles or contents..." id=search-input-desktop>
+<a href=# onclick=return!1 class="search-button search-toggle" id=search-toggle-desktop title=Search>
+<i class="fas fa-search fa-fw"></i>
+</a>
+<a href=# onclick=return!1 class="search-button search-clear" id=search-clear-desktop title=Clear>
+<i class="fas fa-times-circle fa-fw"></i>
+</a>
+<span class="search-button search-loading" id=search-loading-desktop>
+<i class="fas fa-spinner fa-fw fa-spin"></i>
+</span>
+</span><a href=# onclick=return!1 class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw"></i>
+</a></div>
+</div>
+</div>
+</header><header class=mobile id=header-mobile>
+<div class=header-container>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=../ title="Satyabrata pal"><span id=mobile-header-typeit class=typeit></span></a>
+</div>
+<div class=menu-toggle id=menu-toggle-mobile>
+<span></span><span></span><span></span>
+</div>
+</div>
+<div class=menu id=menu-mobile><div class=search-wrapper>
+<div class="search mobile" id=search-mobile>
+<input type=text placeholder="Search titles or contents..." id=search-input-mobile>
+<a href=# onclick=return!1 class="search-button search-toggle" id=search-toggle-mobile title=Search>
+<i class="fas fa-search fa-fw"></i>
+</a>
+<a href=# onclick=return!1 class="search-button search-clear" id=search-clear-mobile title=Clear>
+<i class="fas fa-times-circle fa-fw"></i>
+</a>
+<span class="search-button search-loading" id=search-loading-mobile>
+<i class="fas fa-spinner fa-fw fa-spin"></i>
+</span>
+</div>
+<a href=# onclick=return!1 class=search-cancel id=search-cancel-mobile>
+Cancel
+</a>
+</div><a class=menu-item href=../posts/ title>Posts</a><a href=# onclick=return!1 class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw"></i>
+</a></div>
+</div>
+</header>
+<div class="search-dropdown desktop">
+<div id=search-dropdown-desktop></div>
+</div>
+<div class="search-dropdown mobile">
+<div id=search-dropdown-mobile></div>
+</div>
+<main class=main>
+<div class=container><div class=toc id=toc-auto>
+<h2 class=toc-title>Contents</h2>
+<div class=toc-content id=toc-content-auto></div>
+</div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle","normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC","true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Can we use neural network to understand data?</h1><div class=post-meta>
+<div class=post-meta-line>
+<span class=post-author><i class="author fas fa-user-circle fa-fw"></i><a href=../ title=Author rel=author class=author>Satyabrata pal</a>
+</span>&nbsp;<span class=post-category>included in </span>&nbsp;<span class=post-category>category <a href=../categories/deep-learning/><i class="far fa-folder fa-fw"></i>Deep Learning</a></span></div>
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2022-02-23>2022-02-23</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime=2022-02-23>2022-02-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1695 words&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;8 minutes&nbsp;</div>
+</div><div class="details toc" id=toc-static kept>
+<div class="details-summary toc-title">
+<span>Contents</span>
+<span><i class="details-icon fas fa-angle-right"></i></span>
+</div>
+<div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
+<ul>
+<li><a href=#what-is-this->What is this ?</a></li>
+<li><a href=#import-required-things>Import required things.</a>
+<ul>
+<li><a href=#required-paths>Required paths</a></li>
+</ul>
+</li>
+<li><a href=#get-a-glimpse-of-the-files>Get a glimpse of the files</a></li>
+<li><a href=#datablock>Datablock</a></li>
+<li><a href=#dataloader>Dataloader</a></li>
+<li><a href=#the-model>The model</a></li>
+<li><a href=#creating-a-simple-cnn-learner>Creating a simple CNN learner</a></li>
+<li><a href=#why-the-neural-network-makes-the-decision>Why the neural network makes the decision?</a></li>
+<li><a href=#conclusion>Conclusion</a></li>
+</ul>
+</nav></div>
+</div><div class=content id=content><p>Using a Class Activation Map to explain the decision made by a neural network</p>
+<ul>
+<li>This notebook is also available in <a href=https://www.kaggle.com/sapal6/can-we-use-a-network-to-understand-data target=_blank rel="noopener noreffer">kaggle</a></li>
+<li>Get the code used in this notebook on <a href=https://github.com/sapal6/kaggle_competitions/tree/main/happywhale target=_blank rel="noopener noreffer">github</a>.</li>
+<li>The data used can be found <a href=https://www.kaggle.com/rdizzl3/jpeg-happywhale-128x128 target=_blank rel="noopener noreffer">here</a></li>
+</ul>
+<h2 id=what-is-this->What is this ?</h2>
+<ul>
+<li>A starter notebook for folks new to machine learning.</li>
+<li>A vanilla CNN created for <a href=https://www.kaggle.com/c/happy-whale-and-dolphin target=_blank rel="noopener noreffer">whale species recognition</a> competition using fastai.</li>
+<li>Aim is to observe the behavior of a simple CNN trained to recognize the whale species.</li>
+<li>Here I am trying to show that you can use a simple CNN to know what areas of an image does the CNN &ldquo;sees&rdquo;. You can use this to analyze what needs to be improved or engineered in the data to create a better model.</li>
+</ul>
+<h2 id=import-required-things>Import required things.</h2>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=kn>from</span> <span class=nn>fastai.vision.all</span> <span class=kn>import</span> <span class=o>*</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=required-paths>Required paths</h3>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>root_path</span> <span class=o>=</span> <span class=n>Path</span><span class=p>(</span><span class=s2>&#34;../input&#34;</span><span class=p>)</span>
+<span class=n>train_csv_path</span> <span class=o>=</span> <span class=n>root_path</span><span class=o>/</span><span class=s1>&#39;happy-whale-and-dolphin/train.csv&#39;</span>
+<span class=n>train_img_path</span> <span class=o>=</span> <span class=n>root_path</span><span class=o>/</span><span class=s2>&#34;jpeg-happywhale-128x128/train_images-128-128/train_images-128-128&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=get-a-glimpse-of-the-files>Get a glimpse of the files</h2>
+<p><code>get_image_files</code> is a convenience function that goes through different folders and subfolders and gathers all the image file path.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>train_imgs</span> <span class=o>=</span> <span class=n>get_image_files</span><span class=p>(</span><span class=n>train_img_path</span><span class=p>)</span>
+<span class=n>train_imgs</span><span class=p>[:</span><span class=mi>10</span><span class=p>]</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>(#10) [Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/80b5373b87942b.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/e113b51585c677.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/94eb976e25416c.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/19a45862ab99cd.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/be9645065510e9.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/76d25044120d3c.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/0c64a705ba5d31.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/c1fe278bdbd837.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/6f94f30ac500a0.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/15f295322e5b54.jpg')]
+</code></pre>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>Image</span><span class=o>.</span><span class=n>open</span><span class=p>(</span><span class=n>train_imgs</span><span class=p>[</span><span class=mi>1</span><span class=p>])</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class=lightgallery href=../can-we-use-neural-network-to-understand-data/index_8_0.png title=/can-we-use-neural-network-to-understand-data/index_8_0.png data-thumbnail=/can-we-use-neural-network-to-understand-data/index_8_0.png>
+<img class=lazyload data-src=index_8_0.png data-srcset="../can-we-use-neural-network-to-understand-data/index_8_0.png, index_8_0.png 1.5x, ../can-we-use-neural-network-to-understand-data/index_8_0.png 2x" data-sizes=auto alt=/can-we-use-neural-network-to-understand-data/index_8_0.png height=150 width=150>
+</a>
+<p>let&rsquo;s see what is there in the csv file.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>train_path_df</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>read_csv</span><span class=p>(</span><span class=n>train_csv_path</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>train_path_df</span><span class=o>.</span><span class=n>head</span><span class=p>(</span><span class=mi>5</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div>
+<style scoped>.dataframe tbody tr th:only-of-type{vertical-align:middle}<pre><code>.dataframe tbody tr th{vertical-align:top}.dataframe thead th{text-align:right}</code></pre><p></style></p>
+<table border=1 class=dataframe>
+<thead>
+<tr style=text-align:right>
+<th></th>
+<th>image</th>
+<th>species</th>
+<th>individual_id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>00021adfb725ed.jpg</td>
+<td>melon_headed_whale</td>
+<td>cadddb1636b9</td>
+</tr>
+<tr>
+<th>1</th>
+<td>000562241d384d.jpg</td>
+<td>humpback_whale</td>
+<td>1a71fbb72250</td>
+</tr>
+<tr>
+<th>2</th>
+<td>0007c33415ce37.jpg</td>
+<td>false_killer_whale</td>
+<td>60008f293a2b</td>
+</tr>
+<tr>
+<th>3</th>
+<td>0007d9bca26a99.jpg</td>
+<td>bottlenose_dolphin</td>
+<td>4b00fe572063</td>
+</tr>
+<tr>
+<th>4</th>
+<td>00087baf5cef7a.jpg</td>
+<td>humpback_whale</td>
+<td>8e5253662392</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If I can catch hold of the image filename from the dataframe and attach this to the <code>train_img_path</code> then I can get the full image path.</p>
+<p>Replacing filnames with the filepath</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>train_path_df</span><span class=p>[</span><span class=s1>&#39;image&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=n>train_path_df</span><span class=p>[</span><span class=s1>&#39;image&#39;</span><span class=p>]</span><span class=o>.</span><span class=n>apply</span><span class=p>(</span><span class=k>lambda</span> <span class=n>x</span><span class=p>:</span><span class=n>train_img_path</span><span class=o>/</span><span class=n>x</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>train_path_df</span><span class=o>.</span><span class=n>head</span><span class=p>(</span><span class=mi>2</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div>
+<style scoped>.dataframe tbody tr th:only-of-type{vertical-align:middle}<pre><code>.dataframe tbody tr th{vertical-align:top}.dataframe thead th{text-align:right}</code></pre><p></style></p>
+<table border=1 class=dataframe>
+<thead>
+<tr style=text-align:right>
+<th></th>
+<th>image</th>
+<th>species</th>
+<th>individual_id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/00021adfb725ed.jpg</td>
+<td>melon_headed_whale</td>
+<td>cadddb1636b9</td>
+</tr>
+<tr>
+<th>1</th>
+<td>../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/000562241d384d.jpg</td>
+<td>humpback_whale</td>
+<td>1a71fbb72250</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>Image</span><span class=o>.</span><span class=n>open</span><span class=p>(</span><span class=n>train_path_df</span><span class=o>.</span><span class=n>image</span><span class=p>[</span><span class=mi>0</span><span class=p>])</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class=lightgallery href=../can-we-use-neural-network-to-understand-data/index_16_0.png title=/can-we-use-neural-network-to-understand-data/index_16_0.png data-thumbnail=/can-we-use-neural-network-to-understand-data/index_16_0.png>
+<img class=lazyload data-src=index_16_0.png data-srcset="../can-we-use-neural-network-to-understand-data/index_16_0.png, index_16_0.png 1.5x, ../can-we-use-neural-network-to-understand-data/index_16_0.png 2x" data-sizes=auto alt=/can-we-use-neural-network-to-understand-data/index_16_0.png height=150 width=150>
+</a>
+<h2 id=datablock>Datablock</h2>
+<p>A <code>DataBlock</code> is like a blueprint that tells fastai&ndash;></p>
+<ul>
+<li>What kind of data are we dealing with. Is it image, text etc.</li>
+<li>What kind of labels we have. For example categorical labels, continuous labels etc.</li>
+<li>From where to get the inputs.</li>
+<li>From where to get the targets.</li>
+<li>How to split the data into train and test.</li>
+<li>The transforms that you want to do.</li>
+</ul>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>data</span> <span class=o>=</span> <span class=n>DataBlock</span><span class=p>(</span><span class=n>blocks</span><span class=o>=</span><span class=p>(</span><span class=n>ImageBlock</span><span class=p>,</span> <span class=n>CategoryBlock</span><span class=p>),</span>
+                <span class=n>splitter</span><span class=o>=</span><span class=n>TrainTestSplitter</span><span class=p>(),</span>
+                 <span class=n>get_x</span> <span class=o>=</span> <span class=n>ColReader</span><span class=p>(</span><span class=mi>0</span><span class=p>),</span>
+                 <span class=n>get_y</span> <span class=o>=</span> <span class=n>ColReader</span><span class=p>(</span><span class=mi>1</span><span class=p>),</span>
+                 <span class=n>item_tfms</span><span class=o>=</span><span class=n>Resize</span><span class=p>(</span><span class=mi>224</span><span class=p>),</span>
+                 <span class=n>batch_tfms</span><span class=o>=</span><span class=n>aug_transforms</span><span class=p>(</span><span class=n>size</span><span class=o>=</span><span class=mi>128</span><span class=p>))</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>In the above code&ndash;></p>
+<ul>
+<li>The <code>ImageBlock</code> tells fastai that we are dealing with image data.</li>
+<li><code>CategoryBlock</code> means our targets are categorical in nature.</li>
+<li>The <code>get_x</code> and <code>get_y</code> tells fastai to get the x i.e. the image path from column 0 of dataframe and the target from column 1 of the dataframe.</li>
+<li><code>splitter</code> is the way in which train and test data are split. check <a href=https://docs.fast.ai/data.transforms.html#TrainTestSplitter target=_blank rel="noopener noreffer">here</a> for more details.</li>
+<li>The next two lines are not that important to understand now but they are needed when you are working on image augmentation. Refer to the <a href=https://github.com/fastai/fastbook target=_blank rel="noopener noreffer">fastbook</a> to understand more about this.</li>
+</ul>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=c1># this is not necessary. I was just testing if my datablocks are correct or not</span>
+<span class=c1>#data.summary(train_path_df)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=dataloader>Dataloader</h2>
+<p>Think of a dataloader as a mechanism that picks up your images, does all the things that you had described in the datablock and then loads your data to the device(cpu or gpu).</p>
+<p>At the minimum, you need to provide the source of data, the <code>train_path_df</code> in our case. Here we give the <code>bs</code> i.e. the batch size. For example if we say that the batch size is 8 then it means that the dataloader will load 8 images at a time onto the device.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>dls</span> <span class=o>=</span> <span class=n>data</span><span class=o>.</span><span class=n>dataloaders</span><span class=p>(</span><span class=n>train_path_df</span><span class=p>,</span> <span class=n>bs</span><span class=o>=</span><span class=mi>128</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>/root/.local/lib/python3.7/site-packages/torch/_tensor.py:1023: UserWarning: torch.solve is deprecated in favor of torch.linalg.solveand will be removed in a future PyTorch release.
+torch.linalg.solve has its arguments reversed and does not return the LU factorization.
+To get the LU factorization see torch.lu, which can be used with torch.lu_solve or torch.lu_unpack.
+X = torch.solve(B, A).solution
+should be replaced with
+X = torch.linalg.solve(A, B) (Triggered internally at  /pytorch/aten/src/ATen/native/BatchLinearAlgebra.cpp:760.)
+  ret = func(*args, **kwargs)
+</code></pre>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>dls</span><span class=o>.</span><span class=n>show_batch</span><span class=p>()</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class=lightgallery href=../can-we-use-neural-network-to-understand-data/index_23_0.png title=/can-we-use-neural-network-to-understand-data/index_23_0.png data-thumbnail=/can-we-use-neural-network-to-understand-data/index_23_0.png>
+<img class=lazyload data-src=index_23_0.png data-srcset="../can-we-use-neural-network-to-understand-data/index_23_0.png, index_23_0.png 1.5x, ../can-we-use-neural-network-to-understand-data/index_23_0.png 2x" data-sizes=auto alt=/can-we-use-neural-network-to-understand-data/index_23_0.png height=500 width=500>
+</a>
+<h2 id=the-model>The model</h2>
+<p>Simple CNN to classify whale/dolphin species. The intuition is the following&ndash;></p>
+<ul>
+<li>
+<p>a model which knows to recognize whale/dolphin species should also be able to learn the features to distinguish the different species.</p>
+</li>
+<li>
+<p>such a model can be queried to learn what all portions of an image is taken into account. For example, if somehow the background is tricking the model such that the model considers the background as an area of interest then such data needs to be further engineered.</p>
+</li>
+<li>
+<p>such model can then be used as a pre-trained model to recognize individuals .</p>
+</li>
+</ul>
+<h2 id=creating-a-simple-cnn-learner>Creating a simple CNN learner</h2>
+<p><code>cnn_learner</code> creates a convolutional neural network for you. At the least you provide it the dataloader, a model architecture and a loss function.</p>
+<p><code>models.resnet18</code> is a &ldquo;pre-trained&rdquo; neural network. It&rsquo;s a network that was already trained by some good folks (folks with huge computational hardware) on a very large number of images. This particular network knows how to recognize different images. So, we take this network and then ask fastai to train this network on our image data (whale, dolphins).</p>
+<p>The intuition is that since the pre-trained network already knows how to distinguish between different images, we have to spend less time and computation to make it understand how to recognize different whales and dolphins. This is <strong>Transfer learning</strong></p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>learn</span> <span class=o>=</span> <span class=n>cnn_learner</span><span class=p>(</span><span class=n>dls</span><span class=p>,</span> <span class=n>models</span><span class=o>.</span><span class=n>resnet18</span><span class=p>,</span> <span class=n>loss_func</span><span class=o>=</span><span class=n>CrossEntropyLossFlat</span><span class=p>(),</span> <span class=n>ps</span><span class=o>=</span><span class=mf>0.25</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>For now understand that <code>fine_tune</code> means &ldquo;take my network and make it look at each image a specified number of times. This &ldquo;number of times&rdquo; is the number that is provided as the first argument.</p>
+<p>Let&rsquo;s not dive into the second argument at this moment in time.</p>
+<blockquote>
+<p>For the curious mind, the second argument is known as the learning rate. It&rsquo;s a hyperparameter of a neural network. More information can be found <a href=https://github.com/fastai/fastbook/blob/master/04_mnist_basics.ipynb target=_blank rel="noopener noreffer">here</a></p>
+</blockquote>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>learn</span><span class=o>.</span><span class=n>fine_tune</span><span class=p>(</span><span class=mi>2</span><span class=p>,</span> <span class=mf>3e-3</span><span class=p>)</span>
+</code></pre></td></tr></table>
+</div>
+</div><table border=1 class=dataframe>
+<thead>
+<tr style=text-align:left>
+<th>epoch</th>
+<th>train_loss</th>
+<th>valid_loss</th>
+<th>time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0.905516</td>
+<td>0.673760</td>
+<td>03:58</td>
+</tr>
+</tbody>
+</table>
+<table border=1 class=dataframe>
+<thead>
+<tr style=text-align:left>
+<th>epoch</th>
+<th>train_loss</th>
+<th>valid_loss</th>
+<th>time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0.422199</td>
+<td>0.337718</td>
+<td>02:24</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.231187</td>
+<td>0.232147</td>
+<td>02:24</td>
+</tr>
+</tbody>
+</table>
+<p>We can see what the model predicted vs the actual target.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>learn</span><span class=o>.</span><span class=n>show_results</span><span class=p>()</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class=lightgallery href=../can-we-use-neural-network-to-understand-data/index_30_1.png title=/can-we-use-neural-network-to-understand-data/index_30_1.png data-thumbnail=/can-we-use-neural-network-to-understand-data/index_30_1.png>
+<img class=lazyload data-src=index_30_1.png data-srcset="../can-we-use-neural-network-to-understand-data/index_30_1.png, index_30_1.png 1.5x, ../can-we-use-neural-network-to-understand-data/index_30_1.png 2x" data-sizes=auto alt=/can-we-use-neural-network-to-understand-data/index_30_1.png height=500 width=500>
+</a>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>interp</span> <span class=o>=</span> <span class=n>Interpretation</span><span class=o>.</span><span class=n>from_learner</span><span class=p>(</span><span class=n>learn</span><span class=p>)</span>
+<span class=n>interp</span><span class=o>.</span><span class=n>plot_top_losses</span><span class=p>(</span><span class=mi>3</span><span class=p>,</span> <span class=n>figsize</span><span class=o>=</span><span class=p>(</span><span class=mi>15</span><span class=p>,</span><span class=mi>10</span><span class=p>))</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class=lightgallery href=../can-we-use-neural-network-to-understand-data/index_31_1.png title=/can-we-use-neural-network-to-understand-data/index_31_1.png data-thumbnail=/can-we-use-neural-network-to-understand-data/index_31_1.png>
+<img class=lazyload data-src=index_31_1.png data-srcset="../can-we-use-neural-network-to-understand-data/index_31_1.png, index_31_1.png 1.5x, ../can-we-use-neural-network-to-understand-data/index_31_1.png 2x" data-sizes=auto alt=/can-we-use-neural-network-to-understand-data/index_31_1.png height=500 width=500>
+</a>
+<h2 id=why-the-neural-network-makes-the-decision>Why the neural network makes the decision?</h2>
+<p>We can use class activation maps (CAM) to see which regions of images are of interest to the neural network. Class activation map (CAM) was first introduced by Bolei Zhou et al. in <a href=https://arxiv.org/abs/1512.04150 target=_blank rel="noopener noreffer">&ldquo;Learning Deep Features for Discriminative Localization&rdquo;</a>. Cam uses the output of the last convolutional layer with the predictions to give a heatmap of the regions of interest of the network in an image.</p>
+<p>The intuition behind CAM is that if we do the dot product of the activations of the final layer with the final weights, for each location on our feature map then we can get the score of the feature that was used to make a decision.</p>
+<p>Pytorch provides hooks to hook onto the any layer of a network. We can attach a hook to any layer of a neural network and it will be executed during the forward pass i.e. the moment when the output is computed or during the backward pass i.e. the moment when the weights are being re-adjusted.</p>
+<p>I would highly recommend to read more about CAM in this chapter of <a href=https://github.com/fastai/fastbook/blob/master/18_CAM.ipynb target=_blank rel="noopener noreffer">fastbook</a> before proceeding on with the code.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>Image</span><span class=o>.</span><span class=n>open</span><span class=p>(</span><span class=n>train_path_df</span><span class=o>.</span><span class=n>image</span><span class=p>[</span><span class=mi>6</span><span class=p>])</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class=lightgallery href=../can-we-use-neural-network-to-understand-data/index_33_0.png title=/can-we-use-neural-network-to-understand-data/index_33_0.png data-thumbnail=/can-we-use-neural-network-to-understand-data/index_33_0.png>
+<img class=lazyload data-src=index_33_0.png data-srcset="../can-we-use-neural-network-to-understand-data/index_33_0.png, index_33_0.png 1.5x, ../can-we-use-neural-network-to-understand-data/index_33_0.png 2x" data-sizes=auto alt=/can-we-use-neural-network-to-understand-data/index_33_0.png height=150 width=150>
+</a>
+<p>Let&rsquo;s grab a batch.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>img</span> <span class=o>=</span> <span class=n>PILImage</span><span class=o>.</span><span class=n>create</span><span class=p>(</span><span class=n>train_path_df</span><span class=o>.</span><span class=n>image</span><span class=p>[</span><span class=mi>6</span><span class=p>])</span>
+<span class=c1># grab a batch</span>
+<span class=n>x</span><span class=p>,</span> <span class=o>=</span> <span class=n>first</span><span class=p>(</span><span class=n>dls</span><span class=o>.</span><span class=n>test_dl</span><span class=p>([</span><span class=n>img</span><span class=p>]))</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>We hook into the network . A forward hook takes into three things &ndash;> the model , its input and it&rsquo;s output. The fourth line in the below code is the hook function.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=k>class</span> <span class=nc>Hook</span><span class=p>():</span>
+    <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>m</span><span class=p>):</span>
+        <span class=bp>self</span><span class=o>.</span><span class=n>hook</span> <span class=o>=</span> <span class=n>m</span><span class=o>.</span><span class=n>register_forward_hook</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>hook_func</span><span class=p>)</span>   
+    <span class=k>def</span> <span class=nf>hook_func</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>m</span><span class=p>,</span> <span class=n>i</span><span class=p>,</span> <span class=n>o</span><span class=p>):</span> <span class=bp>self</span><span class=o>.</span><span class=n>stored</span> <span class=o>=</span> <span class=n>o</span><span class=o>.</span><span class=n>detach</span><span class=p>()</span><span class=o>.</span><span class=n>clone</span><span class=p>()</span>
+    <span class=k>def</span> <span class=fm>__enter__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=o>*</span><span class=n>args</span><span class=p>):</span> <span class=k>return</span> <span class=bp>self</span>
+    <span class=k>def</span> <span class=fm>__exit__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=o>*</span><span class=n>args</span><span class=p>):</span> <span class=bp>self</span><span class=o>.</span><span class=n>hook</span><span class=o>.</span><span class=n>remove</span><span class=p>()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Now we do the dot product of our weight matrix with the activations.</p>
+<p>The code below takes the model, hooks into the last layer of our model using our hook function and stores the activations in the <code>act</code> variable. Then we do the dot product of the stored activations with the weights using <code>torch.einsum</code>.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=k>with</span> <span class=n>Hook</span><span class=p>(</span><span class=n>learn</span><span class=o>.</span><span class=n>model</span><span class=p>[</span><span class=mi>0</span><span class=p>])</span> <span class=k>as</span> <span class=n>hook</span><span class=p>:</span>
+    <span class=k>with</span> <span class=n>torch</span><span class=o>.</span><span class=n>no_grad</span><span class=p>():</span> 
+        <span class=n>output</span> <span class=o>=</span> <span class=n>learn</span><span class=o>.</span><span class=n>model</span><span class=o>.</span><span class=n>eval</span><span class=p>()(</span><span class=n>x</span><span class=o>.</span><span class=n>cuda</span><span class=p>())</span>
+        <span class=n>act</span> <span class=o>=</span> <span class=n>hook</span><span class=o>.</span><span class=n>stored</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
+    <span class=n>cam_map</span> <span class=o>=</span> <span class=n>torch</span><span class=o>.</span><span class=n>einsum</span><span class=p>(</span><span class=s1>&#39;ck,kij-&gt;cij&#39;</span><span class=p>,</span> <span class=n>learn</span><span class=o>.</span><span class=n>model</span><span class=p>[</span><span class=mi>1</span><span class=p>][</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span><span class=o>.</span><span class=n>weight</span><span class=p>,</span> <span class=n>act</span><span class=p>)</span>
+    <span class=n>cam_map</span><span class=o>.</span><span class=n>shape</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>For each image in our batch, and for each class, we get a 7×7 feature map that tells us where the activations were higher and where they were lower. This will let us see which areas of the pictures influenced the model&rsquo;s decision.</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=n>x_dec</span> <span class=o>=</span> <span class=n>TensorImage</span><span class=p>(</span><span class=n>dls</span><span class=o>.</span><span class=n>train</span><span class=o>.</span><span class=n>decode</span><span class=p>((</span><span class=n>x</span><span class=p>,))[</span><span class=mi>0</span><span class=p>][</span><span class=mi>0</span><span class=p>])</span>
+<span class=n>_</span><span class=p>,</span><span class=n>ax</span> <span class=o>=</span> <span class=n>plt</span><span class=o>.</span><span class=n>subplots</span><span class=p>()</span>
+<span class=n>x_dec</span><span class=o>.</span><span class=n>show</span><span class=p>(</span><span class=n>ctx</span><span class=o>=</span><span class=n>ax</span><span class=p>)</span>
+<span class=n>ax</span><span class=o>.</span><span class=n>imshow</span><span class=p>(</span><span class=n>cam_map</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span><span class=o>.</span><span class=n>detach</span><span class=p>()</span><span class=o>.</span><span class=n>cpu</span><span class=p>(),</span> <span class=n>alpha</span><span class=o>=</span><span class=mf>0.6</span><span class=p>,</span> <span class=n>extent</span><span class=o>=</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span><span class=mi>128</span><span class=p>,</span><span class=mi>128</span><span class=p>,</span><span class=mi>0</span><span class=p>),</span>
+              <span class=n>interpolation</span><span class=o>=</span><span class=s1>&#39;bilinear&#39;</span><span class=p>,</span> <span class=n>cmap</span><span class=o>=</span><span class=s1>&#39;magma&#39;</span><span class=p>);</span>
+</code></pre></td></tr></table>
+</div>
+</div><a class=lightgallery href=../can-we-use-neural-network-to-understand-data/index_41_0.png title=/can-we-use-neural-network-to-understand-data/index_41_0.png data-thumbnail=/can-we-use-neural-network-to-understand-data/index_41_0.png>
+<img class=lazyload data-src=index_41_0.png data-srcset="../can-we-use-neural-network-to-understand-data/index_41_0.png, index_41_0.png 1.5x, ../can-we-use-neural-network-to-understand-data/index_41_0.png 2x" data-sizes=auto alt=/can-we-use-neural-network-to-understand-data/index_41_0.png height=150 width=150>
+</a>
+<p>The bright areas in the activations are somehow spilling over to the ocean. In my opinion this should not be the case. The activations should be more around the of the dorsal fins and the surface of the fin. In layman terms the network should focus more on the object i.e. the fin features and not on the surrounding water.</p>
+<p>An important takeaway from my perspective is that if we can restrict the region of interest to the whale fin and not the surrounding water then the network would be able to learn better.</p>
+<h2 id=conclusion>Conclusion</h2>
+<p>Besides tasks like classifying images or detecting objects, a neural networks can be used for analyzing the data to device strategies for pre-processing, data engineering and data cleaning.</p>
+<p>Here I have bounced off one idea about how a simple CNN can be used to understand the regions in an image that the neural network focuses to make it&rsquo;s decisions and then analyzing these things we can observer if the network is focusing on areas of images that it needs to focus and if not, then we can think of the steps that we can take to help the network to focus to generalize better.</p>
+<p>I have just scratched the surface of what&rsquo;s possible here and there can be many more ways in which deep learning can be used to take better decisions on data. So, I would emphasize you to expand on this idea and think of other ways in which you can use simple networks to analyze the data before building an architecture for the actual task at hand.</p></div>
+<div class=post-footer id=post-footer>
+<div class=post-info>
+<div class=post-info-line>
+<div class=post-info-mod>
+<span>Updated on 2022-02-23</span>
+</div>
+<div class=post-info-license></div>
+</div>
+<div class=post-info-line>
+<div class=post-info-md><span><a class=link-to-mardown href=../can-we-use-neural-network-to-understand-data/index.md target=_blank rel="noopener noreferrer">Read markdown</a>
+</span></div>
+<div class=post-info-share>
+<span><a href=# onclick=return!1 title="Share on Twitter" data-sharer=twitter data-url=../can-we-use-neural-network-to-understand-data/ data-title="Can we use neural network to understand data?" data-via=thecodingprojec data-hashtags="Deep Learning,Fastai,CAM,model explainability"><i class="fab fa-twitter fa-fw"></i></a><a href=# onclick=return!1 title="Share on Facebook" data-sharer=facebook data-url=../can-we-use-neural-network-to-understand-data/ data-hashtag="Deep Learning"><i class="fab fa-facebook-square fa-fw"></i></a><a href=# onclick=return!1 title="Share on WhatsApp" data-sharer=whatsapp data-url=../can-we-use-neural-network-to-understand-data/ data-title="Can we use neural network to understand data?" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href=# onclick=return!1 title="Share on Line" data-sharer=line data-url=../can-we-use-neural-network-to-understand-data/ data-title="Can we use neural network to understand data?"><i data-svg-src=../lib/simple-icons/icons/line.min.svg></i></a><a href=# onclick=return!1 title="Share on 微博" data-sharer=weibo data-url=../can-we-use-neural-network-to-understand-data/ data-title="Can we use neural network to understand data?"><i class="fab fa-weibo fa-fw"></i></a><a href=# onclick=return!1 title="Share on Myspace" data-sharer=myspace data-url=../can-we-use-neural-network-to-understand-data/ data-title="Can we use neural network to understand data?" data-description="Using a Class Activation Map to explain the decision made by a neural network"><i data-svg-src=../lib/simple-icons/icons/myspace.min.svg></i></a><a href=# onclick=return!1 title="Share on Blogger" data-sharer=blogger data-url=../can-we-use-neural-network-to-understand-data/ data-title="Can we use neural network to understand data?" data-description="Using a Class Activation Map to explain the decision made by a neural network"><i class="fab fa-blogger fa-fw"></i></a><a href=# onclick=return!1 title="Share on Evernote" data-sharer=evernote data-url=../can-we-use-neural-network-to-understand-data/ data-title="Can we use neural network to understand data?"><i class="fab fa-evernote fa-fw"></i></a></span>
+</div>
+</div>
+</div>
+<div class=post-info-more>
+<section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=../tags/deep-learning/>Deep Learning</a>,&nbsp;<a href=../tags/fastai/>Fastai</a>,&nbsp;<a href=../tags/cam/>CAM</a>,&nbsp;<a href=../tags/model-explainability/>model explainability</a></section>
+<section>
+<span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=../>Home</a></span>
+</section>
+</div>
+<div class=post-nav><a href=../nbdev.jl-and-literate-programming/ class=prev rel=prev title=Nbdev.jl-And-Literate-programming><i class="fas fa-angle-left fa-fw"></i>Nbdev.jl-And-Literate-programming</a></div>
+</div>
+<div id=comments></div></article></div>
+</main><footer class=footer>
+<div class=footer-container><div class=footer-line>
+Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.92.2">Hugo</a>&nbsp;|&nbsp;Theme - <a href=https://github.com/HEIGE-PCloud/DoIt target=_blank rel="noopener noreffer" title="DoIt 0.2.13"><i class="far fa-edit fa-fw"></i> DoIt</a>
+</div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2019 - 2022</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=../ target=_blank rel="noopener noreferrer">Satyabrata pal</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div>
+</div></footer></div>
+<div id=fixed-buttons><a href=#back-to-top id=back-to-top-button class=fixed-button title="Back to Top">
+<i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments">
+<i class="fas fa-comment fa-fw"></i>
+</a>
+</div><div id=cookieconsent-container></div><div class=assets><link rel=stylesheet href=../lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=../lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=../lib/lunr/lunr.min.js></script><script type=text/javascript src=../lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=../lib/cookieconsent/cookieconsent.min.js defer></script><script type=text/javascript src=../lib/topbar/topbar.min.js></script><script type=text/javascript src=../lib/pjax/pjax.min.js></script><script type=text/javascript src=../js/theme.min.js></script></div>
+<div class=pjax-assets><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:10},comment:{},cookieconsent:{content:{dismiss:"Got it!",link:"Learn more",message:"This website uses Cookies to improve your experience."},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},data:{"desktop-header-typeit":"Satyabrata pal","mobile-header-typeit":"Satyabrata pal"},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",maxResultLength:10,noResultsFound:"No results found",snippetLength:30,type:"lunr"},sharerjs:!0,typeit:{cursorChar:"|",cursorSpeed:1e3,data:{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},duration:-1,speed:100}}</script><script type=text/javascript src=../lib/lightgallery/lightgallery.min.js></script><script type=text/javascript src=../lib/lightgallery/lg-thumbnail.min.js></script><script type=text/javascript src=../lib/lightgallery/lg-zoom.min.js></script><script type=text/javascript src=../lib/clipboard/clipboard.min.js></script><script type=text/javascript src=../lib/sharer/sharer.min.js></script><script type=text/javascript src=../lib/typeit/typeit.min.js></script><script type=text/javascript src=../lib/katex/katex.min.js defer></script><script type=text/javascript src=../lib/katex/auto-render.min.js defer></script><script type=text/javascript src=../lib/katex/copy-tex.min.js defer></script><script type=text/javascript src=../lib/katex/mhchem.min.js defer></script><script type=text/javascript src=../js/katex.min.js defer></script><script type=text/javascript src=../js/cookieconsent.min.js defer></script><link rel=stylesheet href=../lib/lightgallery/lightgallery.min.css><link rel=stylesheet href=../lib/katex/katex.min.css><link rel=stylesheet href=../lib/katex/copy-tex.min.css></div>
+</body>
+</html>
