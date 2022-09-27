@@ -21,4 +21,5 @@ website:
 
 format:
   html:
+    toc: true
     theme: litera
