@@ -2,7 +2,7 @@
   {
     "listing": "/image-restoration-series.html",
     "items": [
-      "/posts/image-restoration-series/Chapter1-Creating-an-image-restoration-tool-using-deep-learning/Chapter1-Creating-an-image-restoration-tool-using-deep-learning.html"
+      "/posts/image-restoration-series/chapter1-deblur.html"
     ]
   },
   {
@@ -13,7 +13,7 @@
     "listing": "/blog.html",
     "items": [
       "/posts/blog.html",
-      "/posts/image-restoration-series/Chapter1-Creating-an-image-restoration-tool-using-deep-learning/Chapter1-Creating-an-image-restoration-tool-using-deep-learning.html",
+      "/posts/image-restoration-series/chapter1-deblur.html",
       "/posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html",
       "/posts/Nbdev.jl-And-Literate-programming/Nbdev.jl-And-Literate-programming.html",
       "/posts/Extending-Fastai-For-Custom-Task/Extending-Fastai-For-Custom-Task.html",

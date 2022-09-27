@@ -12,9 +12,9 @@
 <generator>quarto-1.1.251</generator>
 <lastBuildDate>Mon, 26 Sep 2022 00:00:00 GMT</lastBuildDate>
 <item>
-  <title>Chapter 1 - Creating an image restoration tool using deep learning</title>
+  <title>Chapter 1 - Deblur</title>
   <dc:creator>Satyabrata pal</dc:creator>
-  <link>https://www.satyabratapal.xyz/posts/image-restoration-series/Chapter1-Creating-an-image-restoration-tool-using-deep-learning/Chapter1-Creating-an-image-restoration-tool-using-deep-learning.html</link>
+  <link>https://www.satyabratapal.xyz/posts/image-restoration-series/chapter1-deblur.html</link>
   <description><![CDATA[ 
 
 
@@ -278,7 +278,7 @@ Note
 <div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1">show_plot(files_hr1[<span class="dv" style="color: #AD0000;">0</span>], files_crappy1[<span class="dv" style="color: #AD0000;">0</span>], <span class="dv" style="color: #AD0000;">1</span>, (<span class="dv" style="color: #AD0000;">10</span>, <span class="dv" style="color: #AD0000;">10</span>))</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/Chapter1-Creating-an-image-restoration-tool-using-deep-learning/Chapter1-Creating-an-image-restoration-tool-using-deep-learning_files/figure-html/cell-20-output-1.png" class="img-fluid"></p>
+<p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/chapter1-deblur_files/figure-html/cell-20-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
@@ -427,7 +427,7 @@ Length: 2790, dtype: int64</code></pre>
 <div class="sourceCode cell-code" id="cb44" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1">dls.show_batch()</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/Chapter1-Creating-an-image-restoration-tool-using-deep-learning/Chapter1-Creating-an-image-restoration-tool-using-deep-learning_files/figure-html/cell-33-output-1.png" class="img-fluid"></p>
+<p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/chapter1-deblur_files/figure-html/cell-33-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <section id="feature-loss" class="level3">
@@ -435,7 +435,7 @@ Length: 2790, dtype: int64</code></pre>
 <p>In the paper <a href="https://arxiv.org/abs/1603.08155">“Perceptual Losses for Real-Time Style Transfer and Super-Resolution</a> the authors proposed a kind of loss known as perceptual loss which would compare different feature maps of the target image with the feature map of the generated image to see if teh generated image’s features are the same as the actual image. This can otherwise be known as “feature loss” as described in the <a href="https://youtu.be/9spwoDYwW_I">Fastai course 2019 lesson 7</a>.</p>
 <p>The below doodle gives a very simple overview of the method used by the authors of the <a href="https://arxiv.org/abs/1603.08155">“Perceptual Losses for Real-Time Style Transfer and Super-Resolution</a> paper</p>
 <p align="center">
-<img src="https://www.satyabratapal.xyz/posts/image-restoration-series/Chapter1-Creating-an-image-restoration-tool-using-deep-learning/featureloss.png">
+<img src="https://www.satyabratapal.xyz/posts/image-restoration-series/featureloss.png">
 </p>
 <p>In the proposed method, the hourglass shaped figure is a pre-cursor to “Unet” which is made up of a encoder for learning the features of an input image and a decoder which would reconstruct the image while upscaling the image.</p>
 <blockquote class="blockquote">
@@ -449,7 +449,7 @@ Length: 2790, dtype: int64</code></pre>
 <p>If recall the diagram from previous section, you will notice that we need to extract the features from our input image as well as the target image which we can compare later. To extract the features, we will use a simple pre-trained network like “vgg16”.</p>
 <p>This below is a representation of the pre-trained network which we would be using to extract the features from our images. The sections in this image represents different layers of the network and the downward arrows represent the extraction of the features.</p>
 <p align="center">
-<img src="https://www.satyabratapal.xyz/posts/image-restoration-series/Chapter1-Creating-an-image-restoration-tool-using-deep-learning/featuremap.png">
+<img src="https://www.satyabratapal.xyz/posts/image-restoration-series/featuremap.png">
 </p>
 <p>The features are grabbed just before the grid size changes and the maxpooling layer in network is where the grid size change occurs.</p>
 </section>
@@ -541,7 +541,7 @@ Downloading: "https://download.pytorch.org/models/vgg16_bn-6c64b313.pth" to /roo
 <div class="sourceCode cell-code" id="cb52" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1">dls.show_batch()</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/Chapter1-Creating-an-image-restoration-tool-using-deep-learning/Chapter1-Creating-an-image-restoration-tool-using-deep-learning_files/figure-html/cell-39-output-1.png" class="img-fluid"></p>
+<p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/chapter1-deblur_files/figure-html/cell-39-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
@@ -631,7 +631,7 @@ Downloading: "https://download.pytorch.org/models/resnet34-b627a593.pth" to /roo
 
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/Chapter1-Creating-an-image-restoration-tool-using-deep-learning/Chapter1-Creating-an-image-restoration-tool-using-deep-learning_files/figure-html/cell-41-output-3.png" class="img-fluid"></p>
+<p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/chapter1-deblur_files/figure-html/cell-41-output-3.png" class="img-fluid"></p>
 </div>
 </div>
 <p><code>lr_find</code> has a few different methods of finding the learning rate but the “valley” and “slide” functions provide suitable learning rate most of the time.</p>
@@ -781,7 +781,7 @@ Better model found at epoch 3 with valid_loss value: 1.8562445640563965.</code><
 
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/Chapter1-Creating-an-image-restoration-tool-using-deep-learning/Chapter1-Creating-an-image-restoration-tool-using-deep-learning_files/figure-html/cell-44-output-3.png" class="img-fluid"></p>
+<p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/chapter1-deblur_files/figure-html/cell-44-output-3.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
@@ -811,7 +811,7 @@ Better model found at epoch 3 with valid_loss value: 1.8562445640563965.</code><
 <div class="sourceCode cell-code" id="cb64" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1">dls.show_batch()</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/Chapter1-Creating-an-image-restoration-tool-using-deep-learning/Chapter1-Creating-an-image-restoration-tool-using-deep-learning_files/figure-html/cell-47-output-1.png" class="img-fluid"></p>
+<p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/chapter1-deblur_files/figure-html/cell-47-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>since we have re-initialized our unet_learner, we would need to assign the new dataloader (the one with 256px images) to the learner.</p>
@@ -860,7 +860,7 @@ Better model found at epoch 3 with valid_loss value: 1.8562445640563965.</code><
 
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/Chapter1-Creating-an-image-restoration-tool-using-deep-learning/Chapter1-Creating-an-image-restoration-tool-using-deep-learning_files/figure-html/cell-50-output-3.png" class="img-fluid"></p>
+<p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/chapter1-deblur_files/figure-html/cell-50-output-3.png" class="img-fluid"></p>
 </div>
 </div>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
@@ -1076,7 +1076,7 @@ Better model found at epoch 4 with valid_loss value: 1.3559863567352295.</code><
 
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/Chapter1-Creating-an-image-restoration-tool-using-deep-learning/Chapter1-Creating-an-image-restoration-tool-using-deep-learning_files/figure-html/cell-53-output-3.png" class="img-fluid"></p>
+<p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/chapter1-deblur_files/figure-html/cell-53-output-3.png" class="img-fluid"></p>
 </div>
 </div>
 <p>So, the results here have improved as compared to the 128px images. You see that’s how progressive resizing helps. Starting with smaller sized images makes training faster.</p>
@@ -1153,7 +1153,7 @@ Better model found at epoch 4 with valid_loss value: 1.3559863567352295.</code><
 <div class="sourceCode cell-code" id="cb83" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb83-1">dls.show_batch()</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/Chapter1-Creating-an-image-restoration-tool-using-deep-learning/Chapter1-Creating-an-image-restoration-tool-using-deep-learning_files/figure-html/cell-61-output-1.png" class="img-fluid"></p>
+<p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/chapter1-deblur_files/figure-html/cell-61-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>Create the Unet learner as before.</p>
@@ -1217,7 +1217,7 @@ Better model found at epoch 4 with valid_loss value: 1.3559863567352295.</code><
  [&lt;AxesSubplot:&gt; &lt;AxesSubplot:&gt; &lt;AxesSubplot:&gt;]]</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/Chapter1-Creating-an-image-restoration-tool-using-deep-learning/Chapter1-Creating-an-image-restoration-tool-using-deep-learning_files/figure-html/cell-66-output-2.png" class="img-fluid"></p>
+<p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/chapter1-deblur_files/figure-html/cell-66-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
@@ -1242,7 +1242,7 @@ Better model found at epoch 4 with valid_loss value: 1.3559863567352295.</code><
 
  ]]></description>
   <category>Deep Learning</category>
-  <guid>https://www.satyabratapal.xyz/posts/image-restoration-series/Chapter1-Creating-an-image-restoration-tool-using-deep-learning/Chapter1-Creating-an-image-restoration-tool-using-deep-learning.html</guid>
+  <guid>https://www.satyabratapal.xyz/posts/image-restoration-series/chapter1-deblur.html</guid>
   <pubDate>Mon, 26 Sep 2022 00:00:00 GMT</pubDate>
 </item>
 <item>

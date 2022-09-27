@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Satyabrata pal">
+<meta name="dcterms.date" content="2022-09-26">
+<meta name="description" content="Using deep learning to restore and correct images">
+
+<title>Satyabrata pal - Chapter 1 - Deblur</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-6WXK83Q2S1"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-6WXK83Q2S1', { 'anonymize_ip': true});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Satyabrata pal</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html">Blog</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../series.html">Series</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/sapal6"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/thecodingprojec"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.youtube.com/channel/UCNWi3qvLjYdSAqKnt1uZj-w"><i class="bi bi-youtube" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#image-restoration" id="toc-image-restoration" class="nav-link active" data-scroll-target="#image-restoration">Image restoration</a></li>
+  <li><a href="#pre-requisites" id="toc-pre-requisites" class="nav-link" data-scroll-target="#pre-requisites">Pre-requisites</a></li>
+  <li><a href="#getting-the-data" id="toc-getting-the-data" class="nav-link" data-scroll-target="#getting-the-data">Getting the data</a></li>
+  <li><a href="#downloading-the-data" id="toc-downloading-the-data" class="nav-link" data-scroll-target="#downloading-the-data">Downloading the data</a></li>
+  <li><a href="#crappifying" id="toc-crappifying" class="nav-link" data-scroll-target="#crappifying">Crappifying</a></li>
+  <li><a href="#grabbing-the-data" id="toc-grabbing-the-data" class="nav-link" data-scroll-target="#grabbing-the-data">Grabbing the data</a>
+  <ul class="collapse">
+  <li><a href="#feature-loss" id="toc-feature-loss" class="nav-link" data-scroll-target="#feature-loss">Feature loss</a></li>
+  </ul></li>
+  <li><a href="#extracting-features" id="toc-extracting-features" class="nav-link" data-scroll-target="#extracting-features">Extracting features</a></li>
+  <li><a href="#feature-loss-1" id="toc-feature-loss-1" class="nav-link" data-scroll-target="#feature-loss-1">Feature Loss</a></li>
+  <li><a href="#grabbing-data" id="toc-grabbing-data" class="nav-link" data-scroll-target="#grabbing-data">Grabbing data</a></li>
+  <li><a href="#unet" id="toc-unet" class="nav-link" data-scroll-target="#unet">Unet</a></li>
+  <li><a href="#progressive-resizing" id="toc-progressive-resizing" class="nav-link" data-scroll-target="#progressive-resizing">Progressive resizing</a></li>
+  <li><a href="#observations-from-my-experiments" id="toc-observations-from-my-experiments" class="nav-link" data-scroll-target="#observations-from-my-experiments">Observations from my experiments</a></li>
+  <li><a href="#inference" id="toc-inference" class="nav-link" data-scroll-target="#inference">Inference</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#reading-list" id="toc-reading-list" class="nav-link" data-scroll-target="#reading-list">Reading list</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Chapter 1 - Deblur</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Deep Learning</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Using deep learning to restore and correct images
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Satyabrata pal </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 26, 2022</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<p>Photography is one of my hobbies and a good percentage of my photography workflow is spent on correcting various artifacts in images. I always wondered if there is I could efficiently automate the process of image correction/restoration but I didn’t pay much attention to image restoration using deep learning. So, for the past couple of months I started playing around with different techniques in the image restoration side of deep learning in the hopes of creating a tool that would assist me in image restoration part of my photography workflow and whatever I have learnt till now, I am putting into a series of articles.</p>
+<p>This is first in a series of such articles where we will try to build a image correction tool by implementing some cool generative imaging techniques using <a href="https://docs.fast.ai/">Fastai</a> and pytorch. Infact this entire series is inspired by the <a href="https://github.com/sapal6/course-v3/blob/master/nbs/dl1/lesson7-superres.ipynb">fastai course from the year 2018</a>.</p>
+<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+📒 Side Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Fastai is a deep learning library built on top of pytorch. Fastai provides powerful APIs to create a wide range of deep learning architectures and it’s layered API makes it easy to implement new architectures as well.</p>
+</div>
+</div>
+<p>At the end of the article I will also post links to different resources from which I got to know a lot about GANs and related techniques.</p>
+<p>At the begining of this notebook we will install all the required packages.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext autoreload</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>autoreload <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>: <span class="im">import</span> fastkaggle</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> ModuleNotFoundError:</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">!</span>pip install <span class="op">-</span>Uq fastkaggle</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv</code></pre>
+</div>
+</div>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>: <span class="im">import</span> fastai</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> ModuleNotFoundError:</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">!</span>pip install <span class="op">-</span>Uq fastai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv</code></pre>
+</div>
+</div>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install fastkaggle if not available</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>: <span class="im">import</span> fastaibreadcrumbs</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> ModuleNotFoundError:</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">!</span>pip install <span class="op">-</span>Uq fastaibreadcrumbs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv</code></pre>
+</div>
+</div>
+<p>Then we will import the required modules.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gc</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastai.vision.<span class="bu">all</span> <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastai.vision.gan <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastkaggle <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastaibreadcrumbs.core <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="image-restoration" class="level3">
+<h3 class="anchored" data-anchor-id="image-restoration">Image restoration</h3>
+<p>Simply put Image restoration is the task of correcting imperfections in images. For example, you have taken some photographs of your pet and the photo, although it’s good but suffers from camera shake. Wouldn’t it be nice if you could remove some of the camera shake from the image so that you don’t have to discard the image altogether?</p>
+<p>In this article we would try to achieve just that using deep learning.</p>
+</section>
+<section id="pre-requisites" class="level3">
+<h3 class="anchored" data-anchor-id="pre-requisites">Pre-requisites</h3>
+<p>This article and the other upcoming articles in this series needs some basic understanding of deep learning. I would recommend you to go through the <a href="https://course.fast.ai/">“Practical Deep Learning”</a> course to get an understanding about deep learning.</p>
+</section>
+<section id="getting-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="getting-the-data">Getting the data</h3>
+<p>I would need training data for my task but it so happens that my task is an unique one and I would need to collect my own data. One way collect data is to create them.</p>
+<p>To create data I would need to collect some images first and then artificially introduce shakes and blurs into these images and to do this we will write some code to “crappify” data.</p>
+<blockquote class="blockquote">
+<p>I heard this term “crappify” and this technique of creating “bad” data in <a href="https://youtu.be/9spwoDYwW_I">lesson-7 of Fastai’s 2019 course</a>.</p>
+</blockquote>
+<p>I have created a <a href="https://www.kaggle.com/datasets/sapal6/superresolution">dataset</a> of high resolution images that I collected from the free stock photography website <a href="https://www.pexels.com/">pexels.com</a>. During the training cycle of my model I combined my data with another <a href="https://www.kaggle.com/datasets/thaihoa1476050/df2k-ost">dataset</a> which also had some more high resolution images.</p>
+</section>
+<section id="downloading-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="downloading-the-data">Downloading the data</h2>
+<p>I have created a tiny library <a href="https://sapal6.github.io/fastaibreadcrumbs/">“fastaibreadcrumbs”</a>. It provides some convinience functions that extends a few of the functionalities available in the <a href="https://fastai.github.io/fastkaggle/">“fastkaggle”</a> library.</p>
+<p>“fastaibreadcrumbs” provides a <code>setup_data</code> using which you can pull any kaggle non-competition dataset onto your machine. Just provide the username from the kaggle dataset page and the dataset name.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you are trying to pull a competition dataset then fastkaggle has an equivalent function <code>setup_comp</code>.</p>
+</div>
+</div>
+<p>We will pull the first dataset (the one I collected from pexels.com)</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>path1 <span class="op">=</span> setup_data(<span class="st">'sapal6'</span>, <span class="st">'superresolution'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Warning: Your Kaggle API key is readable by other users on this system! To fix this, you can run 'chmod 600 /root/.kaggle/kaggle.json'</code></pre>
+</div>
+</div>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>path1.ls()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>(#11) [Path('superresolution/trains'),Path('superresolution/nature'),Path('superresolution/kids-playing'),Path('superresolution/fireworks'),Path('superresolution/busystreet'),Path('superresolution/dogs-running'),Path('superresolution/sports'),Path('superresolution/underwater'),Path('superresolution/dance'),Path('superresolution/wildlife')...]</code></pre>
+</div>
+</div>
+<p>Then we will pull the other dataset from kaggle which I will combine with my dataset.</p>
+<blockquote class="blockquote">
+<p>Sometimes more data helps. While experimenting for this tutorial, I found that the amount of data that I had in my dataset was not enough and adding a few more samples expanded the variation in the input. That’s why I augmented my dataset with some external data (which in this case was another dataset from kaggle).</p>
+</blockquote>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If your model’s results are not at par then you should first try to bring in more training data (if it’s possible because in many domains more data is simply hard to come by). If addign more data doesn’t improve your model then you should look to other techniques.</p>
+</div>
+</div>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>path2 <span class="op">=</span> setup_data(<span class="st">'thaihoa1476050'</span>, <span class="st">'df2k-ost'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>path2.ls()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>(#2) [Path('df2k-ost/train'),Path('df2k-ost/test')]</code></pre>
+</div>
+</div>
+<p>The next thing that I am going to do is to create a config sort of thing that would help me to store frequently used values.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In real world a better way is to create a config file in your project.</p>
+</div>
+</div>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>config <span class="op">=</span> {<span class="st">'root'</span>:Path(<span class="st">"."</span>)}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="crappifying" class="level2">
+<h2 class="anchored" data-anchor-id="crappifying">Crappifying</h2>
+<p>In order to get the target images which in our case are the images having “camera shake” in them, we need to simulate motion blur. “fastaibreadcrumbs” provides <code>Crappifier</code> which takes in images and creates another version of the same image that has motion blur in it.</p>
+<p>First let’s get the source and destination paths.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>config[<span class="st">'path_hr1'</span>] <span class="op">=</span> path1</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>config[<span class="st">'path_hr2'</span>] <span class="op">=</span> path2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>config[<span class="st">'path_crappy'</span>] <span class="op">=</span> Path(<span class="st">'crappy'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>fastai provides <code>get_image_files</code> which fetches all teh image files from a given path. We will use this get the images from our first dataset.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>files_hr1 <span class="op">=</span> get_image_files(config[<span class="st">'path_hr1'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>files_hr1[:<span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>(#10) [Path('superresolution/trains/0055.jpg'),Path('superresolution/trains/0002.jpg'),Path('superresolution/trains/0067.jpg'),Path('superresolution/trains/0022.jpg'),Path('superresolution/trains/0012.jpg'),Path('superresolution/trains/0019.jpg'),Path('superresolution/trains/0009.jpg'),Path('superresolution/trains/0051.jpg'),Path('superresolution/trains/0047.jpg'),Path('superresolution/trains/0072.jpg')]</code></pre>
+</div>
+</div>
+<p>similarly we will get the images from teh second dataset path.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>files_hr2 <span class="op">=</span> get_image_files(config[<span class="st">'path_hr2'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Let’s crappify a single image to check if things work.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>Crappifier(config[<span class="st">"path_crappy"</span>])(files_hr1[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Let’s grab our crappified image.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>files_crappy1 <span class="op">=</span> get_image_files(config[<span class="st">'path_crappy'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>files_crappy1[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>Path('crappy/path_860/trains/0055.jpg')</code></pre>
+</div>
+</div>
+<p>“fastaibreadcrumbs” provides the convinience function <code>show_plot</code> which let’s you display two images side by side.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you look into the source code of <code>show_plot</code> it’s only a few lines of code. Under the hood it’s only matplotlib functions. So, if you don’t want to use <code>show_plot</code> then you can create your own plotting function.</p>
+</div>
+</div>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>show_plot(files_hr1[<span class="dv">0</span>], files_crappy1[<span class="dv">0</span>], <span class="dv">1</span>, (<span class="dv">10</span>, <span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="chapter1-deblur_files/figure-html/cell-20-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#cleaning up the crappy directory.</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>shutil.rmtree(config[<span class="st">'path_crappy'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>While feeding data into a neural network, all teh images needs to be in same size. So, let’s first check the sizes of our training images.</p>
+<p>There is a neat trick which I learned from <a href="https://www.kaggle.com/code/jhoward/first-steps-road-to-the-top-part-1">Jeremy Howard’s notebook</a> to get the image size. I am using the same code here.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastcore.parallel <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(o): <span class="cf">return</span> PILImage.create(o).size</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>sizes <span class="op">=</span> parallel(f, files_hr1<span class="op">+</span>files_hr2, n_workers<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>pd.Series(sizes).value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>/usr/local/lib/python3.9/dist-packages/PIL/Image.py:959: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+/usr/local/lib/python3.9/dist-packages/PIL/Image.py:959: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>(1880, 1253)    4147
+(867, 1300)     2608
+(2040, 1356)    1435
+(496, 368)       637
+(1733, 1300)     623
+                ... 
+(464, 416)         1
+(1803, 1300)       1
+(1756, 1300)       1
+(1235, 1300)       1
+(2040, 1740)       1
+Length: 2790, dtype: int64</code></pre>
+</div>
+</div>
+<p>Now, there are a variety of image sizes and orientations but most of the images have there sizes in the range of a minimum of 800ish(shortest side) and 1300is(longest side). So, I will randomly pick a proportion which allows me to resize an image having teh longest side as 860. I could also have picked up a higher size but then the compute required would have been higher.</p>
+<p>Fastai can resize images while loading data but all those computation would take time and the training speed might get affected on low power devices (for example my laptop which has a humble gpu). We may end up resizing the images to still lower sizes during the creation of dataloader but an initial resizing really helps to save some computing during the training time.</p>
+<blockquote class="blockquote">
+<p>These resizing tricks to save computing and speeding up training is what I got to know from <a href="https://www.kaggle.com/code/jhoward/first-steps-road-to-the-top-part-1">Jeremy Howard’s notebook</a> and from my own experiments that I did on my local machine and my experiments done on kaggle kernel. Your experience might vary depending upon the computing power that you have access to. So, again feel free to experiment.</p>
+</blockquote>
+<p>I will create a config for the path where I am goign to store my resized images.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>config[<span class="st">'path_860'</span>] <span class="op">=</span> Path(<span class="st">'path_860'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>fastai provides <code>resize_images</code> which resizes your source images to the desired size. The below function <code>resz_imgs</code> is just a wrapper on top of fastai’s <code>resize_images</code>. Pass on the source and destination paths and pass the maximum size that you want your images to be resized to. <code>resize_images</code> will then resize the images to the new proportions while keeping the longest side to the given <code>max_sz</code> and accordingly modify the shortest side.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> resz_imgs(source: Path, dest: Path, max_sz: <span class="bu">int</span>):</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    resize_images(source, dest<span class="op">=</span>dest, max_size<span class="op">=</span>max_sz, recurse<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Let’s resize the first dataset.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#for first set</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>resz_imgs(config[<span class="st">'path_hr1'</span>], config[<span class="st">'path_860'</span>], max_sz<span class="op">=</span><span class="dv">860</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Then the second dataset.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#for second set</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>resz_imgs(config[<span class="st">'path_hr2'</span>], config[<span class="st">'path_860'</span>], max_sz<span class="op">=</span><span class="dv">860</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Next, we are going to crappify our resized images and we are going to do that in parallel. Do do things in parallel we will use <code>parallel</code> provided by <a href="https://fastcore.fast.ai/">fastcore</a>. It’s similar to python standard library’s parallel function but much more convenient.</p>
+<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+📒 Side Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>fastcore is a underrated python library which supercharges python.</p>
+</div>
+</div>
+<p>For parallel crappification, I will use <code>crappify_imgs</code> provided by “fastaibreadcrumbs” which let’s you provide the high resolution image path and the destination path, strength of the blur (as <code>sz</code>).</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>crappify_imgs(config[<span class="st">'path_860'</span>], config[<span class="st">'path_crappy'</span>], n_workers<span class="op">=</span><span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="grabbing-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="grabbing-the-data">Grabbing the data</h2>
+<p>Now that crappification is done, let’s grab our input and target data. We can do this by using fastai <code>Datablock</code> API. <code>Datablock</code> let’s you customize the way you want to grab your input and output.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>files_crappy <span class="op">=</span> get_image_files(config[<span class="st">'path_crappy'</span>])</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>files_crappy[:<span class="dv">4</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>(#4) [Path('crappy/path_860/trains/0055.jpg'),Path('crappy/path_860/trains/0002.jpg'),Path('crappy/path_860/trains/0067.jpg'),Path('crappy/path_860/trains/0022.jpg')]</code></pre>
+</div>
+</div>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>files_crappy[<span class="dv">0</span>].relative_to(config[<span class="st">'path_crappy'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>Path('path_860/trains/0055.jpg')</code></pre>
+</div>
+</div>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>dblock <span class="op">=</span> DataBlock(blocks<span class="op">=</span>(ImageBlock, ImageBlock),</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>                       get_y <span class="op">=</span> <span class="kw">lambda</span> x: x.relative_to(config[<span class="st">'path_crappy'</span>]),</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>                       splitter<span class="op">=</span>RandomSplitter(),</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>                       item_tfms<span class="op">=</span>Resize(<span class="dv">480</span>),</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>                       batch_tfms<span class="op">=</span>[<span class="op">*</span>aug_transforms(max_zoom<span class="op">=</span><span class="fl">2.</span>), Normalize.from_stats(<span class="op">*</span>imagenet_stats)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>In the first line we describe outr <code>blocks</code> which are the x and y. Here, our x and y both are images and thus we provide <code>Imageblock</code> as the blocks of choice. Then we use lambda function to tell fastai that we are expecting the crappy images as our y, whose filename match with the filename of the input images. After defining our labels (y) we tell fastai to randomly split our images into training and test data. Then we call the <code>Resize</code> since we want all our images to be of same size. Lastly we do some augmentations.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>dls <span class="op">=</span> dblock.dataloaders(files_crappy, bs<span class="op">=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>dls.show_batch()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="chapter1-deblur_files/figure-html/cell-33-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<section id="feature-loss" class="level3">
+<h3 class="anchored" data-anchor-id="feature-loss">Feature loss</h3>
+<p>In the paper <a href="https://arxiv.org/abs/1603.08155">“Perceptual Losses for Real-Time Style Transfer and Super-Resolution</a> the authors proposed a kind of loss known as perceptual loss which would compare different feature maps of the target image with the feature map of the generated image to see if teh generated image’s features are the same as the actual image. This can otherwise be known as “feature loss” as described in the <a href="https://youtu.be/9spwoDYwW_I">Fastai course 2019 lesson 7</a>.</p>
+<p>The below doodle gives a very simple overview of the method used by the authors of the <a href="https://arxiv.org/abs/1603.08155">“Perceptual Losses for Real-Time Style Transfer and Super-Resolution</a> paper</p>
+<p align="center">
+<img src="featureloss.png">
+</p>
+<p>In the proposed method, the hourglass shaped figure is a pre-cursor to “Unet” which is made up of a encoder for learning the features of an input image and a decoder which would reconstruct the image while upscaling the image.</p>
+<blockquote class="blockquote">
+<p>This is similar to super-resolution where an U-net is used to scale up the resolution of an image. Such a network can also be used for tasks like improving the quality of a crappy image.</p>
+</blockquote>
+<p>The colorful rectangle in the above figure is a pre-trained image model like vgg-16 which feeds on teh image generated by the U-net. While the generated image passes through the pre-trained image model, the feature map of the generated images are grabbed from the intermidiate layers of the vgg-16 model. The target image (actual data) is alos passed through this vgg-16 model it’s feature map is also extracted from teh intermidiate layers. After this is done, the feature map of the generated image is compared with the feature map of the target image. This is done by the feature loss function which is then used to re-train the U-net in order to make the generated model appear as close as possible to the actual thing.</p>
+</section>
+</section>
+<section id="extracting-features" class="level2">
+<h2 class="anchored" data-anchor-id="extracting-features">Extracting features</h2>
+<p>If recall the diagram from previous section, you will notice that we need to extract the features from our input image as well as the target image which we can compare later. To extract the features, we will use a simple pre-trained network like “vgg16”.</p>
+<p>This below is a representation of the pre-trained network which we would be using to extract the features from our images. The sections in this image represents different layers of the network and the downward arrows represent the extraction of the features.</p>
+<p align="center">
+<img src="featuremap.png">
+</p>
+<p>The features are grabbed just before the grid size changes and the maxpooling layer in network is where the grid size change occurs.</p>
+</section>
+<section id="feature-loss-1" class="level2">
+<h2 class="anchored" data-anchor-id="feature-loss-1">Feature Loss</h2>
+<p>Taking all the previous things into account, we will use a pre-trained vgg16 to create a loss function that will help the network to compare the pixels of the target and the input image and check if the two images are the same.</p>
+<p>“fastaibreadcrumbs” provides <code>calc_ft_loss</code> which does the heavy lifting of initiating a vgg16 pre-trained model and calculating the feature loss for you.</p>
+<blockquote class="blockquote">
+<p>If you wan to know more about what happens under the hood then I feel free to read through the <a href="https://github.com/sapal6/course-v3/blob/master/nbs/dl1/lesson7-superres.ipynb">fastai course(2018) notebook here</a> and watch the lecture <a href="https://youtu.be/9spwoDYwW_I">here</a></p>
+</blockquote>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>feat_loss <span class="op">=</span> calc_ft_loss()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>/usr/local/lib/python3.9/dist-packages/torchvision/models/_utils.py:135: UserWarning: Using 'weights' as positional parameter(s) is deprecated since 0.13 and will be removed in 0.15. Please use keyword parameter(s) instead.
+  warnings.warn(
+/usr/local/lib/python3.9/dist-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and will be removed in 0.15. The current behavior is equivalent to passing `weights=VGG16_BN_Weights.IMAGENET1K_V1`. You can also use `weights=VGG16_BN_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+Downloading: "https://download.pytorch.org/models/vgg16_bn-6c64b313.pth" to /root/.cache/torch/hub/checkpoints/vgg16_bn-6c64b313.pth</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"a724f833672d49efa642ae3c45abd106","version_major":2,"version_minor":0}
+</script>
+</div>
+</div>
+</section>
+<section id="grabbing-data" class="level2">
+<h2 class="anchored" data-anchor-id="grabbing-data">Grabbing data</h2>
+<p>Like before we have to create a dataloader which would load adata onto the device. We can use fastai’s dataloader for this purpose but for convenience I will use the <code>get_unet_dls</code> from “fastaibreadcrumbs” which is simply a wrapper over a fastai datablock with two Imageblocks (one Imageblock for input and one Imageblock for target) and a dataloader.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>{'root': Path('.'),
+ 'path_hr1': Path('superresolution'),
+ 'path_hr2': Path('df2k-ost'),
+ 'path_crappy': Path('crappy'),
+ 'path_860': Path('path_860')}</code></pre>
+</div>
+</div>
+<p>…setting some parameters like weight decay, nymber of epochs etc…</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># hyperparameters</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>config[<span class="st">'epoch'</span>] <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>config[<span class="st">'wd'</span>] <span class="op">=</span> <span class="fl">1e-3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>…then we will set our item transformations. These are the transformations which will be applied to each item when they are loaded. Here, we will reduce the size of images to a smaller size. We will use <code>Resize</code> for this. Then we will setup our “batch transformations”, these are the transformations which will be applied to the images once they are grouped into batches. In our case we will apply image augmentations to our batches which will do things like rotate the images, brighten up the images, darken the images, flip the images etc. After that we will setup the method by the way of which we want to grab our target images. Here, we will use a path relative to our crappy images because the directory structure and the image name of the crappy images matches with that of our input images.</p>
+<blockquote class="blockquote">
+<p>Training on a smaller image size will make our training faster and this will enabel use to iterate faster in case we want to try a lots of things to find the best settings fro our training. There is one more reason due to which we may want to start with a smaller image size. We are going to use something known as “progressive resizing” , whereby we start training with small images and then use the model trained on these smaller images as a pre-trained model for another training setup where we use slightly bigger images. This makes the trainign a lot faster then starting with big images from the get go. Remember that our goal is to make our training as fast as possible.</p>
+</blockquote>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co">#transformations</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>item_tfms <span class="op">=</span> Resize(<span class="dv">128</span>)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>batch_tfms <span class="op">=</span> [<span class="op">*</span>aug_transforms(max_zoom<span class="op">=</span><span class="fl">2.</span>), Normalize.from_stats(<span class="op">*</span>imagenet_stats)]</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>get_y <span class="op">=</span> <span class="kw">lambda</span> x: x.relative_to(config[<span class="st">'path_crappy'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>After all these are done, we will pass the following to the <code>get_unet_dls</code> function –&gt;</p>
+<ul>
+<li>batch size</li>
+<li>source i.e.&nbsp;the crappy file names</li>
+<li><code>get_y</code> i.e.&nbsp;the way to fetch our targets</li>
+<li><code>splitter</code> i.e.&nbsp;how to split our data into trainign and validation sets.</li>
+<li>item_tfms i.e.&nbsp;item transformations.</li>
+<li><code>batch_tfms</code> i.e.&nbsp;batch transformations.</li>
+</ul>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>dls<span class="op">=</span> get_unet_dls(<span class="dv">8</span>, source <span class="op">=</span> files_crappy, get_y <span class="op">=</span> get_y, </span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>                     splitter <span class="op">=</span> RandomSplitter(), item_tfms <span class="op">=</span> item_tfms,</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>                     batch_tfms <span class="op">=</span> batch_tfms)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>let’s see our samples.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>dls.show_batch()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="chapter1-deblur_files/figure-html/cell-39-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="unet" class="level2">
+<h2 class="anchored" data-anchor-id="unet">Unet</h2>
+<p>Now that we have our feature loss and data ready, let’s create a unet.</p>
+<p>Creating a basic unet is a one liner affair in fastai. Ofcourse, you can do all sorts of customization to your unet but I will use the minimalist way here and take advantage of the high level API in fastai.</p>
+<p>We will use the unet_learner parameters recommended <a href="https://github.com/sapal6/course-v3/blob/master/nbs/dl1/lesson7-superres.ipynb">here</a>.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>unet_learn <span class="op">=</span> unet_learner(dls, models.resnet34, loss_func<span class="op">=</span>feat_loss,</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>                          metrics<span class="op">=</span>LossMetrics(feat_loss.metric_names),</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>                          blur<span class="op">=</span><span class="va">True</span>, norm_type<span class="op">=</span>NormType.Weight)</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>gc.collect()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>/usr/local/lib/python3.9/dist-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and will be removed in 0.15, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.9/dist-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and will be removed in 0.15. The current behavior is equivalent to passing `weights=ResNet34_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet34_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+Downloading: "https://download.pytorch.org/models/resnet34-b627a593.pth" to /root/.cache/torch/hub/checkpoints/resnet34-b627a593.pth</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"f5fef45a64424fe3b60696acc3c67fc3","version_major":2,"version_minor":0}
+</script>
+</div>
+</div>
+<p>Notice that I have passed something like <code>LossMetrics(feat_loss.metric_names)</code> to the unet. This is our metric which will tell us how our unet is progressing. Where does this comes from?</p>
+<p>Well if you look into the source code of the <code>Feature_loss</code>-</p>
+<pre><code>class FeatureLoss(Module):
+    """Class to calculate feature loss"""
+    def __init__(self, m_feat, layer_ids, layer_wgts):
+        self.m_feat = m_feat
+        self.loss_features = [self.m_feat[i] for i in layer_ids]
+        self.hooks = hook_outputs(self.loss_features, detach=False)
+        self.wgts = layer_wgts
+        self.metric_names = ['pixel',] + [f'feat_{i}' for i in range(len(layer_ids))
+              ] + [f'gram_{i}' for i in range(len(layer_ids))]
+
+    def make_features(self, x, clone=False):
+        self.m_feat(x)
+        return [(o.clone() if clone else o) for o in self.hooks.stored]
+    
+    def forward(self, input, target, reduction='mean'):
+        out_feat = self.make_features(target, clone=True)
+        in_feat = self.make_features(input)
+        self.feat_losses = [pixel_loss(input,target,reduction=reduction)]
+        self.feat_losses += [pixel_loss(f_in, f_out,reduction=reduction)*w
+                             for f_in, f_out, w in zip(in_feat, out_feat, self.wgts)]
+        self.feat_losses += [pixel_loss(gram_matrix(f_in), gram_matrix(f_out),reduction=reduction)*w**2 * 5e3
+                             for f_in, f_out, w in zip(in_feat, out_feat, self.wgts)]
+        if reduction=='none': 
+            self.feat_losses = [f.mean(dim=[1,2,3]) for f in self.feat_losses[:4]] + [f.mean(dim=[1,2]) for f in self.feat_losses[4:]]
+        for n,l in zip(self.metric_names, self.feat_losses): setattr(self, n, l)
+        return sum(self.feat_losses)
+    
+    def __del__(self): self.hooks.remove()</code></pre>
+<p>…notice that we have something called <code>metric_names</code> there. This thing is the collection of the pixel loss and gram loss which can then be used as a metric by us.</p>
+<p>fastai provides the <code>lr_find</code> function which we will use to find a suitable learning rate.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> unet_learn.lr_find(suggest_funcs<span class="op">=</span>(valley, slide))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div>
+<div class="cell-output cell-output-display">
+
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="chapter1-deblur_files/figure-html/cell-41-output-3.png" class="img-fluid"></p>
+</div>
+</div>
+<p><code>lr_find</code> has a few different methods of finding the learning rate but the “valley” and “slide” functions provide suitable learning rate most of the time.</p>
+<p>The <code>lr_find</code> suggests very optimistic values of learning rates so that we don’t screw up our training but another thing that we can do is to look at the learning rate suggested by the “valley” and “slide” functions and then take a value in between these two.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>(lr.valley, lr.slide)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>(0.0003311311302240938, 0.0006918309954926372)</code></pre>
+</div>
+</div>
+<p>We will train the unet using the “one cycle policy”. From 50,000 feet, the one cycle policy can be explained like this “A one cycle policy trains the model with large and oscillating (changing between different values) learning rate in order to make the training faster and more accurate”. A more detailed explanation can be found in this cool <a href="https://iconof.com/1cycle-learning-rate-policy/">article</a>.</p>
+<p>There is one more trick that I am going to use in my unet_learner. I have experimented with quite a different versions of this notebook with variety of data (variations both in nterms of number of images and amount of data) and I have found that with data variations it becomes difficult for me to predict that a particular choice of “epoch numbers” will work everytime. So, I will need to tell fastai that when we need to stop training if my loss is not improving and save my modell whenever a “good” enough loss state is reached. This can be done by the <a href="https://docs.fast.ai/callback.tracker.html"><code>EarlyStoppingCallback</code></a> and <a href="https://docs.fast.ai/callback.tracker.html#savemodelcallback"><code>SaveModelCallback</code></a>. The former stops the model trainign if the loss doesn’t improve further and the latter will save the best possible model. I have provided links to the official documentation of these two functions if you wan tot know more about them.</p>
+<p>But hey! what’s a callback? Simply put a callback is a function that is passed as an argument to another function. It provides a way for the programmer to modify an existing piece of code without changing the structure of code. With callbacks you can modify the behaviour of your piece of code, say a function without changing the body of your current function. <a href="https://pythonexamples.org/python-callback-function/">Here</a> is an article that explains callbacks with examples.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>unet_learn.fit_one_cycle(config[<span class="st">'epoch'</span>], (lr.valley<span class="op">+</span>lr.slide)<span class="op">/</span><span class="dv">2</span>, pct_start<span class="op">=</span><span class="fl">0.9</span>, wd<span class="op">=</span>config[<span class="st">'wd'</span>], </span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>                         cbs<span class="op">=</span>[EarlyStoppingCallback(patience<span class="op">=</span><span class="dv">2</span>), SaveModelCallback(fname<span class="op">=</span><span class="st">'model_128'</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div>
+<div class="cell-output cell-output-display">
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>pixel</th>
+      <th>feat_0</th>
+      <th>feat_1</th>
+      <th>feat_2</th>
+      <th>gram_0</th>
+      <th>gram_1</th>
+      <th>gram_2</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>2.209806</td>
+      <td>2.456991</td>
+      <td>0.185003</td>
+      <td>0.207987</td>
+      <td>0.262833</td>
+      <td>0.114802</td>
+      <td>0.530690</td>
+      <td>0.872372</td>
+      <td>0.283306</td>
+      <td>06:00</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>2.042598</td>
+      <td>2.254473</td>
+      <td>0.171976</td>
+      <td>0.196098</td>
+      <td>0.245231</td>
+      <td>0.106519</td>
+      <td>0.463559</td>
+      <td>0.806346</td>
+      <td>0.264745</td>
+      <td>06:03</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>1.886767</td>
+      <td>2.064314</td>
+      <td>0.150376</td>
+      <td>0.181493</td>
+      <td>0.225683</td>
+      <td>0.098219</td>
+      <td>0.433128</td>
+      <td>0.729233</td>
+      <td>0.246182</td>
+      <td>06:01</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>1.694850</td>
+      <td>1.856245</td>
+      <td>0.135413</td>
+      <td>0.170341</td>
+      <td>0.208545</td>
+      <td>0.090624</td>
+      <td>0.365436</td>
+      <td>0.657052</td>
+      <td>0.228834</td>
+      <td>06:04</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Better model found at epoch 0 with valid_loss value: 2.45699143409729.
+Better model found at epoch 1 with valid_loss value: 2.2544734477996826.
+Better model found at epoch 2 with valid_loss value: 2.0643138885498047.
+Better model found at epoch 3 with valid_loss value: 1.8562445640563965.</code></pre>
+</div>
+</div>
+<p>we can view the predictions on the validation set using <code>show_results</code></p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>unet_learn.show_results()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div>
+<div class="cell-output cell-output-display">
+
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="chapter1-deblur_files/figure-html/cell-44-output-3.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="progressive-resizing" class="level2">
+<h2 class="anchored" data-anchor-id="progressive-resizing">Progressive resizing</h2>
+<p>Even with an image size of 128px our model is doing a good job of removing the motion blur and generating the blur free images. Now, let’s use this model as a pre-trained model fro our next training phase where we will increase the image size to 256px.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co">#transformations</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>item_tfms <span class="op">=</span> Resize(<span class="dv">256</span>)</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>batch_tfms <span class="op">=</span> [<span class="op">*</span>aug_transforms(max_zoom<span class="op">=</span><span class="fl">2.</span>), Normalize.from_stats(<span class="op">*</span>imagenet_stats)]</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>get_y <span class="op">=</span> <span class="kw">lambda</span> x: x.relative_to(config[<span class="st">'path_crappy'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>dls<span class="op">=</span> get_unet_dls(<span class="dv">8</span>, source <span class="op">=</span> files_crappy, get_y <span class="op">=</span> get_y, </span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>                     splitter <span class="op">=</span> RandomSplitter(), item_tfms <span class="op">=</span> item_tfms,</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>                     batch_tfms <span class="op">=</span> batch_tfms)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>dls.show_batch()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="chapter1-deblur_files/figure-html/cell-47-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>since we have re-initialized our unet_learner, we would need to assign the new dataloader (the one with 256px images) to the learner.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>unet_learn.dls <span class="op">=</span> dls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Load the model that was trained on the 128px images.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>unet_learn.load(<span class="st">'model_128'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>/usr/local/lib/python3.9/dist-packages/fastai/learner.py:58: UserWarning: Saved filed doesn't contain an optimizer state.
+  elif with_opt: warn("Saved filed doesn't contain an optimizer state.")</code></pre>
+</div>
+</div>
+<p>Remember that our input image size have changed now and so has the parameters of our model. Due to this we will have to find new learning rate.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> unet_learn.lr_find(suggest_funcs<span class="op">=</span>(valley, slide))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div>
+<div class="cell-output cell-output-display">
+
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="chapter1-deblur_files/figure-html/cell-50-output-3.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>(lr.valley, lr.slide)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>(9.120108734350652e-05, 0.0006918309954926372)</code></pre>
+</div>
+</div>
+<p>Next, we will fine tune our model on the new set of data. With <code>fine_tune</code> we ask fastai to freeze the model, train it for a epoch, unfreeze it and then train for some more epochs.</p>
+<p>In case you wan to understand more about <code>fine_tune</code>, then here is the <a href="https://github.com/fastai/fastai/blob/f2ab8ba78b63b2f4ebd64ea440b9886a2b9e7b6f/fastai/callback/schedule.py#L153">source code</a> and <a href="https://github.com/fastai/fastai/blob/f2ab8ba78b63b2f4ebd64ea440b9886a2b9e7b6f/fastai/callback/schedule.py#L153">here</a> is an old thread in the fastai forum where <code>fine_tune</code> was discussed.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>unet_learn.fine_tune(<span class="dv">5</span>, (lr.valley<span class="op">+</span>lr.slide)<span class="op">/</span><span class="dv">2</span>, pct_start<span class="op">=</span><span class="fl">0.9</span>, wd<span class="op">=</span>config[<span class="st">'wd'</span>], </span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>                         cbs<span class="op">=</span>[EarlyStoppingCallback(patience<span class="op">=</span><span class="dv">2</span>), SaveModelCallback(fname<span class="op">=</span><span class="st">'model_256'</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div>
+<div class="cell-output cell-output-display">
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>pixel</th>
+      <th>feat_0</th>
+      <th>feat_1</th>
+      <th>feat_2</th>
+      <th>gram_0</th>
+      <th>gram_1</th>
+      <th>gram_2</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>1.473990</td>
+      <td>1.519641</td>
+      <td>0.186348</td>
+      <td>0.215888</td>
+      <td>0.219089</td>
+      <td>0.080457</td>
+      <td>0.296886</td>
+      <td>0.394380</td>
+      <td>0.126594</td>
+      <td>16:53</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Better model found at epoch 0 with valid_loss value: 1.519641399383545.</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div>
+<div class="cell-output cell-output-display">
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>pixel</th>
+      <th>feat_0</th>
+      <th>feat_1</th>
+      <th>feat_2</th>
+      <th>gram_0</th>
+      <th>gram_1</th>
+      <th>gram_2</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>1.412022</td>
+      <td>1.459381</td>
+      <td>0.178994</td>
+      <td>0.212948</td>
+      <td>0.214645</td>
+      <td>0.078533</td>
+      <td>0.275205</td>
+      <td>0.375495</td>
+      <td>0.123562</td>
+      <td>17:30</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>1.368803</td>
+      <td>1.436245</td>
+      <td>0.174595</td>
+      <td>0.210241</td>
+      <td>0.212634</td>
+      <td>0.077483</td>
+      <td>0.268589</td>
+      <td>0.370479</td>
+      <td>0.122224</td>
+      <td>17:30</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>1.368343</td>
+      <td>1.437706</td>
+      <td>0.169373</td>
+      <td>0.206416</td>
+      <td>0.211114</td>
+      <td>0.077285</td>
+      <td>0.278587</td>
+      <td>0.373089</td>
+      <td>0.121841</td>
+      <td>17:31</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>1.324890</td>
+      <td>1.393757</td>
+      <td>0.164672</td>
+      <td>0.203151</td>
+      <td>0.207758</td>
+      <td>0.075826</td>
+      <td>0.261442</td>
+      <td>0.361697</td>
+      <td>0.119211</td>
+      <td>17:30</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>1.313353</td>
+      <td>1.355986</td>
+      <td>0.158461</td>
+      <td>0.200111</td>
+      <td>0.204974</td>
+      <td>0.074636</td>
+      <td>0.248391</td>
+      <td>0.351761</td>
+      <td>0.117653</td>
+      <td>17:30</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Better model found at epoch 0 with valid_loss value: 1.4593812227249146.
+Better model found at epoch 1 with valid_loss value: 1.4362448453903198.
+Better model found at epoch 3 with valid_loss value: 1.393756628036499.
+Better model found at epoch 4 with valid_loss value: 1.3559863567352295.</code></pre>
+</div>
+</div>
+<p>Let’s check the predictions on the validation set.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>unet_learn.show_results()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div>
+<div class="cell-output cell-output-display">
+
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="chapter1-deblur_files/figure-html/cell-53-output-3.png" class="img-fluid"></p>
+</div>
+</div>
+<p>So, the results here have improved as compared to the 128px images. You see that’s how progressive resizing helps. Starting with smaller sized images makes training faster.</p>
+<p>From this point onwards you can keep on increasing the image size and keep training until the performance of your model doesn’t improve much.</p>
+</section>
+<section id="observations-from-my-experiments" class="level2">
+<h2 class="anchored" data-anchor-id="observations-from-my-experiments">Observations from my experiments</h2>
+<p>I have actually done many different experiments on this and I have the followign observations –&gt;</p>
+<ul>
+<li><p>When sufficient data is available, training for a 4-5 epochs during each stage of progressive re-sizing is sufficient to generate “decently blur free” images.</p></li>
+<li><p>I have got decent results during training done on only 200 images but there were some noticeable artifacts in the generated images. An interesting thing I noticed was that the motion blur was removed.</p></li>
+<li><p>In my experiments even when I didn’t continue the training after I had trained the model on 256px images, decent results were produced on bigger sized images during inference.</p></li>
+</ul>
+</section>
+<section id="inference" class="level2">
+<h2 class="anchored" data-anchor-id="inference">Inference</h2>
+<p>Let’s test our model on unseen data. For this I have downloaded new images (which were not inlcuded in teh training data) from pexels.com.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>config[<span class="st">'test_860'</span>] <span class="op">=</span> Path(<span class="st">"test_860"</span>)</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>config[<span class="st">'test_crappy'</span>] <span class="op">=</span> Path(<span class="st">"test_crappy"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>files_test <span class="op">=</span> get_image_files(config[<span class="st">'test_860'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>files_test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>(#2) [Path('test_860/sports/pexels-pixabay-248547.jpg'),Path('test_860/signpost/signpost.jpg')]</code></pre>
+</div>
+</div>
+<p>…and crappified them like before.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>crappify_imgs(config[<span class="st">'test_860'</span>], config[<span class="st">'test_crappy'</span>], sz<span class="op">=</span><span class="dv">80</span>, n_workers<span class="op">=</span><span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>files_crappy <span class="op">=</span> get_image_files(config[<span class="st">'test_crappy'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>We also need to grab our dataloader with the same type of transformations as before but this time we will take a 860px image because we are trying to generate “full size” blur free image.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co">#transformations</span></span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>item_tfms <span class="op">=</span> Resize(<span class="dv">860</span>)</span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>batch_tfms <span class="op">=</span> [<span class="op">*</span>aug_transforms(max_zoom<span class="op">=</span><span class="fl">2.</span>), Normalize.from_stats(<span class="op">*</span>imagenet_stats)]</span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>get_y <span class="op">=</span> <span class="kw">lambda</span> x: x.relative_to(config[<span class="st">'test_crappy'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>dls<span class="op">=</span> get_unet_dls(<span class="dv">2</span>, source <span class="op">=</span> files_crappy, get_y <span class="op">=</span> get_y, </span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>                     splitter <span class="op">=</span> RandomSplitter(), item_tfms <span class="op">=</span> item_tfms,</span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>                     batch_tfms <span class="op">=</span> batch_tfms)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>dls.show_batch()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="chapter1-deblur_files/figure-html/cell-61-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Create the Unet learner as before.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>unet_learn <span class="op">=</span> unet_learner(dls, models.resnet34, loss_func<span class="op">=</span>F.l1_loss,</span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>                     blur<span class="op">=</span><span class="va">True</span>, norm_type<span class="op">=</span>NormType.Weight).load(config[<span class="st">'root'</span>]<span class="op">/</span><span class="st">'model_256'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Before prediction we will drop any sort of augmentation from our data.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>dl <span class="op">=</span> dls.train.new(shuffle<span class="op">=</span><span class="va">False</span>, drop_last<span class="op">=</span><span class="va">False</span>, </span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>                       after_batch<span class="op">=</span>[IntToFloatTensor, Normalize.from_stats(<span class="op">*</span>imagenet_stats)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>“fastaibreadcrumbs” provides <code>save_preds</code>, to which we pass the dataloader, learner and the path. This function will generate the predictionsa nd save them.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>save_preds(dl, unet_learn, <span class="st">"gen_imgs"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div>
+<div class="cell-output cell-output-display">
+
+</div>
+</div>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>preds <span class="op">=</span> [Path(<span class="st">"gen_imgs"</span>)<span class="op">/</span>fn.name <span class="cf">for</span> fn <span class="kw">in</span> files_crappy]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>“fastaibreadcrumbs” provides <code>compare_imgs</code> which takes in the path of the original images, path of crappy images, path of generated images and then compare them side by side.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>compare_imgs(files_test, files_crappy, preds, (<span class="dv">100</span>, <span class="dv">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[&lt;AxesSubplot:&gt; &lt;AxesSubplot:&gt; &lt;AxesSubplot:&gt;]
+ [&lt;AxesSubplot:&gt; &lt;AxesSubplot:&gt; &lt;AxesSubplot:&gt;]]</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="chapter1-deblur_files/figure-html/cell-66-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Look! With a few epochs of training our model was able to recognize and remove motion blur from images. This is incredible as to how with some clever tricks (like progressive resizing) we can create such powerful deep learning models which runs fast on quite decent machines and with “not so crazy” amount of data. Another thing to note is that we had just used 256px images in our training but even then our model generalizes quite well when a bigger image is given to it. So, a couple of more epochswould produce even better results.</p>
+<p>One quick thing to note is that you might notice the proportion difference between the original image and the generated images. This is becasue we had resized the images to 860px during training to make the inference faster. If you have access to GPUs with larger memory, then you can give the full size image a shot.</p>
+<p>Now that we have created and trained a model to remove camera shake from our images, in next chapter we will prototype a Graphical tool that can be used as an interface to consume this model.</p>
+</section>
+<section id="reading-list" class="level2">
+<h2 class="anchored" data-anchor-id="reading-list">Reading list</h2>
+<ul>
+<li><p><a href="https://github.com/sapal6/image-restoration">Code for this tutorial</a></p></li>
+<li><p>Superresolution- Fastai - <a href="https://github.com/fastai/fastai/blob/master/dev_nbs/course/lesson7-superres.ipynb">Lesson Notebook</a>, <a href="https://www.youtube.com/watch?v=9spwoDYwW_I&amp;t=4243s">Lesson video</a></p></li>
+<li><p><a href="https://course.fast.ai/">Fastai course 2022</a></p></li>
+<li><p><a href="https://arxiv.org/abs/1603.08155">“Perceptual Losses for Real-Time Style Transfer and Super-Resolution</a></p></li>
+<li><p><a href="https://walkwithfastai.com/Super_Resolution">Walk with fastai</a></p></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
