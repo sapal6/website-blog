@@ -12,5 +12,6 @@ about:
       href: https://github.com/sapal6
 ---
 
+
 Machine learning architect during the week and on weekends I write about Deep learning👨‍🏫, Fitness🏋️‍♂️ and  Photography📷.
 
