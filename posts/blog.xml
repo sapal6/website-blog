@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Satyabrata pal</title>
+<link>https://www.satyabratapal.xyz/posts/blog.html</link>
+<atom:link href="https://www.satyabratapal.xyz/posts/blog.xml" rel="self" type="application/rss+xml"/>
+<description>This is Satyabrata pal's personal Blog.</description>
+<generator>quarto-1.1.251</generator>
+<lastBuildDate>Tue, 27 Sep 2022 10:23:24 GMT</lastBuildDate>
+</channel>
+</rss>

@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Satyabrata pal">
+<meta name="dcterms.date" content="2022-02-23">
+<meta name="description" content="How to use neural networks to analyze and understand data">
+
+<title>Satyabrata pal - Can-we-use-neural-network-to-understand-data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-6WXK83Q2S1"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-6WXK83Q2S1', { 'anonymize_ip': true});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Satyabrata pal</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html">Blog</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../series.html">Series</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/sapal6"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/thecodingprojec"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.youtube.com/channel/UCNWi3qvLjYdSAqKnt1uZj-w"><i class="bi bi-youtube" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Can-we-use-neural-network-to-understand-data</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Deep Learning</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    How to use neural networks to analyze and understand data
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Satyabrata pal </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 23, 2022</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<ul>
+<li>This notebook can also available in <a href="https://www.kaggle.com/sapal6/can-we-use-a-network-to-understand-data">kaggle</a></li>
+<li>Get the code used in this note book on <a href="https://github.com/sapal6/kaggle_competitions/tree/main/happywhale">github</a>.</li>
+<li>The data used can be found <a href="https://www.kaggle.com/rdizzl3/jpeg-happywhale-128x128">here</a></li>
+</ul>
+<section id="what-is-this" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-this">What is this ?</h2>
+<ul>
+<li>A starter notebook for folks new to machine learning.</li>
+<li>A vanilla CNN created for <a href="https://www.kaggle.com/c/happy-whale-and-dolphin">whale species recognition</a> competition using fastai.</li>
+<li>Aim is to observe the behavior of a simple CNN trained to recognize the whale species.</li>
+<li>Here I am trying to show that you can use a simple CNN to know what areas of an image does the CNN “sees”. You can use this to analyze what needs to be improved or engineered in the data to create a better model.</li>
+</ul>
+</section>
+<section id="import-required-things." class="level2">
+<h2 class="anchored" data-anchor-id="import-required-things.">Import required things.</h2>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2022-02-18T13:17:06.391942Z&quot;,&quot;iopub.status.busy&quot;:&quot;2022-02-18T13:17:06.391131Z&quot;,&quot;iopub.status.idle&quot;:&quot;2022-02-18T13:17:08.193261Z&quot;,&quot;shell.execute_reply&quot;:&quot;2022-02-18T13:17:08.192770Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2022-02-16T17:20:43.381136Z&quot;}" data-papermill="{&quot;duration&quot;:2.199272,&quot;end_time&quot;:&quot;2022-02-18T13:17:08.193391&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2022-02-18T13:17:05.994119&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastai.vision.<span class="bu">all</span> <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="required-paths" class="level3">
+<h3 class="anchored" data-anchor-id="required-paths">Required paths</h3>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2022-02-18T13:17:09.770028Z&quot;,&quot;iopub.status.busy&quot;:&quot;2022-02-18T13:17:09.768969Z&quot;,&quot;iopub.status.idle&quot;:&quot;2022-02-18T13:17:09.770727Z&quot;,&quot;shell.execute_reply&quot;:&quot;2022-02-18T13:17:09.771233Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2022-02-16T17:20:46.080951Z&quot;}" data-papermill="{&quot;duration&quot;:0.395792,&quot;end_time&quot;:&quot;2022-02-18T13:17:09.771366&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2022-02-18T13:17:09.375574&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>root_path <span class="op">=</span> Path(<span class="st">"../input"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>train_csv_path <span class="op">=</span> root_path<span class="op">/</span><span class="st">'happy-whale-and-dolphin/train.csv'</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>train_img_path <span class="op">=</span> root_path<span class="op">/</span><span class="st">"jpeg-happywhale-128x128/train_images-128-128/train_images-128-128"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="get-a-glimpse-of-the-files" class="level2">
+<h2 class="anchored" data-anchor-id="get-a-glimpse-of-the-files">Get a glimpse of the files</h2>
+<p><code>get_image_files</code> is a convenience function that goes through different folders and subfolders and gathers all the image file path.</p>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2022-02-18T13:17:11.351775Z&quot;,&quot;iopub.status.busy&quot;:&quot;2022-02-18T13:17:11.350726Z&quot;,&quot;iopub.status.idle&quot;:&quot;2022-02-18T13:18:02.468327Z&quot;,&quot;shell.execute_reply&quot;:&quot;2022-02-18T13:18:02.468828Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2022-02-16T17:20:46.640338Z&quot;}" data-papermill="{&quot;duration&quot;:51.512361,&quot;end_time&quot;:&quot;2022-02-18T13:18:02.468976&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2022-02-18T13:17:10.956615&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>train_imgs <span class="op">=</span> get_image_files(train_img_path)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>train_imgs[:<span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>(#10) [Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/80b5373b87942b.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/e113b51585c677.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/94eb976e25416c.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/19a45862ab99cd.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/be9645065510e9.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/76d25044120d3c.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/0c64a705ba5d31.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/c1fe278bdbd837.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/6f94f30ac500a0.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/15f295322e5b54.jpg')]</code></pre>
+</div>
+</div>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2022-02-18T13:18:03.265302Z&quot;,&quot;iopub.status.busy&quot;:&quot;2022-02-18T13:18:03.264390Z&quot;,&quot;iopub.status.idle&quot;:&quot;2022-02-18T13:18:03.288241Z&quot;,&quot;shell.execute_reply&quot;:&quot;2022-02-18T13:18:03.288707Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2022-02-16T17:21:29.887475Z&quot;}" data-papermill="{&quot;duration&quot;:0.430282,&quot;end_time&quot;:&quot;2022-02-18T13:18:03.288865&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2022-02-18T13:18:02.858583&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Image.<span class="bu">open</span>(train_imgs[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<p><img src="Can-we-use-neural-network-to-understand-data_files/figure-html/cell-5-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>let’s see what is there in the csv file.</p>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2022-02-18T13:18:04.866516Z&quot;,&quot;iopub.status.busy&quot;:&quot;2022-02-18T13:18:04.865688Z&quot;,&quot;iopub.status.idle&quot;:&quot;2022-02-18T13:18:04.950054Z&quot;,&quot;shell.execute_reply&quot;:&quot;2022-02-18T13:18:04.949019Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2022-02-16T17:21:29.913758Z&quot;}" data-papermill="{&quot;duration&quot;:0.475971,&quot;end_time&quot;:&quot;2022-02-18T13:18:04.950185&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2022-02-18T13:18:04.474214&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>train_path_df <span class="op">=</span> pd.read_csv(train_csv_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2022-02-18T13:18:05.741462Z&quot;,&quot;iopub.status.busy&quot;:&quot;2022-02-18T13:18:05.740545Z&quot;,&quot;iopub.status.idle&quot;:&quot;2022-02-18T13:18:05.751734Z&quot;,&quot;shell.execute_reply&quot;:&quot;2022-02-18T13:18:05.752156Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2022-02-16T17:21:32.020457Z&quot;}" data-papermill="{&quot;duration&quot;:0.413408,&quot;end_time&quot;:&quot;2022-02-18T13:18:05.752298&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2022-02-18T13:18:05.338890&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>train_path_df.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="7">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>image</th>
+      <th>species</th>
+      <th>individual_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>00021adfb725ed.jpg</td>
+      <td>melon_headed_whale</td>
+      <td>cadddb1636b9</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>000562241d384d.jpg</td>
+      <td>humpback_whale</td>
+      <td>1a71fbb72250</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0007c33415ce37.jpg</td>
+      <td>false_killer_whale</td>
+      <td>60008f293a2b</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0007d9bca26a99.jpg</td>
+      <td>bottlenose_dolphin</td>
+      <td>4b00fe572063</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>00087baf5cef7a.jpg</td>
+      <td>humpback_whale</td>
+      <td>8e5253662392</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>If I can catch hold of the image filename from the dataframe and attach this to the <code>train_img_path</code> then I can get the full image path.</p>
+<p>Replacing filnames with the filepath</p>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2022-02-18T13:18:08.154766Z&quot;,&quot;iopub.status.busy&quot;:&quot;2022-02-18T13:18:08.153919Z&quot;,&quot;iopub.status.idle&quot;:&quot;2022-02-18T13:18:08.582546Z&quot;,&quot;shell.execute_reply&quot;:&quot;2022-02-18T13:18:08.582019Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2022-02-16T17:21:34.609355Z&quot;}" data-papermill="{&quot;duration&quot;:0.848095,&quot;end_time&quot;:&quot;2022-02-18T13:18:08.582708&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2022-02-18T13:18:07.734613&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>train_path_df[<span class="st">'image'</span>] <span class="op">=</span> train_path_df[<span class="st">'image'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x:train_img_path<span class="op">/</span>x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2022-02-18T13:18:09.373415Z&quot;,&quot;iopub.status.busy&quot;:&quot;2022-02-18T13:18:09.372440Z&quot;,&quot;iopub.status.idle&quot;:&quot;2022-02-18T13:18:09.376258Z&quot;,&quot;shell.execute_reply&quot;:&quot;2022-02-18T13:18:09.376663Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2022-02-16T17:21:35.436696Z&quot;}" data-papermill="{&quot;duration&quot;:0.412572,&quot;end_time&quot;:&quot;2022-02-18T13:18:09.376855&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2022-02-18T13:18:08.964283&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>train_path_df.head(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="9">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>image</th>
+      <th>species</th>
+      <th>individual_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/00021adfb725ed.jpg</td>
+      <td>melon_headed_whale</td>
+      <td>cadddb1636b9</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/000562241d384d.jpg</td>
+      <td>humpback_whale</td>
+      <td>1a71fbb72250</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2022-02-18T13:18:10.429522Z&quot;,&quot;iopub.status.busy&quot;:&quot;2022-02-18T13:18:10.428976Z&quot;,&quot;iopub.status.idle&quot;:&quot;2022-02-18T13:18:10.445620Z&quot;,&quot;shell.execute_reply&quot;:&quot;2022-02-18T13:18:10.446057Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2022-02-16T17:21:36.153197Z&quot;}" data-papermill="{&quot;duration&quot;:0.457953,&quot;end_time&quot;:&quot;2022-02-18T13:18:10.446198&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2022-02-18T13:18:09.988245&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Image.<span class="bu">open</span>(train_path_df.image[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<p><img src="Can-we-use-neural-network-to-understand-data_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="datablock" class="level2">
+<h2 class="anchored" data-anchor-id="datablock">Datablock</h2>
+<p>A <code>DataBlock</code> is like a blueprint that tells fastai–&gt; * What kind of data are we dealing with. Is it image, text etc. * What kind of labels we have. For example categorical labels, continuous labels etc. * From where to get the inputs. * From where to get the targets. * How to split the data into train and test. * The transforms that you want to do.</p>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2022-02-18T13:18:12.046233Z&quot;,&quot;iopub.status.busy&quot;:&quot;2022-02-18T13:18:12.045237Z&quot;,&quot;iopub.status.idle&quot;:&quot;2022-02-18T13:18:12.047318Z&quot;,&quot;shell.execute_reply&quot;:&quot;2022-02-18T13:18:12.047806Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2022-02-16T17:21:38.208852Z&quot;}" data-papermill="{&quot;duration&quot;:0.409721,&quot;end_time&quot;:&quot;2022-02-18T13:18:12.047965&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2022-02-18T13:18:11.638244&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="11">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> DataBlock(blocks<span class="op">=</span>(ImageBlock, CategoryBlock),</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                splitter<span class="op">=</span>TrainTestSplitter(),</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                 get_x <span class="op">=</span> ColReader(<span class="dv">0</span>),</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                 get_y <span class="op">=</span> ColReader(<span class="dv">1</span>),</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                 item_tfms<span class="op">=</span>Resize(<span class="dv">224</span>),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                 batch_tfms<span class="op">=</span>aug_transforms(size<span class="op">=</span><span class="dv">128</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>In the above code–&gt; * The <code>ImageBlock</code> tells fastai that we are dealing with image data. * <code>CategoryBlock</code> means our targets are categorical in nature. * The <code>get_x</code> and <code>get_y</code> tells fastai to get the x i.e.&nbsp;the image path from column 0 of dataframe and the target from column 1 of the dataframe. * <code>splitter</code> is the way in which train and test data are split. check <a href="https://docs.fast.ai/data.transforms.html#TrainTestSplitter">here</a> for more details. * The next two lines are not that important to understand now but they are needed when you are working on image augmentation. Refer to the <a href="https://github.com/fastai/fastbook">fastbook</a> to understand more about this.</p>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2022-02-18T13:18:13.632915Z&quot;,&quot;iopub.status.busy&quot;:&quot;2022-02-18T13:18:13.632178Z&quot;,&quot;iopub.status.idle&quot;:&quot;2022-02-18T13:18:13.633836Z&quot;,&quot;shell.execute_reply&quot;:&quot;2022-02-18T13:18:13.633339Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2022-02-16T17:22:22.952736Z&quot;}" data-papermill="{&quot;duration&quot;:0.401244,&quot;end_time&quot;:&quot;2022-02-18T13:18:13.633952&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2022-02-18T13:18:13.232708&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="12">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this is not necessary. I was just testing if my datablocks are correct or not</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#data.summary(train_path_df)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="dataloader" class="level2">
+<h2 class="anchored" data-anchor-id="dataloader">Dataloader</h2>
+<p>Think of a dataloader as a mechanism that picks up your images, does all the things that you had described in the datablock and then loads your data to the device(cpu or gpu).</p>
+<p>At the minimum, you need to provide the source of data, the <code>train_path_df</code> in our case. Here we give the <code>bs</code> i.e.&nbsp;the batch size. For example if we say that the batch size is 8 then it means that the dataloader will load 8 images at a time onto the device.</p>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2022-02-18T13:18:15.222984Z&quot;,&quot;iopub.status.busy&quot;:&quot;2022-02-18T13:18:15.222090Z&quot;,&quot;iopub.status.idle&quot;:&quot;2022-02-18T13:18:21.024557Z&quot;,&quot;shell.execute_reply&quot;:&quot;2022-02-18T13:18:21.025779Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2022-02-16T17:22:31.24258Z&quot;}" data-papermill="{&quot;duration&quot;:6.206063,&quot;end_time&quot;:&quot;2022-02-18T13:18:21.026019&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2022-02-18T13:18:14.819956&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="13">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>dls <span class="op">=</span> data.dataloaders(train_path_df, bs<span class="op">=</span><span class="dv">128</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>/root/.local/lib/python3.7/site-packages/torch/_tensor.py:1023: UserWarning: torch.solve is deprecated in favor of torch.linalg.solveand will be removed in a future PyTorch release.
+torch.linalg.solve has its arguments reversed and does not return the LU factorization.
+To get the LU factorization see torch.lu, which can be used with torch.lu_solve or torch.lu_unpack.
+X = torch.solve(B, A).solution
+should be replaced with
+X = torch.linalg.solve(A, B) (Triggered internally at  /pytorch/aten/src/ATen/native/BatchLinearAlgebra.cpp:760.)
+  ret = func(*args, **kwargs)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2022-02-18T13:18:21.997075Z&quot;,&quot;iopub.status.busy&quot;:&quot;2022-02-18T13:18:21.996048Z&quot;,&quot;iopub.status.idle&quot;:&quot;2022-02-18T13:18:23.847491Z&quot;,&quot;shell.execute_reply&quot;:&quot;2022-02-18T13:18:23.847949Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2022-02-16T17:23:17.288009Z&quot;}" data-papermill="{&quot;duration&quot;:2.250795,&quot;end_time&quot;:&quot;2022-02-18T13:18:23.848095&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2022-02-18T13:18:21.597300&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="14">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>dls.show_batch()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Can-we-use-neural-network-to-understand-data_files/figure-html/cell-14-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="the-model" class="level2">
+<h2 class="anchored" data-anchor-id="the-model">The model</h2>
+<p>Simple CNN to classify whale/dolphin species. The intuition is the following–&gt; * a model which knows to recognize whale/dolphin species should also be able to learn the features to distinguish the different species. * such a model can be queried to learn what all portions of an image is taken into account. For example, if somehow the background is tricking the model such that the model considers the background as an area of interest then such data needs to be further engineered.</p>
+<ul>
+<li>such model can then be used as a pre-trained model to recognize individuals .</li>
+</ul>
+</section>
+<section id="creating-a-simple-cnn-learner" class="level2">
+<h2 class="anchored" data-anchor-id="creating-a-simple-cnn-learner">Creating a simple CNN learner</h2>
+<p><code>cnn_learner</code> creates a convolutional neural network for you. At the least you provide it the dataloader, a model architecture and a loss function.</p>
+<p><code>models.resnet18</code> is a “pre-trained” neural network. It’s a network that was already trained by some good folks (folks with huge computational hardware) on a very large number of images. This particular network knows how to recognize different images. So, we take this network and then ask fastai to train this network on our image data (whale, dolphins).</p>
+<p>The intuition is that since the pre-trained network already knows how to distinguish between different images, we have to spend less time and computation to make it understand how to recognize different whales and dolphins. This is <strong>Transfer learning</strong></p>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2022-02-18T13:18:26.292162Z&quot;,&quot;iopub.status.busy&quot;:&quot;2022-02-18T13:18:26.291408Z&quot;,&quot;iopub.status.idle&quot;:&quot;2022-02-18T13:21:49.863512Z&quot;,&quot;shell.execute_reply&quot;:&quot;2022-02-18T13:21:49.864542Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2022-02-16T17:23:34.216093Z&quot;}" data-papermill="{&quot;duration&quot;:203.989613,&quot;end_time&quot;:&quot;2022-02-18T13:21:49.864814&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2022-02-18T13:18:25.875201&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="15">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> cnn_learner(dls, models.resnet18, loss_func<span class="op">=</span>CrossEntropyLossFlat(), ps<span class="op">=</span><span class="fl">0.25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Downloading: "https://download.pytorch.org/models/resnet18-f37072fd.pth" to /root/.cache/torch/hub/checkpoints/resnet18-f37072fd.pth</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"485ea4ba3257442d9c37ea0f1e26c7c4","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/root/.local/lib/python3.7/site-packages/torch/nn/functional.py:718: UserWarning: Named tensors and all their associated APIs are an experimental feature and subject to change. Please do not use them for anything important until they are released as stable. (Triggered internally at  /pytorch/c10/core/TensorImpl.h:1156.)
+  return torch.max_pool2d(input, kernel_size, stride, padding, dilation, ceil_mode)</code></pre>
+</div>
+</div>
+<p>For now understand that <code>fine_tune</code> means “take my network and make it look at each image a specified number of times. This”number of times” is the number that is provided as the first argument.</p>
+<p>Let’s not dive into the second argument at this moment in time.</p>
+<blockquote class="blockquote">
+<p>For the curious mind, the second argument is known as the learning rate. It’s a hyperparameter of a neural network. More information can be found <a href="https://github.com/fastai/fastbook/blob/master/04_mnist_basics.ipynb">here</a></p>
+</blockquote>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2022-02-18T13:21:51.509256Z&quot;,&quot;iopub.status.busy&quot;:&quot;2022-02-18T13:21:51.508325Z&quot;,&quot;iopub.status.idle&quot;:&quot;2022-02-18T13:30:40.163063Z&quot;,&quot;shell.execute_reply&quot;:&quot;2022-02-18T13:30:40.161578Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2022-02-16T17:23:37.479409Z&quot;}" data-papermill="{&quot;duration&quot;:529.059765,&quot;end_time&quot;:&quot;2022-02-18T13:30:40.163200&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2022-02-18T13:21:51.103435&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="16">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>learn.fine_tune(<span class="dv">2</span>, <span class="fl">3e-3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0.905516</td>
+      <td>0.673760</td>
+      <td>03:58</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="cell-output cell-output-display">
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0.422199</td>
+      <td>0.337718</td>
+      <td>02:24</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0.231187</td>
+      <td>0.232147</td>
+      <td>02:24</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+<p>We can see what the model predicted vs the actual target.</p>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2022-02-18T13:30:42.052118Z&quot;,&quot;iopub.status.busy&quot;:&quot;2022-02-18T13:30:42.051305Z&quot;,&quot;iopub.status.idle&quot;:&quot;2022-02-18T13:30:43.306546Z&quot;,&quot;shell.execute_reply&quot;:&quot;2022-02-18T13:30:43.307028Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2022-02-16T17:32:46.541576Z&quot;}" data-papermill="{&quot;duration&quot;:1.946826,&quot;end_time&quot;:&quot;2022-02-18T13:30:43.307189&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2022-02-18T13:30:41.360363&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="17">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>learn.show_results()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="Can-we-use-neural-network-to-understand-data_files/figure-html/cell-17-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2022-02-18T13:30:44.156842Z&quot;,&quot;iopub.status.busy&quot;:&quot;2022-02-18T13:30:44.156005Z&quot;,&quot;iopub.status.idle&quot;:&quot;2022-02-18T13:31:15.812230Z&quot;,&quot;shell.execute_reply&quot;:&quot;2022-02-18T13:31:15.812715Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2022-02-16T17:33:39.025923Z&quot;}" data-papermill="{&quot;duration&quot;:32.083541,&quot;end_time&quot;:&quot;2022-02-18T13:31:15.812874&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2022-02-18T13:30:43.729333&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="18">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>interp <span class="op">=</span> Interpretation.from_learner(learn)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>interp.plot_top_losses(<span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="Can-we-use-neural-network-to-understand-data_files/figure-html/cell-18-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="why-the-neural-network-makes-the-decision" class="level2">
+<h2 class="anchored" data-anchor-id="why-the-neural-network-makes-the-decision">Why the neural network makes the decision?</h2>
+<p>We can use class activation maps (CAM) to see which regions of images are of interest to the neural network. Class activation map (CAM) was first introduced by Bolei Zhou et al.&nbsp;in <a href="https://arxiv.org/abs/1512.04150">“Learning Deep Features for Discriminative Localization”</a>. Cam uses the output of the last convolutional layer with the predictions to give a heatmap of the regions of interest of the network in an image.</p>
+<p>The intuition behind CAM is that if we do the dot product of the activations of the final layer with the final weights, for each location on our feature map then we can get the score of the feature that was used to make a decision.</p>
+<p>Pytorch provides hooks to hook onto the any layer of a network. We can attach a hook to any layer of a neural network and it will be executed during the forward pass i.e.&nbsp;the moment when the output is computed or during the backward pass i.e.&nbsp;the moment when the weights are being re-adjusted.</p>
+<p>I would highly recommend to read more about CAM in this chapter of <a href="https://github.com/fastai/fastbook/blob/master/18_CAM.ipynb">fastbook</a> before proceeding on with the code.</p>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2022-02-18T13:31:17.514833Z&quot;,&quot;iopub.status.busy&quot;:&quot;2022-02-18T13:31:17.513187Z&quot;,&quot;iopub.status.idle&quot;:&quot;2022-02-18T13:31:17.527205Z&quot;,&quot;shell.execute_reply&quot;:&quot;2022-02-18T13:31:17.526776Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2022-02-16T17:35:19.246685Z&quot;}" data-papermill="{&quot;duration&quot;:0.439246,&quot;end_time&quot;:&quot;2022-02-18T13:31:17.527326&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2022-02-18T13:31:17.088080&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="19">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>Image.<span class="bu">open</span>(train_path_df.image[<span class="dv">6</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<p><img src="Can-we-use-neural-network-to-understand-data_files/figure-html/cell-19-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Let’s grab a batch.</p>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2022-02-18T13:31:19.222811Z&quot;,&quot;iopub.status.busy&quot;:&quot;2022-02-18T13:31:19.221903Z&quot;,&quot;iopub.status.idle&quot;:&quot;2022-02-18T13:31:19.396487Z&quot;,&quot;shell.execute_reply&quot;:&quot;2022-02-18T13:31:19.397039Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2022-02-16T17:35:24.874665Z&quot;}" data-papermill="{&quot;duration&quot;:0.605277,&quot;end_time&quot;:&quot;2022-02-18T13:31:19.397211&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2022-02-18T13:31:18.791934&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="20">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> PILImage.create(train_path_df.image[<span class="dv">6</span>])</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># grab a batch</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>x, <span class="op">=</span> first(dls.test_dl([img]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>We hook into the network . A forward hook takes into three things –&gt; the model , its input and it’s output. The fourth line in the below code is the hook function.</p>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2022-02-18T13:31:21.074821Z&quot;,&quot;iopub.status.busy&quot;:&quot;2022-02-18T13:31:21.074036Z&quot;,&quot;iopub.status.idle&quot;:&quot;2022-02-18T13:31:21.076786Z&quot;,&quot;shell.execute_reply&quot;:&quot;2022-02-18T13:31:21.076344Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2022-02-16T17:35:26.165998Z&quot;}" data-papermill="{&quot;duration&quot;:0.430662,&quot;end_time&quot;:&quot;2022-02-18T13:31:21.076908&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2022-02-18T13:31:20.646246&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="21">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Hook():</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, m):</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.hook <span class="op">=</span> m.register_forward_hook(<span class="va">self</span>.hook_func)   </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> hook_func(<span class="va">self</span>, m, i, o): <span class="va">self</span>.stored <span class="op">=</span> o.detach().clone()</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__enter__</span>(<span class="va">self</span>, <span class="op">*</span>args): <span class="cf">return</span> <span class="va">self</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__exit__</span>(<span class="va">self</span>, <span class="op">*</span>args): <span class="va">self</span>.hook.remove()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Now we do the dot product of our weight matrix with the activations.</p>
+<p>The code below takes the model, hooks into the last layer of our model using our hook function and stores the activations in the <code>act</code> variable. Then we do the dot product of the stored activations with the weights using <code>torch.einsum</code>.</p>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2022-02-18T13:31:23.030423Z&quot;,&quot;iopub.status.busy&quot;:&quot;2022-02-18T13:31:23.029503Z&quot;,&quot;iopub.status.idle&quot;:&quot;2022-02-18T13:31:23.112449Z&quot;,&quot;shell.execute_reply&quot;:&quot;2022-02-18T13:31:23.111974Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2022-02-16T17:35:34.630955Z&quot;}" data-papermill="{&quot;duration&quot;:0.504757,&quot;end_time&quot;:&quot;2022-02-18T13:31:23.112577&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2022-02-18T13:31:22.607820&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="22">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> Hook(learn.model[<span class="dv">0</span>]) <span class="im">as</span> hook:</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> torch.no_grad(): </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>        output <span class="op">=</span> learn.model.<span class="bu">eval</span>()(x.cuda())</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>        act <span class="op">=</span> hook.stored[<span class="dv">0</span>]</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    cam_map <span class="op">=</span> torch.einsum(<span class="st">'ck,kij-&gt;cij'</span>, learn.model[<span class="dv">1</span>][<span class="op">-</span><span class="dv">1</span>].weight, act)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    cam_map.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>For each image in our batch, and for each class, we get a 7×7 feature map that tells us where the activations were higher and where they were lower. This will let us see which areas of the pictures influenced the model’s decision.</p>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2022-02-18T13:31:24.790253Z&quot;,&quot;iopub.status.busy&quot;:&quot;2022-02-18T13:31:24.781084Z&quot;,&quot;iopub.status.idle&quot;:&quot;2022-02-18T13:31:24.943128Z&quot;,&quot;shell.execute_reply&quot;:&quot;2022-02-18T13:31:24.943714Z&quot;,&quot;shell.execute_reply.started&quot;:&quot;2022-02-16T17:35:35.969745Z&quot;}" data-papermill="{&quot;duration&quot;:0.591457,&quot;end_time&quot;:&quot;2022-02-18T13:31:24.943877&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2022-02-18T13:31:24.352420&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="23">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>x_dec <span class="op">=</span> TensorImage(dls.train.decode((x,))[<span class="dv">0</span>][<span class="dv">0</span>])</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>_,ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>x_dec.show(ctx<span class="op">=</span>ax)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>ax.imshow(cam_map[<span class="dv">1</span>].detach().cpu(), alpha<span class="op">=</span><span class="fl">0.6</span>, extent<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">128</span>,<span class="dv">128</span>,<span class="dv">0</span>),</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>              interpolation<span class="op">=</span><span class="st">'bilinear'</span>, cmap<span class="op">=</span><span class="st">'magma'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Can-we-use-neural-network-to-understand-data_files/figure-html/cell-23-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The bright areas in the activations are somehow spilling over to the ocean. In my opinion this should not be the case. The activations should be more around the of the dorsal fins and the surface of the fin. In layman terms the network should focus more on the object i.e.&nbsp;the fin features and not on the surrounding water.</p>
+<p>An important takeaway from my perspective is that if we can restrict the region of interest to the whale fin and not the surrounding water then the network would be able to learn better.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Besides tasks like classifying images or detecting objects, a neural networks can be used for analyzing the data to device strategies for pre-processing, data engineering and data cleaning.</p>
+<p>Here I have bounced off one idea about how a simple CNN can be used to understand the regions in an image that the neural network focuses to make it’s decisions and then analyzing these things we can observer if the network is focusing on areas of images that it needs to focus and if not, then we can think of the steps that we can take to help the network to focus to generalize better.</p>
+<p>I have just scratched the surface of what’s possible here and there can be many more ways in which deep learning can be used to take better decisions on data. So, I would emphasize you to expand on this idea and think of other ways in which you can use simple networks to analyze the data before building an architecture for the actual task at hand.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script type="application/vnd.jupyter.widget-state+json">
+{"state":{"485ea4ba3257442d9c37ea0f1e26c7c4":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_92518a42dd1f4839933d4820b6c3b173","IPY_MODEL_63936eb29fa043f9a26b1dc77ed64887","IPY_MODEL_ce3748b5bc4e4dabae6475d4907bcfe5"],"layout":"IPY_MODEL_a45630af767b4533974678f4a1a9a994"}},"58254c0b66a240948cc91a3170904338":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","description_width":""}},"58b4dea3e7f244fc8ff0899d09544cf4":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"63936eb29fa043f9a26b1dc77ed64887":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"FloatProgressModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"FloatProgressModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"ProgressView","bar_style":"success","description":"","description_tooltip":null,"layout":"IPY_MODEL_da5fba9d7d8349fe9a91fbe003267d7f","max":46830571,"min":0,"orientation":"horizontal","style":"IPY_MODEL_f368c7728b72497c8712339d844cb59c","value":46830571}},"807cb4341b184545bf00a148bc38fa63":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","description_width":""}},"92518a42dd1f4839933d4820b6c3b173":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HTMLView","description":"","description_tooltip":null,"layout":"IPY_MODEL_c44bcd4fa0b04d79a917d389b094787c","placeholder":"​","style":"IPY_MODEL_807cb4341b184545bf00a148bc38fa63","value":"100%"}},"a45630af767b4533974678f4a1a9a994":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"c44bcd4fa0b04d79a917d389b094787c":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"ce3748b5bc4e4dabae6475d4907bcfe5":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HTMLView","description":"","description_tooltip":null,"layout":"IPY_MODEL_58b4dea3e7f244fc8ff0899d09544cf4","placeholder":"​","style":"IPY_MODEL_58254c0b66a240948cc91a3170904338","value":" 44.7M/44.7M [03:22&lt;00:00, 219kB/s]"}},"da5fba9d7d8349fe9a91fbe003267d7f":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"f368c7728b72497c8712339d844cb59c":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"ProgressStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"ProgressStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","bar_color":null,"description_width":""}}},"version_major":2,"version_minor":0}
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
