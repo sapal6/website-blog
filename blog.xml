@@ -19,6 +19,19 @@
 
 
 
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Execute this notebook on kaggle by clicking <a href="https://www.kaggle.com/code/sapal6/chapter-1-deblur">here</a></p>
+</div>
+</div>
 <p>Photography is one of my hobbies and a good percentage of my photography workflow is spent on correcting various artifacts in images. I always wondered if there is I could efficiently automate the process of image correction/restoration but I didn’t pay much attention to image restoration using deep learning. So, for the past couple of months I started playing around with different techniques in the image restoration side of deep learning in the hopes of creating a tool that would assist me in image restoration part of my photography workflow and whatever I have learnt till now, I am putting into a series of articles.</p>
 <p>This is first in a series of such articles where we will try to build a image correction tool by implementing some cool generative imaging techniques using <a href="https://docs.fast.ai/">Fastai</a> and pytorch. Infact this entire series is inspired by the <a href="https://github.com/sapal6/course-v3/blob/master/nbs/dl1/lesson7-superres.ipynb">fastai course from the year 2018</a>.</p>
 <div class="callout-note callout callout-style-simple no-icon callout-captioned">
