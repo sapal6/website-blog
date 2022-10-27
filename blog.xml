@@ -3809,5 +3809,264 @@ Wall time: 1min 5s</code></pre>
   <guid>https://www.satyabratapal.xyz/posts/How-to-workout-for-longevity/How-to-workout-for-longevity.html</guid>
   <pubDate>Tue, 12 Oct 2021 00:00:00 GMT</pubDate>
 </item>
+<item>
+  <title>Chapter 2 - MVP</title>
+  <dc:creator>Satyabrata pal</dc:creator>
+  <link>https://www.satyabratapal.xyz/posts/image-restoration-series/chapter2-mvp.html</link>
+  <description><![CDATA[ 
+
+
+
+<p><a href="https://www.satyabratapal.xyz/posts/image-restoration-series/chapter1-deblur.html">Last time</a> we trained a model that was able to remove motion blur from our images. In this chapter we are going to create a very basic application through which we can showcase how our users can use the model on their images.</p>
+<section id="why-we-need-an-app" class="level2">
+<h2 class="anchored" data-anchor-id="why-we-need-an-app">Why we need an app ?</h2>
+<p>You may be thinking that why we need an app? Well! your target user won’t be firing up your jupyter notebook or your code everytime they need to use your model, right?</p>
+<p>The user needs a visual medium through which they can consume the predictions of your model. That’s why we are goign to need an app.</p>
+</section>
+<section id="why-build-an-mvp" class="level2">
+<h2 class="anchored" data-anchor-id="why-build-an-mvp">Why build an MVP ?</h2>
+<p>During the initial stages of developing an idea into a usable product, you need to focus on speed of iteration. You need to be able to iterate quickly through many different ways to discover the right thing.</p>
+<p>This is because of this reason that during the initial stage you don’t want to go all out while building a user facing interface. You don’t need a fancy GUI or you don’t need to worry about the hardcore software engineering stages. A prototype application will do fine. So, you need a minimal viable product (MVP) to present your idea to the world and to test if your idea resonates well with the need of the user.</p>
+<p>You don’t need to be an expert in web designing to build a quick prototype of an application. A little bit of creativity and an open source tool like <a href="https://gradio.app/">Gradio</a> is all you need.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Gradio is an open source library to quickly build web apps for your machine learning model using python.</p>
+</div>
+</div>
+</section>
+<section id="the-design" class="level2">
+<h2 class="anchored" data-anchor-id="the-design">The design</h2>
+<p>A good interface provides a good user experience. A state-of-the-art model with an user interface with below average usage experience will not provide any value to the user.</p>
+<p>So, a design which provides the required ease of usage is a must even during the prototype stage. Of course, the design of the prototype can be kept simple but some basic user experience elements like ease of use should be taken into consideration.</p>
+<p>So, the first thing that we are going to do is to start with a basic design.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In a real life project you may not need to create designs yourself as bigger projects/organization usually have separate experts, but in some cases you may need to wear the hat of the designer as well.</p>
+</div>
+</div>
+<p>Below is a hand-drawn design of the prototype UI.</p>
+<p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/ui_design.png" class="img-fluid"></p>
+<p>Basically it has a browse button to upload your images (which needs deblurring) and a preview space with a comparison view of the original image and the deblurred image. I would also want to have a button to save the deblurred image.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In a real project you may wan to use tools like “vision” to create UI designs before presenting that to the stakeholders (customers, teams etc.)</p>
+</div>
+</div>
+</section>
+<section id="importing-the-libraries" class="level2">
+<h2 class="anchored" data-anchor-id="importing-the-libraries">Importing the libraries</h2>
+<p>First let’s import the required libraries.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1">try<span class="op" style="color: #5E5E5E;">:</span> <span class="im" style="color: #00769E;">import</span> <span class="bu" style="color: null;">gradio </span>as gr</span>
+<span id="cb1-2">except ModuleNotFoundError<span class="op" style="color: #5E5E5E;">:</span></span>
+<span id="cb1-3">    !pip install <span class="op" style="color: #5E5E5E;">-</span>Uq gradio</span></code></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><span class="co" style="color: #5E5E5E;"># install fastkaggle if not available</span></span>
+<span id="cb2-2">try<span class="op" style="color: #5E5E5E;">:</span> from fastaibreadcrumbs.core <span class="im" style="color: #00769E;">import</span> <span class="bu" style="color: null;">*</span></span>
+<span id="cb2-3">except ModuleNotFoundError<span class="op" style="color: #5E5E5E;">:</span></span>
+<span id="cb2-4">    !pip install <span class="op" style="color: #5E5E5E;">-</span>Uq fastaibreadcrumbs</span></code></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><span class="im" style="color: #00769E;">import</span> <span class="bu" style="color: null;">gc</span></span>
+<span id="cb3-2">from fastai.vision.all <span class="im" style="color: #00769E;">import</span> <span class="bu" style="color: null;">*</span></span>
+<span id="cb3-3">from fastai.vision.gan <span class="im" style="color: #00769E;">import</span> <span class="bu" style="color: null;">*</span></span>
+<span id="cb3-4">from fastkaggle <span class="im" style="color: #00769E;">import</span> <span class="bu" style="color: null;">*</span></span>
+<span id="cb3-5">from fastaibreadcrumbs.core <span class="im" style="color: #00769E;">import</span> <span class="bu" style="color: null;">*</span></span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="getting-the-prediciton" class="level2">
+<h2 class="anchored" data-anchor-id="getting-the-prediciton">Getting the prediciton</h2>
+<p>We will use the model that we had trained in <a href="https://www.satyabratapal.xyz/posts/image-restoration-series/chapter1-deblur.html">chapter1</a>. We will use the same dataloaders and learners which we used in the previous schapter.</p>
+<p>As is the usual drill, I will create a config dictionary.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1">config <span class="op" style="color: #5E5E5E;">=</span> {<span class="ch" style="color: #20794D;">'path_crappy'</span><span class="op" style="color: #5E5E5E;">:</span> <span class="fu" style="color: #4758AB;">Path</span>(<span class="ch" style="color: #20794D;">'crappy'</span>)}</span></code></pre></div>
+</details>
+</div>
+<p>I have created a quick function below which contains all my transformations and dataloaders from chapter1. If refer the previous <a href="https://www.satyabratapal.xyz/posts/image-restoration-series/chapter1-deblur.html">chapter</a>, you will notice that all the code used is the same. It’s just that here I have combined those into a single function.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1">def <span class="fu" style="color: #4758AB;">get_dls</span>(sz<span class="op" style="color: #5E5E5E;">:</span>int,bs<span class="op" style="color: #5E5E5E;">:</span>int, src)<span class="op" style="color: #5E5E5E;">:</span></span>
+<span id="cb5-2">    item_tfms <span class="op" style="color: #5E5E5E;">=</span> <span class="fu" style="color: #4758AB;">Resize</span>(sz)</span>
+<span id="cb5-3">    batch_tfms <span class="op" style="color: #5E5E5E;">=</span> [<span class="fu" style="color: #4758AB;">*aug_transforms</span>(max_zoom<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">2</span>.), Normalize.<span class="fu" style="color: #4758AB;">from_stats</span>(<span class="op" style="color: #5E5E5E;">*</span>imagenet_stats)]</span>
+<span id="cb5-4">    get_y <span class="op" style="color: #5E5E5E;">=</span> lambda x<span class="op" style="color: #5E5E5E;">:</span> x.<span class="fu" style="color: #4758AB;">relative_to</span>(config[<span class="ch" style="color: #20794D;">'path_crappy'</span>])</span>
+<span id="cb5-5">    files_crappy <span class="op" style="color: #5E5E5E;">=</span> <span class="fu" style="color: #4758AB;">get_image_files</span>(src)</span>
+<span id="cb5-6">    </span>
+<span id="cb5-7">    dls<span class="op" style="color: #5E5E5E;">=</span> <span class="fu" style="color: #4758AB;">get_unet_dls</span>(bs, source <span class="op" style="color: #5E5E5E;">=</span> files_crappy, get_y <span class="op" style="color: #5E5E5E;">=</span> get_y, </span>
+<span id="cb5-8">                     splitter <span class="op" style="color: #5E5E5E;">=</span> <span class="fu" style="color: #4758AB;">RandomSplitter</span>(), item_tfms <span class="op" style="color: #5E5E5E;">=</span> item_tfms,</span>
+<span id="cb5-9">                     batch_tfms <span class="op" style="color: #5E5E5E;">=</span> batch_tfms)</span>
+<span id="cb5-10">    </span>
+<span id="cb5-11">    <span class="cf" style="color: #003B4F;">return</span> dls</span></code></pre></div>
+</details>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For line 4 you would need to make sure that your target images(the non-crappified images), needs to be in a path that is relative to the path where the crappified images are stored. Now if you are coming to this chpater from chapter1 then you would be having the crappified and non-crappified images in relative paths.</p>
+</div>
+</div>
+<p>I have another function here which creates a unet learner and loads the model that we trained in the previous chapter.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1">def <span class="fu" style="color: #4758AB;">get_inf_model</span>(dls, model<span class="op" style="color: #5E5E5E;">:</span>str)<span class="op" style="color: #5E5E5E;">:</span></span>
+<span id="cb6-2">    unet_learn <span class="op" style="color: #5E5E5E;">=</span> <span class="fu" style="color: #4758AB;">unet_learner</span>(dls, models.resnet34, loss_func<span class="op" style="color: #5E5E5E;">=</span>F.l1_loss,</span>
+<span id="cb6-3">                     blur<span class="op" style="color: #5E5E5E;">=</span>True, norm_type<span class="op" style="color: #5E5E5E;">=</span>NormType.Weight).<span class="fu" style="color: #4758AB;">load</span>(model)</span>
+<span id="cb6-4">    </span>
+<span id="cb6-5">    <span class="cf" style="color: #003B4F;">return</span> unet_learn</span></code></pre></div>
+</details>
+</div>
+<p>Now, I will create the dataloaders. I will pass an image size of 860 to my <code>get_dls</code> functions and a batch size of 8. It’s not necessary to keep the batch size same to what you had kept during the trainign time. You can change the batch size. while training the model (in chapter1) we used a final image size of 256px. Here, during inference time I would like to “debluurify” an image bigger than that. Although, I can have the original “big” size of an image but somehow it crashes the jupyter kernel as soon as prediction is performed by the model. It might be due to limited gpu memory. So, a size of 860px works good enough for experiment.</p>
+<p>Feel free to play around with bigger image size and let me know your findings by posting it on twitter (<span class="citation" data-cites="thecodingprojec">@thecodingprojec</span>).</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1">dls <span class="op" style="color: #5E5E5E;">=</span> <span class="fu" style="color: #4758AB;">get_dls</span>(<span class="fl" style="color: #AD0000;">860</span>, <span class="fl" style="color: #AD0000;">8</span>, config[<span class="ch" style="color: #20794D;">'path_crappy'</span>])</span></code></pre></div>
+</details>
+</div>
+<p>Next, let’s create the learner by passing the dataloaders and the model trained in chapter 1.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You will need to pass the path where you have stored the crappy files which you had used to train your model.</p>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1">learner <span class="op" style="color: #5E5E5E;">=</span> <span class="fu" style="color: #4758AB;">get_inf_model</span>(dls, <span class="ch" style="color: #20794D;">'./model_256'</span>)</span></code></pre></div>
+</details>
+</div>
+<p>I have created a function to get the prediction and save that onto the disk.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Make sure to have your final model in the “models” directory and pass the same path to the <code>get_inf_model</code> above.</p>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1">def <span class="fu" style="color: #4758AB;">save_pred</span>(path<span class="op" style="color: #5E5E5E;">:</span>str, dest<span class="op" style="color: #5E5E5E;">:</span>str,learner)<span class="op" style="color: #5E5E5E;">:</span></span>
+<span id="cb9-2">    path <span class="op" style="color: #5E5E5E;">=</span> <span class="fu" style="color: #4758AB;">Path</span>(path)</span>
+<span id="cb9-3">    dest <span class="op" style="color: #5E5E5E;">=</span> <span class="fu" style="color: #4758AB;">Path</span>(dest)</span>
+<span id="cb9-4">    preds <span class="op" style="color: #5E5E5E;">=</span> learner.<span class="fu" style="color: #4758AB;">predict</span>(path)</span>
+<span id="cb9-5">    arr <span class="op" style="color: #5E5E5E;">=</span> preds[<span class="fl" style="color: #AD0000;">0</span>].<span class="fu" style="color: #4758AB;">numpy</span>().<span class="fu" style="color: #4758AB;">transpose</span>(<span class="fl" style="color: #AD0000;">1</span>,<span class="fl" style="color: #AD0000;">2</span>,<span class="fl" style="color: #AD0000;">0</span>).<span class="fu" style="color: #4758AB;">astype</span>(np.uint8)</span>
+<span id="cb9-6">    dest.<span class="fu" style="color: #4758AB;">mkdir</span>(parents<span class="op" style="color: #5E5E5E;">=</span>True, exist_ok<span class="op" style="color: #5E5E5E;">=</span>True)</span>
+<span id="cb9-7">    Image.<span class="fu" style="color: #4758AB;">fromarray</span>(arr).<span class="fu" style="color: #4758AB;">save</span>(dest<span class="op" style="color: #5E5E5E;">/</span>path.name)</span>
+<span id="cb9-8">    <span class="cf" style="color: #003B4F;">return</span> dest<span class="op" style="color: #5E5E5E;">/</span>path.name</span></code></pre></div>
+</details>
+</div>
+<p>The <code>save_pred</code> takes in the source image path, the destionation path and the learner. In line 4 the source image is passed onto the learner and the prediciton is stored in <code>pred</code>. <code>pred</code> is actually a tuple of three things out of which we need only the first item in this tuple i.e.&nbsp;the generated image.</p>
+</section>
+<section id="the-ui" class="level2">
+<h2 class="anchored" data-anchor-id="the-ui">The UI</h2>
+<p>First of all we need a function which would trigger the prediction for us, save it to the disk and then return the path. <code>save_pred</code> from the previous section would take care of generating and saving the prediction. We will wrap this in another function which would then return the path of the generated image.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1">def <span class="fu" style="color: #4758AB;">display_result</span>(path)<span class="op" style="color: #5E5E5E;">:</span></span>
+<span id="cb10-2">    dest <span class="op" style="color: #5E5E5E;">=</span> <span class="fu" style="color: #4758AB;">save_pred</span>(path,<span class="st" style="color: #20794D;">"gen_imgs"</span>,learner)</span>
+<span id="cb10-3">    <span class="cf" style="color: #003B4F;">return</span> dest</span></code></pre></div>
+</details>
+</div>
+<p>Next, we use gradio code to create our Ui components.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1">with gr.<span class="fu" style="color: #4758AB;">Blocks</span>() as demo<span class="op" style="color: #5E5E5E;">:</span></span>
+<span id="cb11-2">    with gr.<span class="fu" style="color: #4758AB;">Row</span>()<span class="op" style="color: #5E5E5E;">:</span></span>
+<span id="cb11-3">        image_input <span class="op" style="color: #5E5E5E;">=</span> gr.<span class="fu" style="color: #4758AB;">Image</span>(<span class="kw" style="color: #003B4F;">type</span><span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"filepath"</span>)</span>
+<span id="cb11-4">        image_output <span class="op" style="color: #5E5E5E;">=</span> gr.<span class="fu" style="color: #4758AB;">Image</span>()</span>
+<span id="cb11-5">    deblur_btn <span class="op" style="color: #5E5E5E;">=</span> gr.<span class="fu" style="color: #4758AB;">Button</span>(<span class="st" style="color: #20794D;">"Deblurrify"</span>)</span>
+<span id="cb11-6">    deblur_btn.<span class="fu" style="color: #4758AB;">click</span>(fn<span class="op" style="color: #5E5E5E;">=</span>display_result,</span>
+<span id="cb11-7">                     inputs<span class="op" style="color: #5E5E5E;">=</span>image_input, outputs<span class="op" style="color: #5E5E5E;">=</span>image_output)</span>
+<span id="cb11-8"></span>
+<span id="cb11-9">demo.<span class="fu" style="color: #4758AB;">launch</span>()</span></code></pre></div>
+</details>
+</div>
+<p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/GUI.png" class="img-fluid"></p>
+<p>In line 1 we ask gradio to initiate something known as “Blocks”. This is an API in gradio which let’s you have more flexibility while creating UI elements. In line 2 we ask gradio to create rows in which we would want to place our UI elements and then in line 3 and 4 we create Image boxes. One image box for our input image and one image box for displaying our output. After this in line 5 we create a button. In line 6 we tie in everything together. Whenever user clicks on the button, <code>display_result</code> function is called with the image from the first image box (defined in line 3) as input and then the generated image will be displayed in the image box define in line 4.</p>
+<p>Now, go ahead and test the UI by dragging on an image of you choice (which has motion blur) and then clicking on the “Deblurrify” button.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>What we have created here is a very early stage prototype application. You will notice that the UI that we created is exactly not same as the design that we imagined but that’s okay in current context. We will iterate on it later on to bring it close to the design.</p>
+<p>You will also notice that the app code and the supporting code is not suitable enough to be hosted somewhere. For example, we still need to re-create the dataloaders and learner before prediction. This is cumbersome as we would need to re-create the same directory structure of our input data and target data wherever we want to host of app. Also, moving the training data around whenever we want to host our app is not a good way to do things.</p>
+<p>At the current state since we are testing out our idea, the current state of our code and app is good enough. In the next chapter we would explore some more things like testing a few edge cases to find out where our model fails, optimize our training code further so that trying out different experiments becomes more easier.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ul>
+<li><p>Chapter 1 can be found <a href="https://www.satyabratapal.xyz/posts/image-restoration-series/chapter1-deblur.html">here</a>.</p></li>
+<li><p>Code for this chapter can be found <a href="https://github.com/sapal6/image-restoration.git">here</a></p></li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>Deep Learning</category>
+  <guid>https://www.satyabratapal.xyz/posts/image-restoration-series/chapter2-mvp.html</guid>
+  <pubDate>Thu, 27 Oct 2022 11:40:03 GMT</pubDate>
+  <media:content url="https://www.satyabratapal.xyz/posts/image-restoration-series/ui_design.png" medium="image" type="image/png" height="121" width="144"/>
+</item>
 </channel>
 </rss>
