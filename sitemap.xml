@@ -2,50 +2,54 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.satyabratapal.xyz/index.html</loc>
-    <lastmod>2023-02-04T11:37:05.950Z</lastmod>
+    <lastmod>2023-02-04T11:42:10.017Z</lastmod>
   </url>
   <url>
     <loc>https://www.satyabratapal.xyz/series.html</loc>
-    <lastmod>2023-02-04T11:37:06.538Z</lastmod>
+    <lastmod>2023-02-04T11:42:10.709Z</lastmod>
   </url>
   <url>
     <loc>https://www.satyabratapal.xyz/image-restoration-series.html</loc>
-    <lastmod>2023-02-04T11:37:07.255Z</lastmod>
+    <lastmod>2023-02-04T11:42:11.473Z</lastmod>
   </url>
   <url>
     <loc>https://www.satyabratapal.xyz/blog.html</loc>
-    <lastmod>2023-02-04T11:37:07.687Z</lastmod>
+    <lastmod>2023-02-04T11:42:11.993Z</lastmod>
   </url>
   <url>
     <loc>https://www.satyabratapal.xyz/posts/Extending-Fastai-For-Custom-Task/Extending-Fastai-For-Custom-Task.html</loc>
-    <lastmod>2023-02-04T11:37:08.655Z</lastmod>
+    <lastmod>2023-02-04T11:42:13.141Z</lastmod>
   </url>
   <url>
     <loc>https://www.satyabratapal.xyz/posts/image-restoration-series/chapter2-mvp.html</loc>
-    <lastmod>2023-02-04T11:37:09.195Z</lastmod>
+    <lastmod>2023-02-04T11:42:13.741Z</lastmod>
   </url>
   <url>
     <loc>https://www.satyabratapal.xyz/posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html</loc>
-    <lastmod>2023-02-04T11:37:09.575Z</lastmod>
+    <lastmod>2023-02-04T11:42:14.185Z</lastmod>
   </url>
   <url>
     <loc>https://www.satyabratapal.xyz/posts/image-restoration-series/chapter1-deblur.html</loc>
-    <lastmod>2023-02-04T11:37:10.955Z</lastmod>
+    <lastmod>2023-02-04T11:42:15.617Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.satyabratapal.xyz/posts/image-restoration-series/chapter3-Testing-out-in-the-wild.html</loc>
+    <lastmod>2023-02-04T11:42:16.029Z</lastmod>
   </url>
   <url>
     <loc>https://www.satyabratapal.xyz/posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html</loc>
-    <lastmod>2023-02-04T11:37:11.479Z</lastmod>
+    <lastmod>2023-02-04T11:42:16.593Z</lastmod>
   </url>
   <url>
     <loc>https://www.satyabratapal.xyz/posts/Nbdev.jl-And-Literate-programming/Nbdev.jl-And-Literate-programming.html</loc>
-    <lastmod>2023-02-04T11:37:11.879Z</lastmod>
+    <lastmod>2023-02-04T11:42:16.989Z</lastmod>
   </url>
   <url>
     <loc>https://www.satyabratapal.xyz/posts/blog.html</loc>
-    <lastmod>2023-02-04T11:37:12.139Z</lastmod>
+    <lastmod>2023-02-04T11:42:17.281Z</lastmod>
   </url>
   <url>
     <loc>https://www.satyabratapal.xyz/posts/How-to-workout-for-longevity/How-to-workout-for-longevity.html</loc>
-    <lastmod>2023-02-04T11:37:12.447Z</lastmod>
+    <lastmod>2023-02-04T11:42:17.621Z</lastmod>
   </url>
 </urlset>

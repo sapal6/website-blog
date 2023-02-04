@@ -4065,7 +4065,7 @@ Note
  ]]></description>
   <category>Deep Learning</category>
   <guid>https://www.satyabratapal.xyz/posts/image-restoration-series/chapter2-mvp.html</guid>
-  <pubDate>Sat, 04 Feb 2023 11:37:07 GMT</pubDate>
+  <pubDate>Sat, 04 Feb 2023 11:42:11 GMT</pubDate>
   <media:content url="https://www.satyabratapal.xyz/posts/image-restoration-series/ui_design.png" medium="image" type="image/png" height="121" width="144"/>
 </item>
 <item>
@@ -4262,7 +4262,204 @@ Note
  ]]></description>
   <category>Deep Learning</category>
   <guid>https://www.satyabratapal.xyz/posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html</guid>
-  <pubDate>Sat, 04 Feb 2023 11:37:07 GMT</pubDate>
+  <pubDate>Sat, 04 Feb 2023 11:42:11 GMT</pubDate>
+  <media:content url="https://www.satyabratapal.xyz/posts/image-restoration-series/ui.png" medium="image" type="image/png" height="82" width="144"/>
+</item>
+<item>
+  <title>Chapter 3 - Testing out in the wild</title>
+  <dc:creator>Satyabrata pal</dc:creator>
+  <link>https://www.satyabratapal.xyz/posts/image-restoration-series/chapter3-Testing-out-in-the-wild.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="why-to-test-machine-learning-model" class="level2">
+<h2 class="anchored" data-anchor-id="why-to-test-machine-learning-model">Why to test machine learning model?</h2>
+<p>Why do we need to test our machine learning model? Didn’t we test it during the training time using the validation set? Well! we did. Kind of, but that validation set was created by us from the data that we had created. Even when you do test your model on a test set, it might still have the same biases as the validation set and training set. To make sure that your model behaves correctly, we will have to test the trained model on a variety of data taken from the wild.</p>
+</section>
+<section id="re-creating-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="re-creating-the-model">Re-creating the model</h2>
+<p>I will have to re-create the datablock and the model code here as well. Let’s do that. We will use the functions from my library <a href="https://sapal6.github.io/fastaibreadcrumbs/">fastaibreadcrumbs</a> and some fucntions that we used in <a href="satyabratapal.xyz/posts/image-restoration-series/chapter2-mvp.html">chapter 2</a>.</p>
+</section>
+<section id="import-the-required-libraries" class="level2">
+<h2 class="anchored" data-anchor-id="import-the-required-libraries">Import the required libraries</h2>
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="cf" style="color: #003B4F;">try</span>: <span class="im" style="color: #00769E;">import</span> gradio <span class="im" style="color: #00769E;">as</span> gr</span>
+<span id="cb1-2"><span class="cf" style="color: #003B4F;">except</span> ModuleNotFoundError:</span>
+<span id="cb1-3">    <span class="op" style="color: #5E5E5E;">!</span>pip install <span class="op" style="color: #5E5E5E;">-</span>Uq gradio</span></code></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="co" style="color: #5E5E5E;"># install fastkaggle if not available</span></span>
+<span id="cb2-2"><span class="cf" style="color: #003B4F;">try</span>: <span class="im" style="color: #00769E;">from</span> fastaibreadcrumbs.core <span class="im" style="color: #00769E;">import</span> <span class="op" style="color: #5E5E5E;">*</span></span>
+<span id="cb2-3"><span class="cf" style="color: #003B4F;">except</span> ModuleNotFoundError:</span>
+<span id="cb2-4">    <span class="op" style="color: #5E5E5E;">!</span>pip install <span class="op" style="color: #5E5E5E;">-</span>Uq fastaibreadcrumbs</span></code></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;">import</span> gc</span>
+<span id="cb3-2"><span class="im" style="color: #00769E;">from</span> fastai.vision.<span class="bu" style="color: null;">all</span> <span class="im" style="color: #00769E;">import</span> <span class="op" style="color: #5E5E5E;">*</span></span>
+<span id="cb3-3"><span class="im" style="color: #00769E;">from</span> fastai.vision.gan <span class="im" style="color: #00769E;">import</span> <span class="op" style="color: #5E5E5E;">*</span></span>
+<span id="cb3-4"><span class="im" style="color: #00769E;">from</span> fastkaggle <span class="im" style="color: #00769E;">import</span> <span class="op" style="color: #5E5E5E;">*</span></span>
+<span id="cb3-5"><span class="im" style="color: #00769E;">from</span> fastaibreadcrumbs.core <span class="im" style="color: #00769E;">import</span> <span class="op" style="color: #5E5E5E;">*</span></span></code></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">config <span class="op" style="color: #5E5E5E;">=</span> {<span class="st" style="color: #20794D;">'path_orig'</span>:Path(<span class="st" style="color: #20794D;">'test_860'</span>), <span class="st" style="color: #20794D;">'path_crappy'</span>: Path(<span class="st" style="color: #20794D;">'crappy'</span>)}</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="prepare-the-test-data" class="level2">
+<h2 class="anchored" data-anchor-id="prepare-the-test-data">Prepare the test data</h2>
+<p>I will use a picture taken from my mobile phone for this. The reason is that the target users may use a deblurring app to deblurify the pictures they take on their mobile phones. One reason for this assumption is that people would want to deblurify images which are blurred, right and most of the times we take images with our mobile deives.</p>
+<div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">config[<span class="st" style="color: #20794D;">'test_path'</span>] <span class="op" style="color: #5E5E5E;">=</span> Path(<span class="st" style="color: #20794D;">'test'</span>)</span></code></pre></div>
+</details>
+</div>
+<p>for your test you can click any picture from your phone and put in the above “test” path or replace the “test” path in the above code with your path.</p>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1">test_img <span class="op" style="color: #5E5E5E;">=</span> get_image_files(config[<span class="st" style="color: #20794D;">'test_path'</span>])</span>
+<span id="cb6-2">test_img</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>(#4) [Path('test/IMG20230128074559.jpg'),Path('test/IMG20230128074749.jpg'),Path('test/IMG20230128074758.jpg'),Path('test/IMG20230128074733.jpg')]</code></pre>
+</div>
+</div>
+</section>
+<section id="recreating-the-learner-and-dataloader" class="level2">
+<h2 class="anchored" data-anchor-id="recreating-the-learner-and-dataloader">ReCreating the learner and dataloader</h2>
+<p>Just like <a href="https://www.satyabratapal.xyz/posts/image-restoration-series/chapter2-mvp.html">chapter2</a>, we will recreate our datalaoders and learner.</p>
+<div class="cell" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="kw" style="color: #003B4F;">def</span> get_dls(sz:<span class="bu" style="color: null;">int</span>,bs:<span class="bu" style="color: null;">int</span>, src):</span>
+<span id="cb8-2">    item_tfms <span class="op" style="color: #5E5E5E;">=</span> Resize(sz)</span>
+<span id="cb8-3">    batch_tfms <span class="op" style="color: #5E5E5E;">=</span> [Normalize.from_stats(<span class="op" style="color: #5E5E5E;">*</span>imagenet_stats)]</span>
+<span id="cb8-4">    get_y <span class="op" style="color: #5E5E5E;">=</span> <span class="kw" style="color: #003B4F;">lambda</span> x: x.relative_to(config[<span class="st" style="color: #20794D;">'path_crappy'</span>])</span>
+<span id="cb8-5">    files_crappy <span class="op" style="color: #5E5E5E;">=</span> get_image_files(src)</span>
+<span id="cb8-6">    </span>
+<span id="cb8-7">    dls<span class="op" style="color: #5E5E5E;">=</span> get_unet_dls(bs, source <span class="op" style="color: #5E5E5E;">=</span> files_crappy, get_y <span class="op" style="color: #5E5E5E;">=</span> get_y, </span>
+<span id="cb8-8">                     splitter <span class="op" style="color: #5E5E5E;">=</span> RandomSplitter(), item_tfms <span class="op" style="color: #5E5E5E;">=</span> item_tfms,</span>
+<span id="cb8-9">                     batch_tfms <span class="op" style="color: #5E5E5E;">=</span> batch_tfms)</span>
+<span id="cb8-10">    </span>
+<span id="cb8-11">    <span class="cf" style="color: #003B4F;">return</span> dls</span>
+<span id="cb8-12"></span>
+<span id="cb8-13"><span class="kw" style="color: #003B4F;">def</span> get_inf_model(dls, model:<span class="bu" style="color: null;">str</span>):</span>
+<span id="cb8-14">    unet_learn <span class="op" style="color: #5E5E5E;">=</span> unet_learner(dls, models.resnet34, loss_func<span class="op" style="color: #5E5E5E;">=</span>F.l1_loss,</span>
+<span id="cb8-15">                     blur<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>, norm_type<span class="op" style="color: #5E5E5E;">=</span>NormType.Weight).load(model)</span>
+<span id="cb8-16">    </span>
+<span id="cb8-17">    <span class="cf" style="color: #003B4F;">return</span> unet_learn</span>
+<span id="cb8-18"></span>
+<span id="cb8-19"><span class="kw" style="color: #003B4F;">def</span> save_pred(path:<span class="bu" style="color: null;">str</span>, dest:<span class="bu" style="color: null;">str</span>,learner):</span>
+<span id="cb8-20">    path <span class="op" style="color: #5E5E5E;">=</span> Path(path)</span>
+<span id="cb8-21">    dest <span class="op" style="color: #5E5E5E;">=</span> Path(dest)</span>
+<span id="cb8-22">    preds <span class="op" style="color: #5E5E5E;">=</span> learner.predict(path)</span>
+<span id="cb8-23">    arr <span class="op" style="color: #5E5E5E;">=</span> preds[<span class="dv" style="color: #AD0000;">0</span>].numpy().transpose(<span class="dv" style="color: #AD0000;">1</span>,<span class="dv" style="color: #AD0000;">2</span>,<span class="dv" style="color: #AD0000;">0</span>).astype(np.uint8)</span>
+<span id="cb8-24">    dest.mkdir(parents<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>, exist_ok<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>)</span>
+<span id="cb8-25">    Image.fromarray(arr).save(dest<span class="op" style="color: #5E5E5E;">/</span>path.name)</span>
+<span id="cb8-26">    <span class="cf" style="color: #003B4F;">return</span> dest<span class="op" style="color: #5E5E5E;">/</span>path.name</span></code></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">dls <span class="op" style="color: #5E5E5E;">=</span> get_dls(<span class="dv" style="color: #AD0000;">480</span>, <span class="dv" style="color: #AD0000;">8</span>, config[<span class="st" style="color: #20794D;">'path_crappy'</span>])</span></code></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">learner <span class="op" style="color: #5E5E5E;">=</span> get_inf_model(dls, <span class="st" style="color: #20794D;">'./model_256'</span>)</span></code></pre></div>
+</details>
+</div>
+<p>Like last time let’s also create the fucntion to save our predictions.</p>
+<div class="cell" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="kw" style="color: #003B4F;">def</span> save_pred(path:<span class="bu" style="color: null;">str</span>, dest:<span class="bu" style="color: null;">str</span>,learner):</span>
+<span id="cb11-2">    path <span class="op" style="color: #5E5E5E;">=</span> Path(path)</span>
+<span id="cb11-3">    dest <span class="op" style="color: #5E5E5E;">=</span> Path(dest)</span>
+<span id="cb11-4">    preds <span class="op" style="color: #5E5E5E;">=</span> learner.predict(path)</span>
+<span id="cb11-5">    arr <span class="op" style="color: #5E5E5E;">=</span> preds[<span class="dv" style="color: #AD0000;">0</span>].numpy().transpose(<span class="dv" style="color: #AD0000;">1</span>,<span class="dv" style="color: #AD0000;">2</span>,<span class="dv" style="color: #AD0000;">0</span>).astype(np.uint8)</span>
+<span id="cb11-6">    dest.mkdir(parents<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>, exist_ok<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>)</span>
+<span id="cb11-7">    Image.fromarray(arr).save(dest<span class="op" style="color: #5E5E5E;">/</span>path.name)</span>
+<span id="cb11-8">    <span class="cf" style="color: #003B4F;">return</span> dest<span class="op" style="color: #5E5E5E;">/</span>path.name</span></code></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="11">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="kw" style="color: #003B4F;">def</span> display_result(path):</span>
+<span id="cb12-2">    dest <span class="op" style="color: #5E5E5E;">=</span> save_pred(path,<span class="st" style="color: #20794D;">"gen_imgs"</span>,learner)</span>
+<span id="cb12-3">    <span class="cf" style="color: #003B4F;">return</span> dest</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="creating-the-gradio-ui" class="level2">
+<h2 class="anchored" data-anchor-id="creating-the-gradio-ui">Creating the gradio UI</h2>
+<p>We will create a gradio Ui to visually test our results. This is the same UI as chapter 2.</p>
+<div class="cell" data-execution_count="12">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><span class="cf" style="color: #003B4F;">with</span> gr.Blocks() <span class="im" style="color: #00769E;">as</span> demo:</span>
+<span id="cb13-2">    <span class="cf" style="color: #003B4F;">with</span> gr.Row():</span>
+<span id="cb13-3">        image_input <span class="op" style="color: #5E5E5E;">=</span> gr.Image(<span class="bu" style="color: null;">type</span><span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"filepath"</span>)</span>
+<span id="cb13-4">        image_output <span class="op" style="color: #5E5E5E;">=</span> gr.Image()</span>
+<span id="cb13-5">    deblur_btn <span class="op" style="color: #5E5E5E;">=</span> gr.Button(<span class="st" style="color: #20794D;">"Deblurrify"</span>)</span>
+<span id="cb13-6">    deblur_btn.click(fn<span class="op" style="color: #5E5E5E;">=</span>display_result,</span>
+<span id="cb13-7">                     inputs<span class="op" style="color: #5E5E5E;">=</span>image_input, outputs<span class="op" style="color: #5E5E5E;">=</span>image_output)</span>
+<span id="cb13-8"></span>
+<span id="cb13-9">demo.launch()</span></code></pre></div>
+</details>
+</div>
+<p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/ui.png" class="img-fluid"></p>
+</section>
+<section id="observations" class="level2">
+<h2 class="anchored" data-anchor-id="observations">Observations</h2>
+<ul>
+<li>The blur is not removed.</li>
+<li>The noise in the image is also amplified.</li>
+</ul>
+</section>
+<section id="reasons-for-the-bad-performance" class="level2">
+<h2 class="anchored" data-anchor-id="reasons-for-the-bad-performance">Reasons for the bad performance</h2>
+<p>This is a typical example of model performing well on training data but not performing good on real world data.</p>
+<ul>
+<li><p>I trained the model on data where the motion blur was simulated only in a single direction but in real world camera shake/motion blur in an image can be in any direction (horizontal, vertical etc.). So while training the model, this thing should be kept in mind.</p></li>
+<li><p>Secondly, my training data only contained high quality images and thus there was no sample which would tell the model what todo in case noise is available in the image (this is something that I can look into in later iterations.).</p></li>
+<li><p>The model that I am using is trained on 256*256 px images. I think I should train it on a bit higher size images as well.</p></li>
+</ul>
+</section>
+<section id="next-steps" class="level2">
+<h2 class="anchored" data-anchor-id="next-steps">Next steps</h2>
+<p>I will go back to my training and then train it with these corrections in training data and I will take a look into some new architectures which can predict the noise and motion blurs better then the present architecture.</p>
+</section>
+<section id="reference" class="level2">
+<h2 class="anchored" data-anchor-id="reference">Reference</h2>
+<ul>
+<li>Chapter 3 code can be found here.</li>
+<li>I have created a <a href="https://www.kaggle.com/datasets/sapal6/superresolution">dataset</a> of high resolution images that I collected from the free stock photography website <a href="https://www.pexels.com/">pexels.com</a>. During the training cycle of my model I combined my data with another <a href="https://www.kaggle.com/datasets/thaihoa1476050/df2k-ost">dataset</a> which also had some more high resolution images.</li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>Deep Learning</category>
+  <guid>https://www.satyabratapal.xyz/posts/image-restoration-series/chapter3-Testing-out-in-the-wild.html</guid>
+  <pubDate>Sat, 04 Feb 2023 11:42:11 GMT</pubDate>
   <media:content url="https://www.satyabratapal.xyz/posts/image-restoration-series/ui.png" medium="image" type="image/png" height="82" width="144"/>
 </item>
 </channel>
