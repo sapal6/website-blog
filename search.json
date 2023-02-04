@@ -1,10 +1,31 @@
 [
   {
-    "objectID": "posts/blog.html",
-    "href": "posts/blog.html",
+    "objectID": "index.html",
+    "href": "index.html",
     "title": "Satyabrata pal",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\nNo matching items"
+    "text": "Machine learning architect during the week and on weekends I write about Deep learning👨‍🏫, Fitness🏋️‍♂️ and Photography📷."
+  },
+  {
+    "objectID": "series.html",
+    "href": "series.html",
+    "title": "Satyabrata pal",
+    "section": "",
+    "text": "Series\n\nImage restoration series\nThis series contains a collection of step-by-step chapters that will help you to build image restoration tool."
+  },
+  {
+    "objectID": "image-restoration-series.html",
+    "href": "image-restoration-series.html",
+    "title": "Series: Image restoration",
+    "section": "",
+    "text": "Chapter 2 - MVP\n\n\n\n\n\nUsing Gradio to quickly build a deep learning tool\n\n\n\n\n\n\n6 min\n\n\n\n\n\n\n\n\nChapter 3 - Testing out in the wild\n\n\n\n\n\nWhy should we test our model with random real-world data\n\n\n\n\n\n\n2 min\n\n\n\n\n\n\n\n\nChapter 1 - Deblur\n\n\n\n\n\nUsing deep learning to restore and correct images\n\n\n\n\n\n\nSep 26, 2022\n\n\n19 min\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Satyabrata pal",
+    "section": "",
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\nChapter 2 - MVP\n\n\n\n\n\n\n\nDeep Learning\n\n\n\n\nUsing Gradio to quickly build a deep learning tool\n\n\n\n\n\n\n6 min\n\n\n\n\n\n\n\n\nChapter 3 - Testing out in the wild\n\n\n\n\n\n\n\nDeep Learning\n\n\n\n\nWhy should we test our model with random real-world data\n\n\n\n\n\n\n2 min\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0 min\n\n\n\n\n\n\n\n\nChapter 1 - Deblur\n\n\n\n\n\n\n\nDeep Learning\n\n\n\n\nUsing deep learning to restore and correct images\n\n\n\n\n\n\nSep 26, 2022\n\n\n19 min\n\n\n\n\n\n\n\n\nCan-we-use-neural-network-to-understand-data\n\n\n\n\n\n\n\nDeep Learning\n\n\n\n\nHow to use neural networks to analyze and understand data\n\n\n\n\n\n\nFeb 23, 2022\n\n\n6 min\n\n\n\n\n\n\n\n\nNbdev.jl-And-Literate-programming\n\n\n\n\n\n\n\nProgramming\n\n\n\n\nWhy, what and how of Nbdev.jl\n\n\n\n\n\n\nJan 5, 2022\n\n\n5 min\n\n\n\n\n\n\n\n\nExtending-Fastai-For-Custom-Task\n\n\n\n\n\n\n\nDeep Learning\n\n\n\n\n\n\n\n\n\n\n\nOct 12, 2021\n\n\n11 min\n\n\n\n\n\n\n\n\nHow To Workout For Longevity\n\n\n\n\n\n\n\nFitness\n\n\n\n\nMy quick notes on an article by Christian Thibaudeau\n\n\n\n\n\n\nOct 12, 2021\n\n\n2 min\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/Extending-Fastai-For-Custom-Task/Extending-Fastai-For-Custom-Task.html",
@@ -175,74 +196,137 @@
     "text": "Conclusion\nI prepared this post as part of my experimentation for the g2net-gravitational-wave-detection competition. My goal for preparing this notebook was to design an end-to-end flow to learn about extending fastai for a custom new task and how to extend the library to work well with other libraries.\nIt took quite a long time to get my head around the low-level and mid level API in fastai.\nPart of the reason being that I couldn’t spend much time on this competition and the other part was that there are very few resources available at this moment which provide good detail about creating custom bits using fastai’s mid-level and low-level APIs.\nI would like to say that the effort that it took to complete this post was worth it and I came to know how powerful the modular structure of fastai is.\nI would like to create an extension library using the code that I have developed for this post but at this moment I can’t say how soon I would be able to do it and when but stay tuned as I would keep posting my progress on this."
   },
   {
-    "objectID": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html",
-    "href": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html",
-    "title": "Can-we-use-neural-network-to-understand-data",
+    "objectID": "posts/image-restoration-series/chapter2-mvp.html",
+    "href": "posts/image-restoration-series/chapter2-mvp.html",
+    "title": "Chapter 2 - MVP",
     "section": "",
-    "text": "This notebook can also available in kaggle\nGet the code used in this note book on github.\nThe data used can be found here"
+    "text": "Last time we trained a model that was able to remove motion blur from our images. In this chapter we are going to create a very basic application through which we can showcase how our users can use the model on their images."
   },
   {
-    "objectID": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#what-is-this",
-    "href": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#what-is-this",
-    "title": "Can-we-use-neural-network-to-understand-data",
-    "section": "What is this ?",
-    "text": "What is this ?\n\nA starter notebook for folks new to machine learning.\nA vanilla CNN created for whale species recognition competition using fastai.\nAim is to observe the behavior of a simple CNN trained to recognize the whale species.\nHere I am trying to show that you can use a simple CNN to know what areas of an image does the CNN “sees”. You can use this to analyze what needs to be improved or engineered in the data to create a better model."
+    "objectID": "posts/image-restoration-series/chapter2-mvp.html#why-we-need-an-app",
+    "href": "posts/image-restoration-series/chapter2-mvp.html#why-we-need-an-app",
+    "title": "Chapter 2 - MVP",
+    "section": "Why we need an app ?",
+    "text": "Why we need an app ?\nYou may be thinking that why we need an app? Well! your target user won’t be firing up your jupyter notebook or your code everytime they need to use your model, right?\nThe user needs a visual medium through which they can consume the predictions of your model. That’s why we are goign to need an app."
   },
   {
-    "objectID": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#import-required-things.",
-    "href": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#import-required-things.",
-    "title": "Can-we-use-neural-network-to-understand-data",
-    "section": "Import required things.",
-    "text": "Import required things.\n\n\nCode\nfrom fastai.vision.all import *\n\n\n\nRequired paths\n\n\nCode\nroot_path = Path(\"../input\")\ntrain_csv_path = root_path/'happy-whale-and-dolphin/train.csv'\ntrain_img_path = root_path/\"jpeg-happywhale-128x128/train_images-128-128/train_images-128-128\""
+    "objectID": "posts/image-restoration-series/chapter2-mvp.html#why-build-an-mvp",
+    "href": "posts/image-restoration-series/chapter2-mvp.html#why-build-an-mvp",
+    "title": "Chapter 2 - MVP",
+    "section": "Why build an MVP ?",
+    "text": "Why build an MVP ?\nDuring the initial stages of developing an idea into a usable product, you need to focus on speed of iteration. You need to be able to iterate quickly through many different ways to discover the right thing.\nThis is because of this reason that during the initial stage you don’t want to go all out while building a user facing interface. You don’t need a fancy GUI or you don’t need to worry about the hardcore software engineering stages. A prototype application will do fine. So, you need a minimal viable product (MVP) to present your idea to the world and to test if your idea resonates well with the need of the user.\nYou don’t need to be an expert in web designing to build a quick prototype of an application. A little bit of creativity and an open source tool like Gradio is all you need.\n\n\n\n\n\n\nNote\n\n\n\nGradio is an open source library to quickly build web apps for your machine learning model using python."
   },
   {
-    "objectID": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#get-a-glimpse-of-the-files",
-    "href": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#get-a-glimpse-of-the-files",
-    "title": "Can-we-use-neural-network-to-understand-data",
-    "section": "Get a glimpse of the files",
-    "text": "Get a glimpse of the files\nget_image_files is a convenience function that goes through different folders and subfolders and gathers all the image file path.\n\n\nCode\ntrain_imgs = get_image_files(train_img_path)\ntrain_imgs[:10]\n\n\n(#10) [Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/80b5373b87942b.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/e113b51585c677.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/94eb976e25416c.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/19a45862ab99cd.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/be9645065510e9.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/76d25044120d3c.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/0c64a705ba5d31.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/c1fe278bdbd837.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/6f94f30ac500a0.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/15f295322e5b54.jpg')]\n\n\n\n\nCode\nImage.open(train_imgs[1])\n\n\n\n\n\nlet’s see what is there in the csv file.\n\n\nCode\ntrain_path_df = pd.read_csv(train_csv_path)\n\n\n\n\nCode\ntrain_path_df.head(5)\n\n\n\n\n\n\n  \n    \n      \n      image\n      species\n      individual_id\n    \n  \n  \n    \n      0\n      00021adfb725ed.jpg\n      melon_headed_whale\n      cadddb1636b9\n    \n    \n      1\n      000562241d384d.jpg\n      humpback_whale\n      1a71fbb72250\n    \n    \n      2\n      0007c33415ce37.jpg\n      false_killer_whale\n      60008f293a2b\n    \n    \n      3\n      0007d9bca26a99.jpg\n      bottlenose_dolphin\n      4b00fe572063\n    \n    \n      4\n      00087baf5cef7a.jpg\n      humpback_whale\n      8e5253662392\n    \n  \n\n\n\n\nIf I can catch hold of the image filename from the dataframe and attach this to the train_img_path then I can get the full image path.\nReplacing filnames with the filepath\n\n\nCode\ntrain_path_df['image'] = train_path_df['image'].apply(lambda x:train_img_path/x)\n\n\n\n\nCode\ntrain_path_df.head(2)\n\n\n\n\n\n\n  \n    \n      \n      image\n      species\n      individual_id\n    \n  \n  \n    \n      0\n      ../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/00021adfb725ed.jpg\n      melon_headed_whale\n      cadddb1636b9\n    \n    \n      1\n      ../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/000562241d384d.jpg\n      humpback_whale\n      1a71fbb72250\n    \n  \n\n\n\n\n\n\nCode\nImage.open(train_path_df.image[0])"
+    "objectID": "posts/image-restoration-series/chapter2-mvp.html#the-design",
+    "href": "posts/image-restoration-series/chapter2-mvp.html#the-design",
+    "title": "Chapter 2 - MVP",
+    "section": "The design",
+    "text": "The design\nA good interface provides a good user experience. A state-of-the-art model with an user interface with below average usage experience will not provide any value to the user.\nSo, a design which provides the required ease of usage is a must even during the prototype stage. Of course, the design of the prototype can be kept simple but some basic user experience elements like ease of use should be taken into consideration.\nSo, the first thing that we are going to do is to start with a basic design.\n\n\n\n\n\n\nNote\n\n\n\nIn a real life project you may not need to create designs yourself as bigger projects/organization usually have separate experts, but in some cases you may need to wear the hat of the designer as well.\n\n\nBelow is a hand-drawn design of the prototype UI.\n\nBasically it has a browse button to upload your images (which needs deblurring) and a preview space with a comparison view of the original image and the deblurred image. I would also want to have a button to save the deblurred image.\n\n\n\n\n\n\nNote\n\n\n\nIn a real project you may wan to use tools like “vision” to create UI designs before presenting that to the stakeholders (customers, teams etc.)"
   },
   {
-    "objectID": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#datablock",
-    "href": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#datablock",
-    "title": "Can-we-use-neural-network-to-understand-data",
-    "section": "Datablock",
-    "text": "Datablock\nA DataBlock is like a blueprint that tells fastai–> * What kind of data are we dealing with. Is it image, text etc. * What kind of labels we have. For example categorical labels, continuous labels etc. * From where to get the inputs. * From where to get the targets. * How to split the data into train and test. * The transforms that you want to do.\n\n\nCode\ndata = DataBlock(blocks=(ImageBlock, CategoryBlock),\n                splitter=TrainTestSplitter(),\n                 get_x = ColReader(0),\n                 get_y = ColReader(1),\n                 item_tfms=Resize(224),\n                 batch_tfms=aug_transforms(size=128))\n\n\nIn the above code–> * The ImageBlock tells fastai that we are dealing with image data. * CategoryBlock means our targets are categorical in nature. * The get_x and get_y tells fastai to get the x i.e. the image path from column 0 of dataframe and the target from column 1 of the dataframe. * splitter is the way in which train and test data are split. check here for more details. * The next two lines are not that important to understand now but they are needed when you are working on image augmentation. Refer to the fastbook to understand more about this.\n\n\nCode\n# this is not necessary. I was just testing if my datablocks are correct or not\n#data.summary(train_path_df)"
+    "objectID": "posts/image-restoration-series/chapter2-mvp.html#importing-the-libraries",
+    "href": "posts/image-restoration-series/chapter2-mvp.html#importing-the-libraries",
+    "title": "Chapter 2 - MVP",
+    "section": "Importing the libraries",
+    "text": "Importing the libraries\nFirst let’s import the required libraries.\n\n\nCode\ntry: import gradio as gr\nexcept ModuleNotFoundError:\n    !pip install -Uq gradio\n\n\n\n\nCode\n# install fastkaggle if not available\ntry: from fastaibreadcrumbs.core import *\nexcept ModuleNotFoundError:\n    !pip install -Uq fastaibreadcrumbs\n\n\n\n\nCode\nimport gc\nfrom fastai.vision.all import *\nfrom fastai.vision.gan import *\nfrom fastkaggle import *\nfrom fastaibreadcrumbs.core import *"
   },
   {
-    "objectID": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#dataloader",
-    "href": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#dataloader",
-    "title": "Can-we-use-neural-network-to-understand-data",
-    "section": "Dataloader",
-    "text": "Dataloader\nThink of a dataloader as a mechanism that picks up your images, does all the things that you had described in the datablock and then loads your data to the device(cpu or gpu).\nAt the minimum, you need to provide the source of data, the train_path_df in our case. Here we give the bs i.e. the batch size. For example if we say that the batch size is 8 then it means that the dataloader will load 8 images at a time onto the device.\n\n\nCode\ndls = data.dataloaders(train_path_df, bs=128)\n\n\n/root/.local/lib/python3.7/site-packages/torch/_tensor.py:1023: UserWarning: torch.solve is deprecated in favor of torch.linalg.solveand will be removed in a future PyTorch release.\ntorch.linalg.solve has its arguments reversed and does not return the LU factorization.\nTo get the LU factorization see torch.lu, which can be used with torch.lu_solve or torch.lu_unpack.\nX = torch.solve(B, A).solution\nshould be replaced with\nX = torch.linalg.solve(A, B) (Triggered internally at  /pytorch/aten/src/ATen/native/BatchLinearAlgebra.cpp:760.)\n  ret = func(*args, **kwargs)\n\n\n\n\nCode\ndls.show_batch()"
+    "objectID": "posts/image-restoration-series/chapter2-mvp.html#getting-the-prediciton",
+    "href": "posts/image-restoration-series/chapter2-mvp.html#getting-the-prediciton",
+    "title": "Chapter 2 - MVP",
+    "section": "Getting the prediciton",
+    "text": "Getting the prediciton\nWe will use the model that we had trained in chapter1. We will use the same dataloaders and learners which we used in the previous schapter.\nAs is the usual drill, I will create a config dictionary.\n\n\nCode\nconfig = {'path_crappy': Path('crappy')}\n\n\nI have created a quick function below which contains all my transformations and dataloaders from chapter1. If refer the previous chapter, you will notice that all the code used is the same. It’s just that here I have combined those into a single function.\n\n\nCode\ndef get_dls(sz:int,bs:int, src):\n    item_tfms = Resize(sz)\n    batch_tfms = [*aug_transforms(max_zoom=2.), Normalize.from_stats(*imagenet_stats)]\n    get_y = lambda x: x.relative_to(config['path_crappy'])\n    files_crappy = get_image_files(src)\n    \n    dls= get_unet_dls(bs, source = files_crappy, get_y = get_y, \n                     splitter = RandomSplitter(), item_tfms = item_tfms,\n                     batch_tfms = batch_tfms)\n    \n    return dls\n\n\n\n\n\n\n\n\nNote\n\n\n\nFor line 4 you would need to make sure that your target images(the non-crappified images), needs to be in a path that is relative to the path where the crappified images are stored. Now if you are coming to this chpater from chapter1 then you would be having the crappified and non-crappified images in relative paths.\n\n\nI have another function here which creates a unet learner and loads the model that we trained in the previous chapter.\n\n\nCode\ndef get_inf_model(dls, model:str):\n    unet_learn = unet_learner(dls, models.resnet34, loss_func=F.l1_loss,\n                     blur=True, norm_type=NormType.Weight).load(model)\n    \n    return unet_learn\n\n\nNow, I will create the dataloaders. I will pass an image size of 860 to my get_dls functions and a batch size of 8. It’s not necessary to keep the batch size same to what you had kept during the trainign time. You can change the batch size. while training the model (in chapter1) we used a final image size of 256px. Here, during inference time I would like to “debluurify” an image bigger than that. Although, I can have the original “big” size of an image but somehow it crashes the jupyter kernel as soon as prediction is performed by the model. It might be due to limited gpu memory. So, a size of 860px works good enough for experiment.\nFeel free to play around with bigger image size and let me know your findings by posting it on twitter (@thecodingprojec).\n\n\nCode\ndls = get_dls(860, 8, config['path_crappy'])\n\n\nNext, let’s create the learner by passing the dataloaders and the model trained in chapter 1.\n\n\n\n\n\n\nNote\n\n\n\nYou will need to pass the path where you have stored the crappy files which you had used to train your model.\n\n\n\n\nCode\nlearner = get_inf_model(dls, './model_256')\n\n\nI have created a function to get the prediction and save that onto the disk.\n\n\n\n\n\n\nNote\n\n\n\nMake sure to have your final model in the “models” directory and pass the same path to the get_inf_model above.\n\n\n\n\nCode\ndef save_pred(path:str, dest:str,learner):\n    path = Path(path)\n    dest = Path(dest)\n    preds = learner.predict(path)\n    arr = preds[0].numpy().transpose(1,2,0).astype(np.uint8)\n    dest.mkdir(parents=True, exist_ok=True)\n    Image.fromarray(arr).save(dest/path.name)\n    return dest/path.name\n\n\nThe save_pred takes in the source image path, the destionation path and the learner. In line 4 the source image is passed onto the learner and the prediciton is stored in pred. pred is actually a tuple of three things out of which we need only the first item in this tuple i.e. the generated image."
   },
   {
-    "objectID": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#the-model",
-    "href": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#the-model",
-    "title": "Can-we-use-neural-network-to-understand-data",
-    "section": "The model",
-    "text": "The model\nSimple CNN to classify whale/dolphin species. The intuition is the following–> * a model which knows to recognize whale/dolphin species should also be able to learn the features to distinguish the different species. * such a model can be queried to learn what all portions of an image is taken into account. For example, if somehow the background is tricking the model such that the model considers the background as an area of interest then such data needs to be further engineered.\n\nsuch model can then be used as a pre-trained model to recognize individuals ."
+    "objectID": "posts/image-restoration-series/chapter2-mvp.html#the-ui",
+    "href": "posts/image-restoration-series/chapter2-mvp.html#the-ui",
+    "title": "Chapter 2 - MVP",
+    "section": "The UI",
+    "text": "The UI\nFirst of all we need a function which would trigger the prediction for us, save it to the disk and then return the path. save_pred from the previous section would take care of generating and saving the prediction. We will wrap this in another function which would then return the path of the generated image.\n\n\nCode\ndef display_result(path):\n    dest = save_pred(path,\"gen_imgs\",learner)\n    return dest\n\n\nNext, we use gradio code to create our Ui components.\n\n\nCode\nwith gr.Blocks() as demo:\n    with gr.Row():\n        image_input = gr.Image(type=\"filepath\")\n        image_output = gr.Image()\n    deblur_btn = gr.Button(\"Deblurrify\")\n    deblur_btn.click(fn=display_result,\n                     inputs=image_input, outputs=image_output)\n\ndemo.launch()\n\n\n\nIn line 1 we ask gradio to initiate something known as “Blocks”. This is an API in gradio which let’s you have more flexibility while creating UI elements. In line 2 we ask gradio to create rows in which we would want to place our UI elements and then in line 3 and 4 we create Image boxes. One image box for our input image and one image box for displaying our output. After this in line 5 we create a button. In line 6 we tie in everything together. Whenever user clicks on the button, display_result function is called with the image from the first image box (defined in line 3) as input and then the generated image will be displayed in the image box define in line 4.\nNow, go ahead and test the UI by dragging on an image of you choice (which has motion blur) and then clicking on the “Deblurrify” button."
   },
   {
-    "objectID": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#creating-a-simple-cnn-learner",
-    "href": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#creating-a-simple-cnn-learner",
-    "title": "Can-we-use-neural-network-to-understand-data",
-    "section": "Creating a simple CNN learner",
-    "text": "Creating a simple CNN learner\ncnn_learner creates a convolutional neural network for you. At the least you provide it the dataloader, a model architecture and a loss function.\nmodels.resnet18 is a “pre-trained” neural network. It’s a network that was already trained by some good folks (folks with huge computational hardware) on a very large number of images. This particular network knows how to recognize different images. So, we take this network and then ask fastai to train this network on our image data (whale, dolphins).\nThe intuition is that since the pre-trained network already knows how to distinguish between different images, we have to spend less time and computation to make it understand how to recognize different whales and dolphins. This is Transfer learning\n\n\nCode\nlearn = cnn_learner(dls, models.resnet18, loss_func=CrossEntropyLossFlat(), ps=0.25)\n\n\nDownloading: \"https://download.pytorch.org/models/resnet18-f37072fd.pth\" to /root/.cache/torch/hub/checkpoints/resnet18-f37072fd.pth\n\n\n\n\n\n/root/.local/lib/python3.7/site-packages/torch/nn/functional.py:718: UserWarning: Named tensors and all their associated APIs are an experimental feature and subject to change. Please do not use them for anything important until they are released as stable. (Triggered internally at  /pytorch/c10/core/TensorImpl.h:1156.)\n  return torch.max_pool2d(input, kernel_size, stride, padding, dilation, ceil_mode)\n\n\nFor now understand that fine_tune means “take my network and make it look at each image a specified number of times. This”number of times” is the number that is provided as the first argument.\nLet’s not dive into the second argument at this moment in time.\n\nFor the curious mind, the second argument is known as the learning rate. It’s a hyperparameter of a neural network. More information can be found here\n\n\n\nCode\nlearn.fine_tune(2, 3e-3)\n\n\n\n\n  \n    \n      epoch\n      train_loss\n      valid_loss\n      time\n    \n  \n  \n    \n      0\n      0.905516\n      0.673760\n      03:58\n    \n  \n\n\n\n\n\n  \n    \n      epoch\n      train_loss\n      valid_loss\n      time\n    \n  \n  \n    \n      0\n      0.422199\n      0.337718\n      02:24\n    \n    \n      1\n      0.231187\n      0.232147\n      02:24\n    \n  \n\n\n\nWe can see what the model predicted vs the actual target.\n\n\nCode\nlearn.show_results()\n\n\n\n\n\n\n\n\n\n\nCode\ninterp = Interpretation.from_learner(learn)\ninterp.plot_top_losses(3, figsize=(15,10))"
-  },
-  {
-    "objectID": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#why-the-neural-network-makes-the-decision",
-    "href": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#why-the-neural-network-makes-the-decision",
-    "title": "Can-we-use-neural-network-to-understand-data",
-    "section": "Why the neural network makes the decision?",
-    "text": "Why the neural network makes the decision?\nWe can use class activation maps (CAM) to see which regions of images are of interest to the neural network. Class activation map (CAM) was first introduced by Bolei Zhou et al. in “Learning Deep Features for Discriminative Localization”. Cam uses the output of the last convolutional layer with the predictions to give a heatmap of the regions of interest of the network in an image.\nThe intuition behind CAM is that if we do the dot product of the activations of the final layer with the final weights, for each location on our feature map then we can get the score of the feature that was used to make a decision.\nPytorch provides hooks to hook onto the any layer of a network. We can attach a hook to any layer of a neural network and it will be executed during the forward pass i.e. the moment when the output is computed or during the backward pass i.e. the moment when the weights are being re-adjusted.\nI would highly recommend to read more about CAM in this chapter of fastbook before proceeding on with the code.\n\n\nCode\nImage.open(train_path_df.image[6])\n\n\n\n\n\nLet’s grab a batch.\n\n\nCode\nimg = PILImage.create(train_path_df.image[6])\n# grab a batch\nx, = first(dls.test_dl([img]))\n\n\nWe hook into the network . A forward hook takes into three things –> the model , its input and it’s output. The fourth line in the below code is the hook function.\n\n\nCode\nclass Hook():\n    def __init__(self, m):\n        self.hook = m.register_forward_hook(self.hook_func)   \n    def hook_func(self, m, i, o): self.stored = o.detach().clone()\n    def __enter__(self, *args): return self\n    def __exit__(self, *args): self.hook.remove()\n\n\nNow we do the dot product of our weight matrix with the activations.\nThe code below takes the model, hooks into the last layer of our model using our hook function and stores the activations in the act variable. Then we do the dot product of the stored activations with the weights using torch.einsum.\n\n\nCode\nwith Hook(learn.model[0]) as hook:\n    with torch.no_grad(): \n        output = learn.model.eval()(x.cuda())\n        act = hook.stored[0]\n    cam_map = torch.einsum('ck,kij->cij', learn.model[1][-1].weight, act)\n    cam_map.shape\n\n\nFor each image in our batch, and for each class, we get a 7×7 feature map that tells us where the activations were higher and where they were lower. This will let us see which areas of the pictures influenced the model’s decision.\n\n\nCode\nx_dec = TensorImage(dls.train.decode((x,))[0][0])\n_,ax = plt.subplots()\nx_dec.show(ctx=ax)\nax.imshow(cam_map[1].detach().cpu(), alpha=0.6, extent=(0,128,128,0),\n              interpolation='bilinear', cmap='magma');\n\n\n\n\n\nThe bright areas in the activations are somehow spilling over to the ocean. In my opinion this should not be the case. The activations should be more around the of the dorsal fins and the surface of the fin. In layman terms the network should focus more on the object i.e. the fin features and not on the surrounding water.\nAn important takeaway from my perspective is that if we can restrict the region of interest to the whale fin and not the surrounding water then the network would be able to learn better."
-  },
-  {
-    "objectID": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#conclusion",
-    "href": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#conclusion",
-    "title": "Can-we-use-neural-network-to-understand-data",
+    "objectID": "posts/image-restoration-series/chapter2-mvp.html#conclusion",
+    "href": "posts/image-restoration-series/chapter2-mvp.html#conclusion",
+    "title": "Chapter 2 - MVP",
     "section": "Conclusion",
-    "text": "Conclusion\nBesides tasks like classifying images or detecting objects, a neural networks can be used for analyzing the data to device strategies for pre-processing, data engineering and data cleaning.\nHere I have bounced off one idea about how a simple CNN can be used to understand the regions in an image that the neural network focuses to make it’s decisions and then analyzing these things we can observer if the network is focusing on areas of images that it needs to focus and if not, then we can think of the steps that we can take to help the network to focus to generalize better.\nI have just scratched the surface of what’s possible here and there can be many more ways in which deep learning can be used to take better decisions on data. So, I would emphasize you to expand on this idea and think of other ways in which you can use simple networks to analyze the data before building an architecture for the actual task at hand."
+    "text": "Conclusion\nWhat we have created here is a very early stage prototype application. You will notice that the UI that we created is exactly not same as the design that we imagined but that’s okay in current context. We will iterate on it later on to bring it close to the design.\nYou will also notice that the app code and the supporting code is not suitable enough to be hosted somewhere. For example, we still need to re-create the dataloaders and learner before prediction. This is cumbersome as we would need to re-create the same directory structure of our input data and target data wherever we want to host of app. Also, moving the training data around whenever we want to host our app is not a good way to do things.\nAt the current state since we are testing out our idea, the current state of our code and app is good enough. In the next chapter we would explore some more things like testing a few edge cases to find out where our model fails, optimize our training code further so that trying out different experiments becomes more easier."
+  },
+  {
+    "objectID": "posts/image-restoration-series/chapter2-mvp.html#references",
+    "href": "posts/image-restoration-series/chapter2-mvp.html#references",
+    "title": "Chapter 2 - MVP",
+    "section": "References",
+    "text": "References\n\nChapter 1 can be found here.\nCode for this chapter can be found here"
+  },
+  {
+    "objectID": "posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html",
+    "href": "posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html",
+    "title": "Chapter 3 - Testing out in the wild",
+    "section": "",
+    "text": "Why do we need to test our machine learning model? Didn’t we test it during the training time using the validation set? Well! we did. Kind of, but that validation set was created by us from the data that we had created. Even when you do test your model on a test set, it might still have the same biases as the validation set and training set. To make sure that your model behaves correctly, we will have to test the trained model on a variety of data taken from the wild."
+  },
+  {
+    "objectID": "posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html#re-creating-the-model",
+    "href": "posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html#re-creating-the-model",
+    "title": "Chapter 3 - Testing out in the wild",
+    "section": "Re-creating the model",
+    "text": "Re-creating the model\nI will have to re-create the datablock and the model code here as well. Let’s do that. We will use the functions from my library fastaibreadcrumbs and some fucntions that we used in chapter 2."
+  },
+  {
+    "objectID": "posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html#import-the-required-libraries",
+    "href": "posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html#import-the-required-libraries",
+    "title": "Chapter 3 - Testing out in the wild",
+    "section": "Import the required libraries",
+    "text": "Import the required libraries\n\n\nCode\ntry: import gradio as gr\nexcept ModuleNotFoundError:\n    !pip install -Uq gradio\n\n\n\n\nCode\n# install fastkaggle if not available\ntry: from fastaibreadcrumbs.core import *\nexcept ModuleNotFoundError:\n    !pip install -Uq fastaibreadcrumbs\n\n\n\n\nCode\nimport gc\nfrom fastai.vision.all import *\nfrom fastai.vision.gan import *\nfrom fastkaggle import *\nfrom fastaibreadcrumbs.core import *\n\n\n\n\nCode\nconfig = {'path_orig':Path('test_860'), 'path_crappy': Path('crappy')}"
+  },
+  {
+    "objectID": "posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html#prepare-the-test-data",
+    "href": "posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html#prepare-the-test-data",
+    "title": "Chapter 3 - Testing out in the wild",
+    "section": "Prepare the test data",
+    "text": "Prepare the test data\nI will use a picture taken from my mobile phone for this. The reason is that the target users may use a deblurring app to deblurify the pictures they take on their mobile phones. One reason for this assumption is that people would want to deblurify images which are blurred, right and most of the times we take images with our mobile deives.\n\n\nCode\nconfig['test_path'] = Path('test')\n\n\nfor your test you can click any picture from your phone and put in the above “test” path or replace the “test” path in the above code with your path.\n\n\nCode\ntest_img = get_image_files(config['test_path'])\ntest_img\n\n\n(#4) [Path('test/IMG20230128074559.jpg'),Path('test/IMG20230128074749.jpg'),Path('test/IMG20230128074758.jpg'),Path('test/IMG20230128074733.jpg')]"
+  },
+  {
+    "objectID": "posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html#recreating-the-learner-and-dataloader",
+    "href": "posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html#recreating-the-learner-and-dataloader",
+    "title": "Chapter 3 - Testing out in the wild",
+    "section": "ReCreating the learner and dataloader",
+    "text": "ReCreating the learner and dataloader\nJust like chapter2, we will recreate our datalaoders and learner.\n\n\nCode\ndef get_dls(sz:int,bs:int, src):\n    item_tfms = Resize(sz)\n    batch_tfms = [Normalize.from_stats(*imagenet_stats)]\n    get_y = lambda x: x.relative_to(config['path_crappy'])\n    files_crappy = get_image_files(src)\n    \n    dls= get_unet_dls(bs, source = files_crappy, get_y = get_y, \n                     splitter = RandomSplitter(), item_tfms = item_tfms,\n                     batch_tfms = batch_tfms)\n    \n    return dls\n\ndef get_inf_model(dls, model:str):\n    unet_learn = unet_learner(dls, models.resnet34, loss_func=F.l1_loss,\n                     blur=True, norm_type=NormType.Weight).load(model)\n    \n    return unet_learn\n\ndef save_pred(path:str, dest:str,learner):\n    path = Path(path)\n    dest = Path(dest)\n    preds = learner.predict(path)\n    arr = preds[0].numpy().transpose(1,2,0).astype(np.uint8)\n    dest.mkdir(parents=True, exist_ok=True)\n    Image.fromarray(arr).save(dest/path.name)\n    return dest/path.name\n\n\n\n\nCode\ndls = get_dls(480, 8, config['path_crappy'])\n\n\n\n\nCode\nlearner = get_inf_model(dls, './model_256')\n\n\nLike last time let’s also create the fucntion to save our predictions.\n\n\nCode\ndef save_pred(path:str, dest:str,learner):\n    path = Path(path)\n    dest = Path(dest)\n    preds = learner.predict(path)\n    arr = preds[0].numpy().transpose(1,2,0).astype(np.uint8)\n    dest.mkdir(parents=True, exist_ok=True)\n    Image.fromarray(arr).save(dest/path.name)\n    return dest/path.name\n\n\n\n\nCode\ndef display_result(path):\n    dest = save_pred(path,\"gen_imgs\",learner)\n    return dest"
+  },
+  {
+    "objectID": "posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html#creating-the-gradio-ui",
+    "href": "posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html#creating-the-gradio-ui",
+    "title": "Chapter 3 - Testing out in the wild",
+    "section": "Creating the gradio UI",
+    "text": "Creating the gradio UI\nWe will create a gradio Ui to visually test our results. This is the same UI as chapter 2.\n\n\nCode\nwith gr.Blocks() as demo:\n    with gr.Row():\n        image_input = gr.Image(type=\"filepath\")\n        image_output = gr.Image()\n    deblur_btn = gr.Button(\"Deblurrify\")\n    deblur_btn.click(fn=display_result,\n                     inputs=image_input, outputs=image_output)\n\ndemo.launch()"
+  },
+  {
+    "objectID": "posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html#observations",
+    "href": "posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html#observations",
+    "title": "Chapter 3 - Testing out in the wild",
+    "section": "Observations",
+    "text": "Observations\n\nThe blur is not removed.\nThe noise in the image is also amplified."
+  },
+  {
+    "objectID": "posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html#reasons-for-the-bad-performance",
+    "href": "posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html#reasons-for-the-bad-performance",
+    "title": "Chapter 3 - Testing out in the wild",
+    "section": "Reasons for the bad performance",
+    "text": "Reasons for the bad performance\nThis is a typical example of model performing well on training data but not performing good on real world data.\n\nI trained the model on data where the motion blur was simulated only in a single direction but in real world camera shake/motion blur in an image can be in any direction (horizontal, vertical etc.). So while training the model, this thing should be kept in mind.\nSecondly, my training data only contained high quality images and thus there was no sample which would tell the model what todo in case noise is available in the image (this is something that I can look into in later iterations.).\nThe model that I am using is trained on 256*256 px images. I think I should train it on a bit higher size images as well."
+  },
+  {
+    "objectID": "posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html#next-steps",
+    "href": "posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html#next-steps",
+    "title": "Chapter 3 - Testing out in the wild",
+    "section": "Next steps",
+    "text": "Next steps\nI will go back to my training and then train it with these corrections in training data and I will take a look into some new architectures which can predict the noise and motion blurs better then the present architecture."
+  },
+  {
+    "objectID": "posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html#reference",
+    "href": "posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html#reference",
+    "title": "Chapter 3 - Testing out in the wild",
+    "section": "Reference",
+    "text": "Reference\n\nChapter 3 code can be found here.\nI have created a dataset of high resolution images that I collected from the free stock photography website pexels.com. During the training cycle of my model I combined my data with another dataset which also had some more high resolution images."
   },
   {
     "objectID": "posts/image-restoration-series/chapter1-deblur.html",
@@ -336,67 +420,74 @@
     "text": "Reading list\n\nCode for this tutorial\nSuperresolution- Fastai - Lesson Notebook, Lesson video\nFastai course 2022\n“Perceptual Losses for Real-Time Style Transfer and Super-Resolution\nWalk with fastai"
   },
   {
-    "objectID": "posts/image-restoration-series/chapter2-mvp.html",
-    "href": "posts/image-restoration-series/chapter2-mvp.html",
-    "title": "Chapter 2 - MVP",
+    "objectID": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html",
+    "href": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html",
+    "title": "Can-we-use-neural-network-to-understand-data",
     "section": "",
-    "text": "Last time we trained a model that was able to remove motion blur from our images. In this chapter we are going to create a very basic application through which we can showcase how our users can use the model on their images."
+    "text": "This notebook can also available in kaggle\nGet the code used in this note book on github.\nThe data used can be found here"
   },
   {
-    "objectID": "posts/image-restoration-series/chapter2-mvp.html#why-we-need-an-app",
-    "href": "posts/image-restoration-series/chapter2-mvp.html#why-we-need-an-app",
-    "title": "Chapter 2 - MVP",
-    "section": "Why we need an app ?",
-    "text": "Why we need an app ?\nYou may be thinking that why we need an app? Well! your target user won’t be firing up your jupyter notebook or your code everytime they need to use your model, right?\nThe user needs a visual medium through which they can consume the predictions of your model. That’s why we are goign to need an app."
+    "objectID": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#what-is-this",
+    "href": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#what-is-this",
+    "title": "Can-we-use-neural-network-to-understand-data",
+    "section": "What is this ?",
+    "text": "What is this ?\n\nA starter notebook for folks new to machine learning.\nA vanilla CNN created for whale species recognition competition using fastai.\nAim is to observe the behavior of a simple CNN trained to recognize the whale species.\nHere I am trying to show that you can use a simple CNN to know what areas of an image does the CNN “sees”. You can use this to analyze what needs to be improved or engineered in the data to create a better model."
   },
   {
-    "objectID": "posts/image-restoration-series/chapter2-mvp.html#why-build-an-mvp",
-    "href": "posts/image-restoration-series/chapter2-mvp.html#why-build-an-mvp",
-    "title": "Chapter 2 - MVP",
-    "section": "Why build an MVP ?",
-    "text": "Why build an MVP ?\nDuring the initial stages of developing an idea into a usable product, you need to focus on speed of iteration. You need to be able to iterate quickly through many different ways to discover the right thing.\nThis is because of this reason that during the initial stage you don’t want to go all out while building a user facing interface. You don’t need a fancy GUI or you don’t need to worry about the hardcore software engineering stages. A prototype application will do fine. So, you need a minimal viable product (MVP) to present your idea to the world and to test if your idea resonates well with the need of the user.\nYou don’t need to be an expert in web designing to build a quick prototype of an application. A little bit of creativity and an open source tool like Gradio is all you need.\n\n\n\n\n\n\nNote\n\n\n\nGradio is an open source library to quickly build web apps for your machine learning model using python."
+    "objectID": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#import-required-things.",
+    "href": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#import-required-things.",
+    "title": "Can-we-use-neural-network-to-understand-data",
+    "section": "Import required things.",
+    "text": "Import required things.\n\n\nCode\nfrom fastai.vision.all import *\n\n\n\nRequired paths\n\n\nCode\nroot_path = Path(\"../input\")\ntrain_csv_path = root_path/'happy-whale-and-dolphin/train.csv'\ntrain_img_path = root_path/\"jpeg-happywhale-128x128/train_images-128-128/train_images-128-128\""
   },
   {
-    "objectID": "posts/image-restoration-series/chapter2-mvp.html#the-design",
-    "href": "posts/image-restoration-series/chapter2-mvp.html#the-design",
-    "title": "Chapter 2 - MVP",
-    "section": "The design",
-    "text": "The design\nA good interface provides a good user experience. A state-of-the-art model with an user interface with below average usage experience will not provide any value to the user.\nSo, a design which provides the required ease of usage is a must even during the prototype stage. Of course, the design of the prototype can be kept simple but some basic user experience elements like ease of use should be taken into consideration.\nSo, the first thing that we are going to do is to start with a basic design.\n\n\n\n\n\n\nNote\n\n\n\nIn a real life project you may not need to create designs yourself as bigger projects/organization usually have separate experts, but in some cases you may need to wear the hat of the designer as well.\n\n\nBelow is a hand-drawn design of the prototype UI.\n\nBasically it has a browse button to upload your images (which needs deblurring) and a preview space with a comparison view of the original image and the deblurred image. I would also want to have a button to save the deblurred image.\n\n\n\n\n\n\nNote\n\n\n\nIn a real project you may wan to use tools like “vision” to create UI designs before presenting that to the stakeholders (customers, teams etc.)"
+    "objectID": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#get-a-glimpse-of-the-files",
+    "href": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#get-a-glimpse-of-the-files",
+    "title": "Can-we-use-neural-network-to-understand-data",
+    "section": "Get a glimpse of the files",
+    "text": "Get a glimpse of the files\nget_image_files is a convenience function that goes through different folders and subfolders and gathers all the image file path.\n\n\nCode\ntrain_imgs = get_image_files(train_img_path)\ntrain_imgs[:10]\n\n\n(#10) [Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/80b5373b87942b.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/e113b51585c677.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/94eb976e25416c.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/19a45862ab99cd.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/be9645065510e9.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/76d25044120d3c.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/0c64a705ba5d31.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/c1fe278bdbd837.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/6f94f30ac500a0.jpg'),Path('../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/15f295322e5b54.jpg')]\n\n\n\n\nCode\nImage.open(train_imgs[1])\n\n\n\n\n\nlet’s see what is there in the csv file.\n\n\nCode\ntrain_path_df = pd.read_csv(train_csv_path)\n\n\n\n\nCode\ntrain_path_df.head(5)\n\n\n\n\n\n\n  \n    \n      \n      image\n      species\n      individual_id\n    \n  \n  \n    \n      0\n      00021adfb725ed.jpg\n      melon_headed_whale\n      cadddb1636b9\n    \n    \n      1\n      000562241d384d.jpg\n      humpback_whale\n      1a71fbb72250\n    \n    \n      2\n      0007c33415ce37.jpg\n      false_killer_whale\n      60008f293a2b\n    \n    \n      3\n      0007d9bca26a99.jpg\n      bottlenose_dolphin\n      4b00fe572063\n    \n    \n      4\n      00087baf5cef7a.jpg\n      humpback_whale\n      8e5253662392\n    \n  \n\n\n\n\nIf I can catch hold of the image filename from the dataframe and attach this to the train_img_path then I can get the full image path.\nReplacing filnames with the filepath\n\n\nCode\ntrain_path_df['image'] = train_path_df['image'].apply(lambda x:train_img_path/x)\n\n\n\n\nCode\ntrain_path_df.head(2)\n\n\n\n\n\n\n  \n    \n      \n      image\n      species\n      individual_id\n    \n  \n  \n    \n      0\n      ../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/00021adfb725ed.jpg\n      melon_headed_whale\n      cadddb1636b9\n    \n    \n      1\n      ../input/jpeg-happywhale-128x128/train_images-128-128/train_images-128-128/000562241d384d.jpg\n      humpback_whale\n      1a71fbb72250\n    \n  \n\n\n\n\n\n\nCode\nImage.open(train_path_df.image[0])"
   },
   {
-    "objectID": "posts/image-restoration-series/chapter2-mvp.html#importing-the-libraries",
-    "href": "posts/image-restoration-series/chapter2-mvp.html#importing-the-libraries",
-    "title": "Chapter 2 - MVP",
-    "section": "Importing the libraries",
-    "text": "Importing the libraries\nFirst let’s import the required libraries.\n\n\nCode\ntry: import gradio as gr\nexcept ModuleNotFoundError:\n    !pip install -Uq gradio\n\n\n\n\nCode\n# install fastkaggle if not available\ntry: from fastaibreadcrumbs.core import *\nexcept ModuleNotFoundError:\n    !pip install -Uq fastaibreadcrumbs\n\n\n\n\nCode\nimport gc\nfrom fastai.vision.all import *\nfrom fastai.vision.gan import *\nfrom fastkaggle import *\nfrom fastaibreadcrumbs.core import *"
+    "objectID": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#datablock",
+    "href": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#datablock",
+    "title": "Can-we-use-neural-network-to-understand-data",
+    "section": "Datablock",
+    "text": "Datablock\nA DataBlock is like a blueprint that tells fastai–> * What kind of data are we dealing with. Is it image, text etc. * What kind of labels we have. For example categorical labels, continuous labels etc. * From where to get the inputs. * From where to get the targets. * How to split the data into train and test. * The transforms that you want to do.\n\n\nCode\ndata = DataBlock(blocks=(ImageBlock, CategoryBlock),\n                splitter=TrainTestSplitter(),\n                 get_x = ColReader(0),\n                 get_y = ColReader(1),\n                 item_tfms=Resize(224),\n                 batch_tfms=aug_transforms(size=128))\n\n\nIn the above code–> * The ImageBlock tells fastai that we are dealing with image data. * CategoryBlock means our targets are categorical in nature. * The get_x and get_y tells fastai to get the x i.e. the image path from column 0 of dataframe and the target from column 1 of the dataframe. * splitter is the way in which train and test data are split. check here for more details. * The next two lines are not that important to understand now but they are needed when you are working on image augmentation. Refer to the fastbook to understand more about this.\n\n\nCode\n# this is not necessary. I was just testing if my datablocks are correct or not\n#data.summary(train_path_df)"
   },
   {
-    "objectID": "posts/image-restoration-series/chapter2-mvp.html#getting-the-prediciton",
-    "href": "posts/image-restoration-series/chapter2-mvp.html#getting-the-prediciton",
-    "title": "Chapter 2 - MVP",
-    "section": "Getting the prediciton",
-    "text": "Getting the prediciton\nWe will use the model that we had trained in chapter1. We will use the same dataloaders and learners which we used in the previous schapter.\nAs is the usual drill, I will create a config dictionary.\n\n\nCode\nconfig = {'path_crappy': Path('crappy')}\n\n\nI have created a quick function below which contains all my transformations and dataloaders from chapter1. If refer the previous chapter, you will notice that all the code used is the same. It’s just that here I have combined those into a single function.\n\n\nCode\ndef get_dls(sz:int,bs:int, src):\n    item_tfms = Resize(sz)\n    batch_tfms = [*aug_transforms(max_zoom=2.), Normalize.from_stats(*imagenet_stats)]\n    get_y = lambda x: x.relative_to(config['path_crappy'])\n    files_crappy = get_image_files(src)\n    \n    dls= get_unet_dls(bs, source = files_crappy, get_y = get_y, \n                     splitter = RandomSplitter(), item_tfms = item_tfms,\n                     batch_tfms = batch_tfms)\n    \n    return dls\n\n\n\n\n\n\n\n\nNote\n\n\n\nFor line 4 you would need to make sure that your target images(the non-crappified images), needs to be in a path that is relative to the path where the crappified images are stored. Now if you are coming to this chpater from chapter1 then you would be having the crappified and non-crappified images in relative paths.\n\n\nI have another function here which creates a unet learner and loads the model that we trained in the previous chapter.\n\n\nCode\ndef get_inf_model(dls, model:str):\n    unet_learn = unet_learner(dls, models.resnet34, loss_func=F.l1_loss,\n                     blur=True, norm_type=NormType.Weight).load(model)\n    \n    return unet_learn\n\n\nNow, I will create the dataloaders. I will pass an image size of 860 to my get_dls functions and a batch size of 8. It’s not necessary to keep the batch size same to what you had kept during the trainign time. You can change the batch size. while training the model (in chapter1) we used a final image size of 256px. Here, during inference time I would like to “debluurify” an image bigger than that. Although, I can have the original “big” size of an image but somehow it crashes the jupyter kernel as soon as prediction is performed by the model. It might be due to limited gpu memory. So, a size of 860px works good enough for experiment.\nFeel free to play around with bigger image size and let me know your findings by posting it on twitter (@thecodingprojec).\n\n\nCode\ndls = get_dls(860, 8, config['path_crappy'])\n\n\nNext, let’s create the learner by passing the dataloaders and the model trained in chapter 1.\n\n\n\n\n\n\nNote\n\n\n\nYou will need to pass the path where you have stored the crappy files which you had used to train your model.\n\n\n\n\nCode\nlearner = get_inf_model(dls, './model_256')\n\n\nI have created a function to get the prediction and save that onto the disk.\n\n\n\n\n\n\nNote\n\n\n\nMake sure to have your final model in the “models” directory and pass the same path to the get_inf_model above.\n\n\n\n\nCode\ndef save_pred(path:str, dest:str,learner):\n    path = Path(path)\n    dest = Path(dest)\n    preds = learner.predict(path)\n    arr = preds[0].numpy().transpose(1,2,0).astype(np.uint8)\n    dest.mkdir(parents=True, exist_ok=True)\n    Image.fromarray(arr).save(dest/path.name)\n    return dest/path.name\n\n\nThe save_pred takes in the source image path, the destionation path and the learner. In line 4 the source image is passed onto the learner and the prediciton is stored in pred. pred is actually a tuple of three things out of which we need only the first item in this tuple i.e. the generated image."
+    "objectID": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#dataloader",
+    "href": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#dataloader",
+    "title": "Can-we-use-neural-network-to-understand-data",
+    "section": "Dataloader",
+    "text": "Dataloader\nThink of a dataloader as a mechanism that picks up your images, does all the things that you had described in the datablock and then loads your data to the device(cpu or gpu).\nAt the minimum, you need to provide the source of data, the train_path_df in our case. Here we give the bs i.e. the batch size. For example if we say that the batch size is 8 then it means that the dataloader will load 8 images at a time onto the device.\n\n\nCode\ndls = data.dataloaders(train_path_df, bs=128)\n\n\n/root/.local/lib/python3.7/site-packages/torch/_tensor.py:1023: UserWarning: torch.solve is deprecated in favor of torch.linalg.solveand will be removed in a future PyTorch release.\ntorch.linalg.solve has its arguments reversed and does not return the LU factorization.\nTo get the LU factorization see torch.lu, which can be used with torch.lu_solve or torch.lu_unpack.\nX = torch.solve(B, A).solution\nshould be replaced with\nX = torch.linalg.solve(A, B) (Triggered internally at  /pytorch/aten/src/ATen/native/BatchLinearAlgebra.cpp:760.)\n  ret = func(*args, **kwargs)\n\n\n\n\nCode\ndls.show_batch()"
   },
   {
-    "objectID": "posts/image-restoration-series/chapter2-mvp.html#the-ui",
-    "href": "posts/image-restoration-series/chapter2-mvp.html#the-ui",
-    "title": "Chapter 2 - MVP",
-    "section": "The UI",
-    "text": "The UI\nFirst of all we need a function which would trigger the prediction for us, save it to the disk and then return the path. save_pred from the previous section would take care of generating and saving the prediction. We will wrap this in another function which would then return the path of the generated image.\n\n\nCode\ndef display_result(path):\n    dest = save_pred(path,\"gen_imgs\",learner)\n    return dest\n\n\nNext, we use gradio code to create our Ui components.\n\n\nCode\nwith gr.Blocks() as demo:\n    with gr.Row():\n        image_input = gr.Image(type=\"filepath\")\n        image_output = gr.Image()\n    deblur_btn = gr.Button(\"Deblurrify\")\n    deblur_btn.click(fn=display_result,\n                     inputs=image_input, outputs=image_output)\n\ndemo.launch()\n\n\n\nIn line 1 we ask gradio to initiate something known as “Blocks”. This is an API in gradio which let’s you have more flexibility while creating UI elements. In line 2 we ask gradio to create rows in which we would want to place our UI elements and then in line 3 and 4 we create Image boxes. One image box for our input image and one image box for displaying our output. After this in line 5 we create a button. In line 6 we tie in everything together. Whenever user clicks on the button, display_result function is called with the image from the first image box (defined in line 3) as input and then the generated image will be displayed in the image box define in line 4.\nNow, go ahead and test the UI by dragging on an image of you choice (which has motion blur) and then clicking on the “Deblurrify” button."
+    "objectID": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#the-model",
+    "href": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#the-model",
+    "title": "Can-we-use-neural-network-to-understand-data",
+    "section": "The model",
+    "text": "The model\nSimple CNN to classify whale/dolphin species. The intuition is the following–> * a model which knows to recognize whale/dolphin species should also be able to learn the features to distinguish the different species. * such a model can be queried to learn what all portions of an image is taken into account. For example, if somehow the background is tricking the model such that the model considers the background as an area of interest then such data needs to be further engineered.\n\nsuch model can then be used as a pre-trained model to recognize individuals ."
   },
   {
-    "objectID": "posts/image-restoration-series/chapter2-mvp.html#conclusion",
-    "href": "posts/image-restoration-series/chapter2-mvp.html#conclusion",
-    "title": "Chapter 2 - MVP",
+    "objectID": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#creating-a-simple-cnn-learner",
+    "href": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#creating-a-simple-cnn-learner",
+    "title": "Can-we-use-neural-network-to-understand-data",
+    "section": "Creating a simple CNN learner",
+    "text": "Creating a simple CNN learner\ncnn_learner creates a convolutional neural network for you. At the least you provide it the dataloader, a model architecture and a loss function.\nmodels.resnet18 is a “pre-trained” neural network. It’s a network that was already trained by some good folks (folks with huge computational hardware) on a very large number of images. This particular network knows how to recognize different images. So, we take this network and then ask fastai to train this network on our image data (whale, dolphins).\nThe intuition is that since the pre-trained network already knows how to distinguish between different images, we have to spend less time and computation to make it understand how to recognize different whales and dolphins. This is Transfer learning\n\n\nCode\nlearn = cnn_learner(dls, models.resnet18, loss_func=CrossEntropyLossFlat(), ps=0.25)\n\n\nDownloading: \"https://download.pytorch.org/models/resnet18-f37072fd.pth\" to /root/.cache/torch/hub/checkpoints/resnet18-f37072fd.pth\n\n\n\n\n\n/root/.local/lib/python3.7/site-packages/torch/nn/functional.py:718: UserWarning: Named tensors and all their associated APIs are an experimental feature and subject to change. Please do not use them for anything important until they are released as stable. (Triggered internally at  /pytorch/c10/core/TensorImpl.h:1156.)\n  return torch.max_pool2d(input, kernel_size, stride, padding, dilation, ceil_mode)\n\n\nFor now understand that fine_tune means “take my network and make it look at each image a specified number of times. This”number of times” is the number that is provided as the first argument.\nLet’s not dive into the second argument at this moment in time.\n\nFor the curious mind, the second argument is known as the learning rate. It’s a hyperparameter of a neural network. More information can be found here\n\n\n\nCode\nlearn.fine_tune(2, 3e-3)\n\n\n\n\n  \n    \n      epoch\n      train_loss\n      valid_loss\n      time\n    \n  \n  \n    \n      0\n      0.905516\n      0.673760\n      03:58\n    \n  \n\n\n\n\n\n  \n    \n      epoch\n      train_loss\n      valid_loss\n      time\n    \n  \n  \n    \n      0\n      0.422199\n      0.337718\n      02:24\n    \n    \n      1\n      0.231187\n      0.232147\n      02:24\n    \n  \n\n\n\nWe can see what the model predicted vs the actual target.\n\n\nCode\nlearn.show_results()\n\n\n\n\n\n\n\n\n\n\nCode\ninterp = Interpretation.from_learner(learn)\ninterp.plot_top_losses(3, figsize=(15,10))"
+  },
+  {
+    "objectID": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#why-the-neural-network-makes-the-decision",
+    "href": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#why-the-neural-network-makes-the-decision",
+    "title": "Can-we-use-neural-network-to-understand-data",
+    "section": "Why the neural network makes the decision?",
+    "text": "Why the neural network makes the decision?\nWe can use class activation maps (CAM) to see which regions of images are of interest to the neural network. Class activation map (CAM) was first introduced by Bolei Zhou et al. in “Learning Deep Features for Discriminative Localization”. Cam uses the output of the last convolutional layer with the predictions to give a heatmap of the regions of interest of the network in an image.\nThe intuition behind CAM is that if we do the dot product of the activations of the final layer with the final weights, for each location on our feature map then we can get the score of the feature that was used to make a decision.\nPytorch provides hooks to hook onto the any layer of a network. We can attach a hook to any layer of a neural network and it will be executed during the forward pass i.e. the moment when the output is computed or during the backward pass i.e. the moment when the weights are being re-adjusted.\nI would highly recommend to read more about CAM in this chapter of fastbook before proceeding on with the code.\n\n\nCode\nImage.open(train_path_df.image[6])\n\n\n\n\n\nLet’s grab a batch.\n\n\nCode\nimg = PILImage.create(train_path_df.image[6])\n# grab a batch\nx, = first(dls.test_dl([img]))\n\n\nWe hook into the network . A forward hook takes into three things –> the model , its input and it’s output. The fourth line in the below code is the hook function.\n\n\nCode\nclass Hook():\n    def __init__(self, m):\n        self.hook = m.register_forward_hook(self.hook_func)   \n    def hook_func(self, m, i, o): self.stored = o.detach().clone()\n    def __enter__(self, *args): return self\n    def __exit__(self, *args): self.hook.remove()\n\n\nNow we do the dot product of our weight matrix with the activations.\nThe code below takes the model, hooks into the last layer of our model using our hook function and stores the activations in the act variable. Then we do the dot product of the stored activations with the weights using torch.einsum.\n\n\nCode\nwith Hook(learn.model[0]) as hook:\n    with torch.no_grad(): \n        output = learn.model.eval()(x.cuda())\n        act = hook.stored[0]\n    cam_map = torch.einsum('ck,kij->cij', learn.model[1][-1].weight, act)\n    cam_map.shape\n\n\nFor each image in our batch, and for each class, we get a 7×7 feature map that tells us where the activations were higher and where they were lower. This will let us see which areas of the pictures influenced the model’s decision.\n\n\nCode\nx_dec = TensorImage(dls.train.decode((x,))[0][0])\n_,ax = plt.subplots()\nx_dec.show(ctx=ax)\nax.imshow(cam_map[1].detach().cpu(), alpha=0.6, extent=(0,128,128,0),\n              interpolation='bilinear', cmap='magma');\n\n\n\n\n\nThe bright areas in the activations are somehow spilling over to the ocean. In my opinion this should not be the case. The activations should be more around the of the dorsal fins and the surface of the fin. In layman terms the network should focus more on the object i.e. the fin features and not on the surrounding water.\nAn important takeaway from my perspective is that if we can restrict the region of interest to the whale fin and not the surrounding water then the network would be able to learn better."
+  },
+  {
+    "objectID": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#conclusion",
+    "href": "posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html#conclusion",
+    "title": "Can-we-use-neural-network-to-understand-data",
     "section": "Conclusion",
-    "text": "Conclusion\nWhat we have created here is a very early stage prototype application. You will notice that the UI that we created is exactly not same as the design that we imagined but that’s okay in current context. We will iterate on it later on to bring it close to the design.\nYou will also notice that the app code and the supporting code is not suitable enough to be hosted somewhere. For example, we still need to re-create the dataloaders and learner before prediction. This is cumbersome as we would need to re-create the same directory structure of our input data and target data wherever we want to host of app. Also, moving the training data around whenever we want to host our app is not a good way to do things.\nAt the current state since we are testing out our idea, the current state of our code and app is good enough. In the next chapter we would explore some more things like testing a few edge cases to find out where our model fails, optimize our training code further so that trying out different experiments becomes more easier."
-  },
-  {
-    "objectID": "posts/image-restoration-series/chapter2-mvp.html#references",
-    "href": "posts/image-restoration-series/chapter2-mvp.html#references",
-    "title": "Chapter 2 - MVP",
-    "section": "References",
-    "text": "References\n\nChapter 1 can be found here.\nCode for this chapter can be found here"
+    "text": "Conclusion\nBesides tasks like classifying images or detecting objects, a neural networks can be used for analyzing the data to device strategies for pre-processing, data engineering and data cleaning.\nHere I have bounced off one idea about how a simple CNN can be used to understand the regions in an image that the neural network focuses to make it’s decisions and then analyzing these things we can observer if the network is focusing on areas of images that it needs to focus and if not, then we can think of the steps that we can take to help the network to focus to generalize better.\nI have just scratched the surface of what’s possible here and there can be many more ways in which deep learning can be used to take better decisions on data. So, I would emphasize you to expand on this idea and think of other ways in which you can use simple networks to analyze the data before building an architecture for the actual task at hand."
   },
   {
     "objectID": "posts/Nbdev.jl-And-Literate-programming/Nbdev.jl-And-Literate-programming.html",
@@ -441,6 +532,13 @@
     "text": "Further reads\n\nhttp://ross.net/funnelweb/tutorial/intro_what.html\nhttps://www.fast.ai/2019/12/02/nbdev/\nhttps://nbdev.fast.ai/tutorial.html"
   },
   {
+    "objectID": "posts/blog.html",
+    "href": "posts/blog.html",
+    "title": "Satyabrata pal",
+    "section": "",
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\nNo matching items"
+  },
+  {
     "objectID": "posts/How-to-workout-for-longevity/How-to-workout-for-longevity.html",
     "href": "posts/How-to-workout-for-longevity/How-to-workout-for-longevity.html",
     "title": "How To Workout For Longevity",
@@ -474,33 +572,5 @@
     "title": "How To Workout For Longevity",
     "section": "Further reading",
     "text": "Further reading\nRead the original article here 👉 The Eternal Warrior Plan"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Satyabrata pal",
-    "section": "",
-    "text": "Machine learning architect during the week and on weekends I write about Deep learning👨‍🏫, Fitness🏋️‍♂️ and Photography📷."
-  },
-  {
-    "objectID": "series.html",
-    "href": "series.html",
-    "title": "Satyabrata pal",
-    "section": "",
-    "text": "This series contains a collection of step-by-step chapters that will help you to build image restoration tool."
-  },
-  {
-    "objectID": "blog.html",
-    "href": "blog.html",
-    "title": "Satyabrata pal",
-    "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0 min\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDeep Learning\n\n\n\n\nUsing Gradio to quickly build a deep learning tool\n\n\n\n\n\n\n6 min\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDeep Learning\n\n\n\n\nUsing deep learning to restore and correct images\n\n\n\n\n\n\nSep 26, 2022\n\n\n19 min\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDeep Learning\n\n\n\n\nHow to use neural networks to analyze and understand data\n\n\n\n\n\n\nFeb 23, 2022\n\n\n6 min\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nProgramming\n\n\n\n\nWhy, what and how of Nbdev.jl\n\n\n\n\n\n\nJan 5, 2022\n\n\n5 min\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDeep Learning\n\n\n\n\n\n\n\n\n\n\n\nOct 12, 2021\n\n\n11 min\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFitness\n\n\n\n\nMy quick notes on an article by Christian Thibaudeau\n\n\n\n\n\n\nOct 12, 2021\n\n\n2 min\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "image-restoration-series.html",
-    "href": "image-restoration-series.html",
-    "title": "Series: Image restoration",
-    "section": "",
-    "text": "Using Gradio to quickly build a deep learning tool\n\n\n\n\n\n\n6 min\n\n\n\n\n\n\n\n\n\n\n\n\nUsing deep learning to restore and correct images\n\n\n\n\n\n\nSep 26, 2022\n\n\n19 min\n\n\n\n\n\n\nNo matching items"
   }
 ]

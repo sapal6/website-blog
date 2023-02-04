@@ -8,8 +8,8 @@
 <title>Satyabrata pal</title>
 <link>https://www.satyabratapal.xyz/blog.html</link>
 <atom:link href="https://www.satyabratapal.xyz/blog.xml" rel="self" type="application/rss+xml"/>
-<description>This is Satyabrata pal's personal Blog.</description>
-<generator>quarto-1.1.251</generator>
+<description>This is Satyabrata pal&#39;s personal Blog.</description>
+<generator>quarto-1.2.335</generator>
 <lastBuildDate>Mon, 26 Sep 2022 00:00:00 GMT</lastBuildDate>
 <item>
   <title>Chapter 1 - Deblur</title>
@@ -49,14 +49,14 @@ Note
 </div>
 <p>At the end of the article I will also post links to different resources from which I got to know a lot about GANs and related techniques.</p>
 <p>At the begining of this notebook we will install all the required packages.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="op" style="color: #5E5E5E;">%</span>load_ext autoreload</span>
 <span id="cb1-2"><span class="op" style="color: #5E5E5E;">%</span>autoreload <span class="dv" style="color: #AD0000;">2</span></span></code></pre></div>
 </details>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="cf" style="color: #003B4F;">try</span>: <span class="im" style="color: #00769E;">import</span> fastkaggle</span>
@@ -67,7 +67,7 @@ Note
 <pre><code>WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv</code></pre>
 </div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="cf" style="color: #003B4F;">try</span>: <span class="im" style="color: #00769E;">import</span> fastai</span>
@@ -78,7 +78,7 @@ Note
 <pre><code>WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv</code></pre>
 </div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="co" style="color: #5E5E5E;"># install fastkaggle if not available</span></span>
@@ -91,7 +91,7 @@ Note
 </div>
 </div>
 <p>Then we will import the required modules.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="im" style="color: #00769E;">import</span> gc</span>
@@ -137,7 +137,7 @@ Note
 </div>
 </div>
 <p>We will pull the first dataset (the one I collected from pexels.com)</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">path1 <span class="op" style="color: #5E5E5E;">=</span> setup_data(<span class="st" style="color: #20794D;">'sapal6'</span>, <span class="st" style="color: #20794D;">'superresolution'</span>)</span></code></pre></div>
@@ -146,7 +146,7 @@ Note
 <pre><code>Warning: Your Kaggle API key is readable by other users on this system! To fix this, you can run 'chmod 600 /root/.kaggle/kaggle.json'</code></pre>
 </div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1">path1.ls()</span></code></pre></div>
@@ -172,13 +172,13 @@ Tip
 <p>If your model’s results are not at par then you should first try to bring in more training data (if it’s possible because in many domains more data is simply hard to come by). If addign more data doesn’t improve your model then you should look to other techniques.</p>
 </div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1">path2 <span class="op" style="color: #5E5E5E;">=</span> setup_data(<span class="st" style="color: #20794D;">'thaihoa1476050'</span>, <span class="st" style="color: #20794D;">'df2k-ost'</span>)</span></code></pre></div>
 </details>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1">path2.ls()</span></code></pre></div>
@@ -201,7 +201,7 @@ Tip
 <p>In real world a better way is to create a config file in your project.</p>
 </div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1">config <span class="op" style="color: #5E5E5E;">=</span> {<span class="st" style="color: #20794D;">'root'</span>:Path(<span class="st" style="color: #20794D;">"."</span>)}</span></code></pre></div>
@@ -212,27 +212,27 @@ Tip
 <h2 class="anchored" data-anchor-id="crappifying">Crappifying</h2>
 <p>In order to get the target images which in our case are the images having “camera shake” in them, we need to simulate motion blur. “fastaibreadcrumbs” provides <code>Crappifier</code> which takes in images and creates another version of the same image that has motion blur in it.</p>
 <p>First let’s get the source and destination paths.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1">config[<span class="st" style="color: #20794D;">'path_hr1'</span>] <span class="op" style="color: #5E5E5E;">=</span> path1</span>
 <span id="cb17-2">config[<span class="st" style="color: #20794D;">'path_hr2'</span>] <span class="op" style="color: #5E5E5E;">=</span> path2</span></code></pre></div>
 </details>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1">config[<span class="st" style="color: #20794D;">'path_crappy'</span>] <span class="op" style="color: #5E5E5E;">=</span> Path(<span class="st" style="color: #20794D;">'crappy'</span>)</span></code></pre></div>
 </details>
 </div>
 <p>fastai provides <code>get_image_files</code> which fetches all teh image files from a given path. We will use this get the images from our first dataset.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1">files_hr1 <span class="op" style="color: #5E5E5E;">=</span> get_image_files(config[<span class="st" style="color: #20794D;">'path_hr1'</span>])</span></code></pre></div>
 </details>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1">files_hr1[:<span class="dv" style="color: #AD0000;">10</span>]</span></code></pre></div>
@@ -242,27 +242,27 @@ Tip
 </div>
 </div>
 <p>similarly we will get the images from teh second dataset path.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1">files_hr2 <span class="op" style="color: #5E5E5E;">=</span> get_image_files(config[<span class="st" style="color: #20794D;">'path_hr2'</span>])</span></code></pre></div>
 </details>
 </div>
 <p>Let’s crappify a single image to check if things work.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1">Crappifier(config[<span class="st" style="color: #20794D;">"path_crappy"</span>])(files_hr1[<span class="dv" style="color: #AD0000;">0</span>])</span></code></pre></div>
 </details>
 </div>
 <p>Let’s grab our crappified image.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1">files_crappy1 <span class="op" style="color: #5E5E5E;">=</span> get_image_files(config[<span class="st" style="color: #20794D;">'path_crappy'</span>])</span></code></pre></div>
 </details>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1">files_crappy1[<span class="dv" style="color: #AD0000;">0</span>]</span></code></pre></div>
@@ -285,7 +285,7 @@ Note
 <p>If you look into the source code of <code>show_plot</code> it’s only a few lines of code. Under the hood it’s only matplotlib functions. So, if you don’t want to use <code>show_plot</code> then you can create your own plotting function.</p>
 </div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1">show_plot(files_hr1[<span class="dv" style="color: #AD0000;">0</span>], files_crappy1[<span class="dv" style="color: #AD0000;">0</span>], <span class="dv" style="color: #AD0000;">1</span>, (<span class="dv" style="color: #AD0000;">10</span>, <span class="dv" style="color: #AD0000;">10</span>))</span></code></pre></div>
@@ -294,7 +294,7 @@ Note
 <p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/chapter1-deblur_files/figure-html/cell-20-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><span class="co" style="color: #5E5E5E;">#cleaning up the crappy directory.</span></span>
@@ -303,13 +303,13 @@ Note
 </div>
 <p>While feeding data into a neural network, all teh images needs to be in same size. So, let’s first check the sizes of our training images.</p>
 <p>There is a neat trick which I learned from <a href="https://www.kaggle.com/code/jhoward/first-steps-road-to-the-top-part-1">Jeremy Howard’s notebook</a> to get the image size. I am using the same code here.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><span class="im" style="color: #00769E;">from</span> fastcore.parallel <span class="im" style="color: #00769E;">import</span> <span class="op" style="color: #5E5E5E;">*</span></span></code></pre></div>
 </details>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><span class="kw" style="color: #003B4F;">def</span> f(o): <span class="cf" style="color: #003B4F;">return</span> PILImage.create(o).size</span>
@@ -343,14 +343,14 @@ Length: 2790, dtype: int64</code></pre>
 <p>These resizing tricks to save computing and speeding up training is what I got to know from <a href="https://www.kaggle.com/code/jhoward/first-steps-road-to-the-top-part-1">Jeremy Howard’s notebook</a> and from my own experiments that I did on my local machine and my experiments done on kaggle kernel. Your experience might vary depending upon the computing power that you have access to. So, again feel free to experiment.</p>
 </blockquote>
 <p>I will create a config for the path where I am goign to store my resized images.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1">config[<span class="st" style="color: #20794D;">'path_860'</span>] <span class="op" style="color: #5E5E5E;">=</span> Path(<span class="st" style="color: #20794D;">'path_860'</span>)</span></code></pre></div>
 </details>
 </div>
 <p>fastai provides <code>resize_images</code> which resizes your source images to the desired size. The below function <code>resz_imgs</code> is just a wrapper on top of fastai’s <code>resize_images</code>. Pass on the source and destination paths and pass the maximum size that you want your images to be resized to. <code>resize_images</code> will then resize the images to the new proportions while keeping the longest side to the given <code>max_sz</code> and accordingly modify the shortest side.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb34" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><span class="kw" style="color: #003B4F;">def</span> resz_imgs(source: Path, dest: Path, max_sz: <span class="bu" style="color: null;">int</span>):</span>
@@ -358,7 +358,7 @@ Length: 2790, dtype: int64</code></pre>
 </details>
 </div>
 <p>Let’s resize the first dataset.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb35" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><span class="co" style="color: #5E5E5E;">#for first set</span></span>
@@ -366,7 +366,7 @@ Length: 2790, dtype: int64</code></pre>
 </details>
 </div>
 <p>Then the second dataset.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb36" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><span class="co" style="color: #5E5E5E;">#for second set</span></span>
@@ -388,7 +388,7 @@ Length: 2790, dtype: int64</code></pre>
 </div>
 </div>
 <p>For parallel crappification, I will use <code>crappify_imgs</code> provided by “fastaibreadcrumbs” which let’s you provide the high resolution image path and the destination path, strength of the blur (as <code>sz</code>).</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb37" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1">crappify_imgs(config[<span class="st" style="color: #20794D;">'path_860'</span>], config[<span class="st" style="color: #20794D;">'path_crappy'</span>], n_workers<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">8</span>)</span></code></pre></div>
@@ -398,7 +398,7 @@ Length: 2790, dtype: int64</code></pre>
 <section id="grabbing-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="grabbing-the-data">Grabbing the data</h2>
 <p>Now that crappification is done, let’s grab our input and target data. We can do this by using fastai <code>Datablock</code> API. <code>Datablock</code> let’s you customize the way you want to grab your input and output.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb38" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1">files_crappy <span class="op" style="color: #5E5E5E;">=</span> get_image_files(config[<span class="st" style="color: #20794D;">'path_crappy'</span>])</span>
@@ -408,7 +408,7 @@ Length: 2790, dtype: int64</code></pre>
 <pre><code>(#4) [Path('crappy/path_860/trains/0055.jpg'),Path('crappy/path_860/trains/0002.jpg'),Path('crappy/path_860/trains/0067.jpg'),Path('crappy/path_860/trains/0022.jpg')]</code></pre>
 </div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb40" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1">files_crappy[<span class="dv" style="color: #AD0000;">0</span>].relative_to(config[<span class="st" style="color: #20794D;">'path_crappy'</span>])</span></code></pre></div>
@@ -417,7 +417,7 @@ Length: 2790, dtype: int64</code></pre>
 <pre><code>Path('path_860/trains/0055.jpg')</code></pre>
 </div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb42" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1">dblock <span class="op" style="color: #5E5E5E;">=</span> DataBlock(blocks<span class="op" style="color: #5E5E5E;">=</span>(ImageBlock, ImageBlock),</span>
@@ -428,13 +428,13 @@ Length: 2790, dtype: int64</code></pre>
 </details>
 </div>
 <p>In the first line we describe outr <code>blocks</code> which are the x and y. Here, our x and y both are images and thus we provide <code>Imageblock</code> as the blocks of choice. Then we use lambda function to tell fastai that we are expecting the crappy images as our y, whose filename match with the filename of the input images. After defining our labels (y) we tell fastai to randomly split our images into training and test data. Then we call the <code>Resize</code> since we want all our images to be of same size. Lastly we do some augmentations.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb43" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1">dls <span class="op" style="color: #5E5E5E;">=</span> dblock.dataloaders(files_crappy, bs<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">4</span>)</span></code></pre></div>
 </details>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb44" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1">dls.show_batch()</span></code></pre></div>
@@ -473,7 +473,7 @@ Length: 2790, dtype: int64</code></pre>
 <blockquote class="blockquote">
 <p>If you wan to know more about what happens under the hood then I feel free to read through the <a href="https://github.com/sapal6/course-v3/blob/master/nbs/dl1/lesson7-superres.ipynb">fastai course(2018) notebook here</a> and watch the lecture <a href="https://youtu.be/9spwoDYwW_I">here</a></p>
 </blockquote>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb45" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1">feat_loss <span class="op" style="color: #5E5E5E;">=</span> calc_ft_loss()</span></code></pre></div>
@@ -495,7 +495,7 @@ Downloading: "https://download.pytorch.org/models/vgg16_bn-6c64b313.pth" to /roo
 <section id="grabbing-data" class="level2">
 <h2 class="anchored" data-anchor-id="grabbing-data">Grabbing data</h2>
 <p>Like before we have to create a dataloader which would load adata onto the device. We can use fastai’s dataloader for this purpose but for convenience I will use the <code>get_unet_dls</code> from “fastaibreadcrumbs” which is simply a wrapper over a fastai datablock with two Imageblocks (one Imageblock for input and one Imageblock for target) and a dataloader.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb47" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1">config</span></code></pre></div>
@@ -509,7 +509,7 @@ Downloading: "https://download.pytorch.org/models/vgg16_bn-6c64b313.pth" to /roo
 </div>
 </div>
 <p>…setting some parameters like weight decay, nymber of epochs etc…</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb49" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><span class="co" style="color: #5E5E5E;"># hyperparameters</span></span>
@@ -521,7 +521,7 @@ Downloading: "https://download.pytorch.org/models/vgg16_bn-6c64b313.pth" to /roo
 <blockquote class="blockquote">
 <p>Training on a smaller image size will make our training faster and this will enabel use to iterate faster in case we want to try a lots of things to find the best settings fro our training. There is one more reason due to which we may want to start with a smaller image size. We are going to use something known as “progressive resizing” , whereby we start training with small images and then use the model trained on these smaller images as a pre-trained model for another training setup where we use slightly bigger images. This makes the trainign a lot faster then starting with big images from the get go. Remember that our goal is to make our training as fast as possible.</p>
 </blockquote>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb50" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><span class="co" style="color: #5E5E5E;">#transformations</span></span>
@@ -539,7 +539,7 @@ Downloading: "https://download.pytorch.org/models/vgg16_bn-6c64b313.pth" to /roo
 <li>item_tfms i.e.&nbsp;item transformations.</li>
 <li><code>batch_tfms</code> i.e.&nbsp;batch transformations.</li>
 </ul>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb51" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1">dls<span class="op" style="color: #5E5E5E;">=</span> get_unet_dls(<span class="dv" style="color: #AD0000;">8</span>, source <span class="op" style="color: #5E5E5E;">=</span> files_crappy, get_y <span class="op" style="color: #5E5E5E;">=</span> get_y, </span>
@@ -548,7 +548,7 @@ Downloading: "https://download.pytorch.org/models/vgg16_bn-6c64b313.pth" to /roo
 </details>
 </div>
 <p>let’s see our samples.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb52" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1">dls.show_batch()</span></code></pre></div>
@@ -563,7 +563,7 @@ Downloading: "https://download.pytorch.org/models/vgg16_bn-6c64b313.pth" to /roo
 <p>Now that we have our feature loss and data ready, let’s create a unet.</p>
 <p>Creating a basic unet is a one liner affair in fastai. Ofcourse, you can do all sorts of customization to your unet but I will use the minimalist way here and take advantage of the high level API in fastai.</p>
 <p>We will use the unet_learner parameters recommended <a href="https://github.com/sapal6/course-v3/blob/master/nbs/dl1/lesson7-superres.ipynb">here</a>.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb53" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1">unet_learn <span class="op" style="color: #5E5E5E;">=</span> unet_learner(dls, models.resnet34, loss_func<span class="op" style="color: #5E5E5E;">=</span>feat_loss,</span>
@@ -617,7 +617,7 @@ Downloading: "https://download.pytorch.org/models/resnet34-b627a593.pth" to /roo
     def __del__(self): self.hooks.remove()</code></pre>
 <p>…notice that we have something called <code>metric_names</code> there. This thing is the collection of the pixel loss and gram loss which can then be used as a metric by us.</p>
 <p>fastai provides the <code>lr_find</code> function which we will use to find a suitable learning rate.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb56" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1">lr <span class="op" style="color: #5E5E5E;">=</span> unet_learn.lr_find(suggest_funcs<span class="op" style="color: #5E5E5E;">=</span>(valley, slide))</span></code></pre></div>
@@ -649,7 +649,7 @@ Downloading: "https://download.pytorch.org/models/resnet34-b627a593.pth" to /roo
 </div>
 <p><code>lr_find</code> has a few different methods of finding the learning rate but the “valley” and “slide” functions provide suitable learning rate most of the time.</p>
 <p>The <code>lr_find</code> suggests very optimistic values of learning rates so that we don’t screw up our training but another thing that we can do is to look at the learning rate suggested by the “valley” and “slide” functions and then take a value in between these two.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb57" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1">(lr.valley, lr.slide)</span></code></pre></div>
@@ -661,7 +661,7 @@ Downloading: "https://download.pytorch.org/models/resnet34-b627a593.pth" to /roo
 <p>We will train the unet using the “one cycle policy”. From 50,000 feet, the one cycle policy can be explained like this “A one cycle policy trains the model with large and oscillating (changing between different values) learning rate in order to make the training faster and more accurate”. A more detailed explanation can be found in this cool <a href="https://iconof.com/1cycle-learning-rate-policy/">article</a>.</p>
 <p>There is one more trick that I am going to use in my unet_learner. I have experimented with quite a different versions of this notebook with variety of data (variations both in nterms of number of images and amount of data) and I have found that with data variations it becomes difficult for me to predict that a particular choice of “epoch numbers” will work everytime. So, I will need to tell fastai that when we need to stop training if my loss is not improving and save my modell whenever a “good” enough loss state is reached. This can be done by the <a href="https://docs.fast.ai/callback.tracker.html"><code>EarlyStoppingCallback</code></a> and <a href="https://docs.fast.ai/callback.tracker.html#savemodelcallback"><code>SaveModelCallback</code></a>. The former stops the model trainign if the loss doesn’t improve further and the latter will save the best possible model. I have provided links to the official documentation of these two functions if you wan tot know more about them.</p>
 <p>But hey! what’s a callback? Simply put a callback is a function that is passed as an argument to another function. It provides a way for the programmer to modify an existing piece of code without changing the structure of code. With callbacks you can modify the behaviour of your piece of code, say a function without changing the body of your current function. <a href="https://pythonexamples.org/python-callback-function/">Here</a> is an article that explains callbacks with examples.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb59" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1">unet_learn.fit_one_cycle(config[<span class="st" style="color: #20794D;">'epoch'</span>], (lr.valley<span class="op" style="color: #5E5E5E;">+</span>lr.slide)<span class="op" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">2</span>, pct_start<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">0.9</span>, wd<span class="op" style="color: #5E5E5E;">=</span>config[<span class="st" style="color: #20794D;">'wd'</span>], </span>
@@ -767,7 +767,7 @@ Better model found at epoch 3 with valid_loss value: 1.8562445640563965.</code><
 </div>
 </div>
 <p>we can view the predictions on the validation set using <code>show_results</code></p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb61" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1">unet_learn.show_results()</span></code></pre></div>
@@ -801,7 +801,7 @@ Better model found at epoch 3 with valid_loss value: 1.8562445640563965.</code><
 <section id="progressive-resizing" class="level2">
 <h2 class="anchored" data-anchor-id="progressive-resizing">Progressive resizing</h2>
 <p>Even with an image size of 128px our model is doing a good job of removing the motion blur and generating the blur free images. Now, let’s use this model as a pre-trained model fro our next training phase where we will increase the image size to 256px.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb62" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><span class="co" style="color: #5E5E5E;">#transformations</span></span>
@@ -810,7 +810,7 @@ Better model found at epoch 3 with valid_loss value: 1.8562445640563965.</code><
 <span id="cb62-4">get_y <span class="op" style="color: #5E5E5E;">=</span> <span class="kw" style="color: #003B4F;">lambda</span> x: x.relative_to(config[<span class="st" style="color: #20794D;">'path_crappy'</span>])</span></code></pre></div>
 </details>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb63" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1">dls<span class="op" style="color: #5E5E5E;">=</span> get_unet_dls(<span class="dv" style="color: #AD0000;">8</span>, source <span class="op" style="color: #5E5E5E;">=</span> files_crappy, get_y <span class="op" style="color: #5E5E5E;">=</span> get_y, </span>
@@ -818,7 +818,7 @@ Better model found at epoch 3 with valid_loss value: 1.8562445640563965.</code><
 <span id="cb63-3">                     batch_tfms <span class="op" style="color: #5E5E5E;">=</span> batch_tfms)</span></code></pre></div>
 </details>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb64" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1">dls.show_batch()</span></code></pre></div>
@@ -828,14 +828,14 @@ Better model found at epoch 3 with valid_loss value: 1.8562445640563965.</code><
 </div>
 </div>
 <p>since we have re-initialized our unet_learner, we would need to assign the new dataloader (the one with 256px images) to the learner.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb65" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1">unet_learn.dls <span class="op" style="color: #5E5E5E;">=</span> dls</span></code></pre></div>
 </details>
 </div>
 <p>Load the model that was trained on the 128px images.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb66" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1">unet_learn.load(<span class="st" style="color: #20794D;">'model_128'</span>)<span class="op" style="color: #5E5E5E;">;</span></span></code></pre></div>
@@ -846,7 +846,7 @@ Better model found at epoch 3 with valid_loss value: 1.8562445640563965.</code><
 </div>
 </div>
 <p>Remember that our input image size have changed now and so has the parameters of our model. Due to this we will have to find new learning rate.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb68" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1">lr <span class="op" style="color: #5E5E5E;">=</span> unet_learn.lr_find(suggest_funcs<span class="op" style="color: #5E5E5E;">=</span>(valley, slide))</span></code></pre></div>
@@ -876,7 +876,7 @@ Better model found at epoch 3 with valid_loss value: 1.8562445640563965.</code><
 <p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/chapter1-deblur_files/figure-html/cell-50-output-3.png" class="img-fluid"></p>
 </div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb69" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1">(lr.valley, lr.slide)</span></code></pre></div>
@@ -887,7 +887,7 @@ Better model found at epoch 3 with valid_loss value: 1.8562445640563965.</code><
 </div>
 <p>Next, we will fine tune our model on the new set of data. With <code>fine_tune</code> we ask fastai to freeze the model, train it for a epoch, unfreeze it and then train for some more epochs.</p>
 <p>In case you wan to understand more about <code>fine_tune</code>, then here is the <a href="https://github.com/fastai/fastai/blob/f2ab8ba78b63b2f4ebd64ea440b9886a2b9e7b6f/fastai/callback/schedule.py#L153">source code</a> and <a href="https://github.com/fastai/fastai/blob/f2ab8ba78b63b2f4ebd64ea440b9886a2b9e7b6f/fastai/callback/schedule.py#L153">here</a> is an old thread in the fastai forum where <code>fine_tune</code> was discussed.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb71" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb71-1">unet_learn.fine_tune(<span class="dv" style="color: #AD0000;">5</span>, (lr.valley<span class="op" style="color: #5E5E5E;">+</span>lr.slide)<span class="op" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">2</span>, pct_start<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">0.9</span>, wd<span class="op" style="color: #5E5E5E;">=</span>config[<span class="st" style="color: #20794D;">'wd'</span>], </span>
@@ -1062,7 +1062,7 @@ Better model found at epoch 4 with valid_loss value: 1.3559863567352295.</code><
 </div>
 </div>
 <p>Let’s check the predictions on the validation set.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb74" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb74-1">unet_learn.show_results()</span></code></pre></div>
@@ -1107,20 +1107,20 @@ Better model found at epoch 4 with valid_loss value: 1.3559863567352295.</code><
 <section id="inference" class="level2">
 <h2 class="anchored" data-anchor-id="inference">Inference</h2>
 <p>Let’s test our model on unseen data. For this I have downloaded new images (which were not inlcuded in teh training data) from pexels.com.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb75" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1">config[<span class="st" style="color: #20794D;">'test_860'</span>] <span class="op" style="color: #5E5E5E;">=</span> Path(<span class="st" style="color: #20794D;">"test_860"</span>)</span>
 <span id="cb75-2">config[<span class="st" style="color: #20794D;">'test_crappy'</span>] <span class="op" style="color: #5E5E5E;">=</span> Path(<span class="st" style="color: #20794D;">"test_crappy"</span>)</span></code></pre></div>
 </details>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb76" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb76-1">files_test <span class="op" style="color: #5E5E5E;">=</span> get_image_files(config[<span class="st" style="color: #20794D;">'test_860'</span>])</span></code></pre></div>
 </details>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb77" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb77-1">files_test</span></code></pre></div>
@@ -1130,20 +1130,20 @@ Better model found at epoch 4 with valid_loss value: 1.3559863567352295.</code><
 </div>
 </div>
 <p>…and crappified them like before.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb79" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb79-1">crappify_imgs(config[<span class="st" style="color: #20794D;">'test_860'</span>], config[<span class="st" style="color: #20794D;">'test_crappy'</span>], sz<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">80</span>, n_workers<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">8</span>)</span></code></pre></div>
 </details>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb80" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb80-1">files_crappy <span class="op" style="color: #5E5E5E;">=</span> get_image_files(config[<span class="st" style="color: #20794D;">'test_crappy'</span>])</span></code></pre></div>
 </details>
 </div>
 <p>We also need to grab our dataloader with the same type of transformations as before but this time we will take a 860px image because we are trying to generate “full size” blur free image.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb81" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb81-1"><span class="co" style="color: #5E5E5E;">#transformations</span></span>
@@ -1152,7 +1152,7 @@ Better model found at epoch 4 with valid_loss value: 1.3559863567352295.</code><
 <span id="cb81-4">get_y <span class="op" style="color: #5E5E5E;">=</span> <span class="kw" style="color: #003B4F;">lambda</span> x: x.relative_to(config[<span class="st" style="color: #20794D;">'test_crappy'</span>])</span></code></pre></div>
 </details>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb82" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb82-1">dls<span class="op" style="color: #5E5E5E;">=</span> get_unet_dls(<span class="dv" style="color: #AD0000;">2</span>, source <span class="op" style="color: #5E5E5E;">=</span> files_crappy, get_y <span class="op" style="color: #5E5E5E;">=</span> get_y, </span>
@@ -1160,7 +1160,7 @@ Better model found at epoch 4 with valid_loss value: 1.3559863567352295.</code><
 <span id="cb82-3">                     batch_tfms <span class="op" style="color: #5E5E5E;">=</span> batch_tfms)</span></code></pre></div>
 </details>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb83" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb83-1">dls.show_batch()</span></code></pre></div>
@@ -1170,7 +1170,7 @@ Better model found at epoch 4 with valid_loss value: 1.3559863567352295.</code><
 </div>
 </div>
 <p>Create the Unet learner as before.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb84" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb84-1">unet_learn <span class="op" style="color: #5E5E5E;">=</span> unet_learner(dls, models.resnet34, loss_func<span class="op" style="color: #5E5E5E;">=</span>F.l1_loss,</span>
@@ -1178,7 +1178,7 @@ Better model found at epoch 4 with valid_loss value: 1.3559863567352295.</code><
 </details>
 </div>
 <p>Before prediction we will drop any sort of augmentation from our data.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb85" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb85-1">dl <span class="op" style="color: #5E5E5E;">=</span> dls.train.new(shuffle<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">False</span>, drop_last<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">False</span>, </span>
@@ -1186,7 +1186,7 @@ Better model found at epoch 4 with valid_loss value: 1.3559863567352295.</code><
 </details>
 </div>
 <p>“fastaibreadcrumbs” provides <code>save_preds</code>, to which we pass the dataloader, learner and the path. This function will generate the predictionsa nd save them.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb86" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb86-1">save_preds(dl, unet_learn, <span class="st" style="color: #20794D;">"gen_imgs"</span>)</span></code></pre></div>
@@ -1213,14 +1213,14 @@ Better model found at epoch 4 with valid_loss value: 1.3559863567352295.</code><
 
 </div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb87" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb87-1">preds <span class="op" style="color: #5E5E5E;">=</span> [Path(<span class="st" style="color: #20794D;">"gen_imgs"</span>)<span class="op" style="color: #5E5E5E;">/</span>fn.name <span class="cf" style="color: #003B4F;">for</span> fn <span class="kw" style="color: #003B4F;">in</span> files_crappy]</span></code></pre></div>
 </details>
 </div>
 <p>“fastaibreadcrumbs” provides <code>compare_imgs</code> which takes in the path of the original images, path of crappy images, path of generated images and then compare them side by side.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
+<div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb88" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb88-1">compare_imgs(files_test, files_crappy, preds, (<span class="dv" style="color: #AD0000;">100</span>, <span class="dv" style="color: #AD0000;">100</span>))</span></code></pre></div>
@@ -4065,8 +4065,205 @@ Note
  ]]></description>
   <category>Deep Learning</category>
   <guid>https://www.satyabratapal.xyz/posts/image-restoration-series/chapter2-mvp.html</guid>
-  <pubDate>Thu, 27 Oct 2022 11:40:03 GMT</pubDate>
+  <pubDate>Sat, 04 Feb 2023 11:37:07 GMT</pubDate>
   <media:content url="https://www.satyabratapal.xyz/posts/image-restoration-series/ui_design.png" medium="image" type="image/png" height="121" width="144"/>
+</item>
+<item>
+  <title>Chapter 3 - Testing out in the wild</title>
+  <dc:creator>Satyabrata pal</dc:creator>
+  <link>https://www.satyabratapal.xyz/posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="why-to-test-machine-learning-model" class="level2">
+<h2 class="anchored" data-anchor-id="why-to-test-machine-learning-model">Why to test machine learning model?</h2>
+<p>Why do we need to test our machine learning model? Didn’t we test it during the training time using the validation set? Well! we did. Kind of, but that validation set was created by us from the data that we had created. Even when you do test your model on a test set, it might still have the same biases as the validation set and training set. To make sure that your model behaves correctly, we will have to test the trained model on a variety of data taken from the wild.</p>
+</section>
+<section id="re-creating-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="re-creating-the-model">Re-creating the model</h2>
+<p>I will have to re-create the datablock and the model code here as well. Let’s do that. We will use the functions from my library <a href="https://sapal6.github.io/fastaibreadcrumbs/">fastaibreadcrumbs</a> and some fucntions that we used in <a href="satyabratapal.xyz/posts/image-restoration-series/chapter2-mvp.html">chapter 2</a>.</p>
+</section>
+<section id="import-the-required-libraries" class="level2">
+<h2 class="anchored" data-anchor-id="import-the-required-libraries">Import the required libraries</h2>
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="cf" style="color: #003B4F;">try</span>: <span class="im" style="color: #00769E;">import</span> gradio <span class="im" style="color: #00769E;">as</span> gr</span>
+<span id="cb1-2"><span class="cf" style="color: #003B4F;">except</span> ModuleNotFoundError:</span>
+<span id="cb1-3">    <span class="op" style="color: #5E5E5E;">!</span>pip install <span class="op" style="color: #5E5E5E;">-</span>Uq gradio</span></code></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="co" style="color: #5E5E5E;"># install fastkaggle if not available</span></span>
+<span id="cb2-2"><span class="cf" style="color: #003B4F;">try</span>: <span class="im" style="color: #00769E;">from</span> fastaibreadcrumbs.core <span class="im" style="color: #00769E;">import</span> <span class="op" style="color: #5E5E5E;">*</span></span>
+<span id="cb2-3"><span class="cf" style="color: #003B4F;">except</span> ModuleNotFoundError:</span>
+<span id="cb2-4">    <span class="op" style="color: #5E5E5E;">!</span>pip install <span class="op" style="color: #5E5E5E;">-</span>Uq fastaibreadcrumbs</span></code></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;">import</span> gc</span>
+<span id="cb3-2"><span class="im" style="color: #00769E;">from</span> fastai.vision.<span class="bu" style="color: null;">all</span> <span class="im" style="color: #00769E;">import</span> <span class="op" style="color: #5E5E5E;">*</span></span>
+<span id="cb3-3"><span class="im" style="color: #00769E;">from</span> fastai.vision.gan <span class="im" style="color: #00769E;">import</span> <span class="op" style="color: #5E5E5E;">*</span></span>
+<span id="cb3-4"><span class="im" style="color: #00769E;">from</span> fastkaggle <span class="im" style="color: #00769E;">import</span> <span class="op" style="color: #5E5E5E;">*</span></span>
+<span id="cb3-5"><span class="im" style="color: #00769E;">from</span> fastaibreadcrumbs.core <span class="im" style="color: #00769E;">import</span> <span class="op" style="color: #5E5E5E;">*</span></span></code></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">config <span class="op" style="color: #5E5E5E;">=</span> {<span class="st" style="color: #20794D;">'path_orig'</span>:Path(<span class="st" style="color: #20794D;">'test_860'</span>), <span class="st" style="color: #20794D;">'path_crappy'</span>: Path(<span class="st" style="color: #20794D;">'crappy'</span>)}</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="prepare-the-test-data" class="level2">
+<h2 class="anchored" data-anchor-id="prepare-the-test-data">Prepare the test data</h2>
+<p>I will use a picture taken from my mobile phone for this. The reason is that the target users may use a deblurring app to deblurify the pictures they take on their mobile phones. One reason for this assumption is that people would want to deblurify images which are blurred, right and most of the times we take images with our mobile deives.</p>
+<div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">config[<span class="st" style="color: #20794D;">'test_path'</span>] <span class="op" style="color: #5E5E5E;">=</span> Path(<span class="st" style="color: #20794D;">'test'</span>)</span></code></pre></div>
+</details>
+</div>
+<p>for your test you can click any picture from your phone and put in the above “test” path or replace the “test” path in the above code with your path.</p>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1">test_img <span class="op" style="color: #5E5E5E;">=</span> get_image_files(config[<span class="st" style="color: #20794D;">'test_path'</span>])</span>
+<span id="cb6-2">test_img</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>(#4) [Path('test/IMG20230128074559.jpg'),Path('test/IMG20230128074749.jpg'),Path('test/IMG20230128074758.jpg'),Path('test/IMG20230128074733.jpg')]</code></pre>
+</div>
+</div>
+</section>
+<section id="recreating-the-learner-and-dataloader" class="level2">
+<h2 class="anchored" data-anchor-id="recreating-the-learner-and-dataloader">ReCreating the learner and dataloader</h2>
+<p>Just like <a href="https://www.satyabratapal.xyz/posts/image-restoration-series/chapter2-mvp.html">chapter2</a>, we will recreate our datalaoders and learner.</p>
+<div class="cell" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="kw" style="color: #003B4F;">def</span> get_dls(sz:<span class="bu" style="color: null;">int</span>,bs:<span class="bu" style="color: null;">int</span>, src):</span>
+<span id="cb8-2">    item_tfms <span class="op" style="color: #5E5E5E;">=</span> Resize(sz)</span>
+<span id="cb8-3">    batch_tfms <span class="op" style="color: #5E5E5E;">=</span> [Normalize.from_stats(<span class="op" style="color: #5E5E5E;">*</span>imagenet_stats)]</span>
+<span id="cb8-4">    get_y <span class="op" style="color: #5E5E5E;">=</span> <span class="kw" style="color: #003B4F;">lambda</span> x: x.relative_to(config[<span class="st" style="color: #20794D;">'path_crappy'</span>])</span>
+<span id="cb8-5">    files_crappy <span class="op" style="color: #5E5E5E;">=</span> get_image_files(src)</span>
+<span id="cb8-6">    </span>
+<span id="cb8-7">    dls<span class="op" style="color: #5E5E5E;">=</span> get_unet_dls(bs, source <span class="op" style="color: #5E5E5E;">=</span> files_crappy, get_y <span class="op" style="color: #5E5E5E;">=</span> get_y, </span>
+<span id="cb8-8">                     splitter <span class="op" style="color: #5E5E5E;">=</span> RandomSplitter(), item_tfms <span class="op" style="color: #5E5E5E;">=</span> item_tfms,</span>
+<span id="cb8-9">                     batch_tfms <span class="op" style="color: #5E5E5E;">=</span> batch_tfms)</span>
+<span id="cb8-10">    </span>
+<span id="cb8-11">    <span class="cf" style="color: #003B4F;">return</span> dls</span>
+<span id="cb8-12"></span>
+<span id="cb8-13"><span class="kw" style="color: #003B4F;">def</span> get_inf_model(dls, model:<span class="bu" style="color: null;">str</span>):</span>
+<span id="cb8-14">    unet_learn <span class="op" style="color: #5E5E5E;">=</span> unet_learner(dls, models.resnet34, loss_func<span class="op" style="color: #5E5E5E;">=</span>F.l1_loss,</span>
+<span id="cb8-15">                     blur<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>, norm_type<span class="op" style="color: #5E5E5E;">=</span>NormType.Weight).load(model)</span>
+<span id="cb8-16">    </span>
+<span id="cb8-17">    <span class="cf" style="color: #003B4F;">return</span> unet_learn</span>
+<span id="cb8-18"></span>
+<span id="cb8-19"><span class="kw" style="color: #003B4F;">def</span> save_pred(path:<span class="bu" style="color: null;">str</span>, dest:<span class="bu" style="color: null;">str</span>,learner):</span>
+<span id="cb8-20">    path <span class="op" style="color: #5E5E5E;">=</span> Path(path)</span>
+<span id="cb8-21">    dest <span class="op" style="color: #5E5E5E;">=</span> Path(dest)</span>
+<span id="cb8-22">    preds <span class="op" style="color: #5E5E5E;">=</span> learner.predict(path)</span>
+<span id="cb8-23">    arr <span class="op" style="color: #5E5E5E;">=</span> preds[<span class="dv" style="color: #AD0000;">0</span>].numpy().transpose(<span class="dv" style="color: #AD0000;">1</span>,<span class="dv" style="color: #AD0000;">2</span>,<span class="dv" style="color: #AD0000;">0</span>).astype(np.uint8)</span>
+<span id="cb8-24">    dest.mkdir(parents<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>, exist_ok<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>)</span>
+<span id="cb8-25">    Image.fromarray(arr).save(dest<span class="op" style="color: #5E5E5E;">/</span>path.name)</span>
+<span id="cb8-26">    <span class="cf" style="color: #003B4F;">return</span> dest<span class="op" style="color: #5E5E5E;">/</span>path.name</span></code></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">dls <span class="op" style="color: #5E5E5E;">=</span> get_dls(<span class="dv" style="color: #AD0000;">480</span>, <span class="dv" style="color: #AD0000;">8</span>, config[<span class="st" style="color: #20794D;">'path_crappy'</span>])</span></code></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">learner <span class="op" style="color: #5E5E5E;">=</span> get_inf_model(dls, <span class="st" style="color: #20794D;">'./model_256'</span>)</span></code></pre></div>
+</details>
+</div>
+<p>Like last time let’s also create the fucntion to save our predictions.</p>
+<div class="cell" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="kw" style="color: #003B4F;">def</span> save_pred(path:<span class="bu" style="color: null;">str</span>, dest:<span class="bu" style="color: null;">str</span>,learner):</span>
+<span id="cb11-2">    path <span class="op" style="color: #5E5E5E;">=</span> Path(path)</span>
+<span id="cb11-3">    dest <span class="op" style="color: #5E5E5E;">=</span> Path(dest)</span>
+<span id="cb11-4">    preds <span class="op" style="color: #5E5E5E;">=</span> learner.predict(path)</span>
+<span id="cb11-5">    arr <span class="op" style="color: #5E5E5E;">=</span> preds[<span class="dv" style="color: #AD0000;">0</span>].numpy().transpose(<span class="dv" style="color: #AD0000;">1</span>,<span class="dv" style="color: #AD0000;">2</span>,<span class="dv" style="color: #AD0000;">0</span>).astype(np.uint8)</span>
+<span id="cb11-6">    dest.mkdir(parents<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>, exist_ok<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>)</span>
+<span id="cb11-7">    Image.fromarray(arr).save(dest<span class="op" style="color: #5E5E5E;">/</span>path.name)</span>
+<span id="cb11-8">    <span class="cf" style="color: #003B4F;">return</span> dest<span class="op" style="color: #5E5E5E;">/</span>path.name</span></code></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="11">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="kw" style="color: #003B4F;">def</span> display_result(path):</span>
+<span id="cb12-2">    dest <span class="op" style="color: #5E5E5E;">=</span> save_pred(path,<span class="st" style="color: #20794D;">"gen_imgs"</span>,learner)</span>
+<span id="cb12-3">    <span class="cf" style="color: #003B4F;">return</span> dest</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="creating-the-gradio-ui" class="level2">
+<h2 class="anchored" data-anchor-id="creating-the-gradio-ui">Creating the gradio UI</h2>
+<p>We will create a gradio Ui to visually test our results. This is the same UI as chapter 2.</p>
+<div class="cell" data-execution_count="12">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><span class="cf" style="color: #003B4F;">with</span> gr.Blocks() <span class="im" style="color: #00769E;">as</span> demo:</span>
+<span id="cb13-2">    <span class="cf" style="color: #003B4F;">with</span> gr.Row():</span>
+<span id="cb13-3">        image_input <span class="op" style="color: #5E5E5E;">=</span> gr.Image(<span class="bu" style="color: null;">type</span><span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"filepath"</span>)</span>
+<span id="cb13-4">        image_output <span class="op" style="color: #5E5E5E;">=</span> gr.Image()</span>
+<span id="cb13-5">    deblur_btn <span class="op" style="color: #5E5E5E;">=</span> gr.Button(<span class="st" style="color: #20794D;">"Deblurrify"</span>)</span>
+<span id="cb13-6">    deblur_btn.click(fn<span class="op" style="color: #5E5E5E;">=</span>display_result,</span>
+<span id="cb13-7">                     inputs<span class="op" style="color: #5E5E5E;">=</span>image_input, outputs<span class="op" style="color: #5E5E5E;">=</span>image_output)</span>
+<span id="cb13-8"></span>
+<span id="cb13-9">demo.launch()</span></code></pre></div>
+</details>
+</div>
+<p><img src="https://www.satyabratapal.xyz/posts/image-restoration-series/ui.png" class="img-fluid"></p>
+</section>
+<section id="observations" class="level2">
+<h2 class="anchored" data-anchor-id="observations">Observations</h2>
+<ul>
+<li>The blur is not removed.</li>
+<li>The noise in the image is also amplified.</li>
+</ul>
+</section>
+<section id="reasons-for-the-bad-performance" class="level2">
+<h2 class="anchored" data-anchor-id="reasons-for-the-bad-performance">Reasons for the bad performance</h2>
+<p>This is a typical example of model performing well on training data but not performing good on real world data.</p>
+<ul>
+<li><p>I trained the model on data where the motion blur was simulated only in a single direction but in real world camera shake/motion blur in an image can be in any direction (horizontal, vertical etc.). So while training the model, this thing should be kept in mind.</p></li>
+<li><p>Secondly, my training data only contained high quality images and thus there was no sample which would tell the model what todo in case noise is available in the image (this is something that I can look into in later iterations.).</p></li>
+<li><p>The model that I am using is trained on 256*256 px images. I think I should train it on a bit higher size images as well.</p></li>
+</ul>
+</section>
+<section id="next-steps" class="level2">
+<h2 class="anchored" data-anchor-id="next-steps">Next steps</h2>
+<p>I will go back to my training and then train it with these corrections in training data and I will take a look into some new architectures which can predict the noise and motion blurs better then the present architecture.</p>
+</section>
+<section id="reference" class="level2">
+<h2 class="anchored" data-anchor-id="reference">Reference</h2>
+<ul>
+<li>Chapter 3 code can be found here.</li>
+<li>I have created a <a href="https://www.kaggle.com/datasets/sapal6/superresolution">dataset</a> of high resolution images that I collected from the free stock photography website <a href="https://www.pexels.com/">pexels.com</a>. During the training cycle of my model I combined my data with another <a href="https://www.kaggle.com/datasets/thaihoa1476050/df2k-ost">dataset</a> which also had some more high resolution images.</li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>Deep Learning</category>
+  <guid>https://www.satyabratapal.xyz/posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html</guid>
+  <pubDate>Sat, 04 Feb 2023 11:37:07 GMT</pubDate>
+  <media:content url="https://www.satyabratapal.xyz/posts/image-restoration-series/ui.png" medium="image" type="image/png" height="82" width="144"/>
 </item>
 </channel>
 </rss>

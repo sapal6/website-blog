@@ -1,13 +1,18 @@
 [
   {
-    "listing": "/posts/blog.html",
-    "items": []
+    "listing": "/image-restoration-series.html",
+    "items": [
+      "/posts/image-restoration-series/chapter2-mvp.html",
+      "/posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html",
+      "/posts/image-restoration-series/chapter1-deblur.html"
+    ]
   },
   {
     "listing": "/blog.html",
     "items": [
-      "/posts/blog.html",
       "/posts/image-restoration-series/chapter2-mvp.html",
+      "/posts/image-restoration-series/Chapter3-Testing-out-in-the-wild.html",
+      "/posts/blog.html",
       "/posts/image-restoration-series/chapter1-deblur.html",
       "/posts/Can-we-use-neural-network-to-understand-data/Can-we-use-neural-network-to-understand-data.html",
       "/posts/Nbdev.jl-And-Literate-programming/Nbdev.jl-And-Literate-programming.html",
@@ -16,10 +21,7 @@
     ]
   },
   {
-    "listing": "/image-restoration-series.html",
-    "items": [
-      "/posts/image-restoration-series/chapter2-mvp.html",
-      "/posts/image-restoration-series/chapter1-deblur.html"
-    ]
+    "listing": "/posts/blog.html",
+    "items": []
   }
 ]
